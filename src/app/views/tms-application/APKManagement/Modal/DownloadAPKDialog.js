@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import { getAPKFromServer } from 'app/Services/PolicyServices';
 import { toast } from 'react-toastify';
@@ -34,11 +34,12 @@ export default function DownloadAPKDialog(props) {
 
   return (
     <div>
-      <Tooltip arrow placement="bottom" title="Download APK Data">
-        <IconButton onClick={handleClickOpen}>
-          <Download color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Download APK Data"> */}
+      <IconButton onClick={handleClickOpen}>
+        <Download color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Download APK</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Dialog
         open={open}
         onClose={handleClose}

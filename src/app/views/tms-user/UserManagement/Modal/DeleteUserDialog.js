@@ -9,6 +9,7 @@ import {
   DialogContentText,
   Tooltip,
   IconButton,
+  Typography,
 } from '@mui/material';
 import { deleteUser } from 'app/Services/User_Auth_Service';
 import { Delete } from '@mui/icons-material';
@@ -45,11 +46,12 @@ const DeleteUserDialog = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Delete">
-        <IconButton onClick={() => (row.original.active ? handleOpenDeleteModal(row) : '')}>
-          <Delete color="error" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Delete"> */}
+      <IconButton onClick={() => (row.original.active ? handleOpenDeleteModal(row) : '')}>
+        <Delete color="error" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Delete</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       {/* Dialog delete user*/}
       <Dialog open={openModalDelete} onClose={handleCloseDelete} id="deleteDialog">
         <DialogTitle>Delete confirmation</DialogTitle>

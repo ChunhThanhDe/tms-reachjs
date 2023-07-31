@@ -9,6 +9,7 @@ import {
   DialogContentText,
   Tooltip,
   IconButton,
+  Typography,
 } from '@mui/material';
 import { deleteAPKfile } from 'app/Services/PolicyServices';
 import { Delete } from '@mui/icons-material';
@@ -45,11 +46,12 @@ const DeleteAPKDialog = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Delete">
-        <IconButton onClick={() => handleOpenDeleteModal(row)}>
-          <Delete color="error" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Delete"> */}
+      <IconButton onClick={() => handleOpenDeleteModal(row)}>
+        <Delete color="error" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Delete</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       {/* Dialog delete apk*/}
       <Dialog open={openModalDelete} onClose={handleCloseDelete} id="deleteDialog">
         <DialogTitle>Delete confirmation</DialogTitle>

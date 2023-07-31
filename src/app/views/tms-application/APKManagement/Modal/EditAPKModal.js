@@ -109,11 +109,12 @@ const EditApkModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit APK Data">
-        <IconButton onClick={handleOpenEditUser}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit APK Data"> */}
+      <IconButton onClick={handleOpenEditUser}>
+        <Edit color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit APK Data</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditUser}>
         <Box
           sx={{

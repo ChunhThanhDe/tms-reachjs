@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Modal, Tooltip } from '@mui/material';
+import { Box, IconButton, Modal, Tooltip, Typography } from '@mui/material';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import APKManageTable from './APKManagement/PolicyApkMap/APKManageTable';
 import PolicyAPKTable from 'app/views/tms-policy/SinglePolicy/PolicyAPKTable/PolicyAPKTable';
@@ -22,11 +22,12 @@ const EditPolicyAPK = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy Map APK">
-        <IconButton onClick={handleOpenEditDescription}>
-          <AppRegistrationIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Policy Map APK"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <AppRegistrationIcon color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Policy Map APK</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box
           sx={{

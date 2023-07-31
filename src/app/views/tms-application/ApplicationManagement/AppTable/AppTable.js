@@ -120,15 +120,16 @@ const AppTable = () => {
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
             <Box>
-              <Tooltip arrow placement="bottom" title="Detail">
-                <NavLink
-                  to={`/tms-application/application-management/application?id=${row.original.id}&name=${row.original.name}`}
-                >
-                  <IconButton>
-                    <InfoIcon color="primary" />
-                  </IconButton>
-                </NavLink>
-              </Tooltip>
+              {/* <Tooltip arrow placement="bottom" title="Detail"> */}
+              <NavLink
+                to={`/tms-application/application-management/application?id=${row.original.id}&name=${row.original.name}`}
+              >
+                <IconButton>
+                  <InfoIcon color="primary" />
+                  <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
+                </IconButton>
+              </NavLink>
+              {/* </Tooltip> */}
             </Box>,
           ]}
           renderDetailPanel={({ row }) => (

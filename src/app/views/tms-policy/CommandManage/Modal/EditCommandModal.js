@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   Box,
@@ -8,11 +8,74 @@ import {
   Typography,
   TextField,
   Grid,
-  Tooltip,
+  Autocomplete,
+  // Tooltip,
 } from '@mui/material';
 import { Edit } from '@mui/icons-material';
-import { putEditCommand } from 'app/Services/PolicyServices';
+import { getNotiID, putEditCommand } from 'app/Services/PolicyServices';
 import ListSelect from 'app/components/List/ListSelect';
+
+function AutoComplete({ label, defaultNoti, selectedOption, setSelectedOption }) {
+  const [arrNotiId, setArrNotiId] = useState([]);
+  const [paramsPage, setParamPage] = useState({
+    page: 1,
+    limit: 10,
+    search: null,
+  });
+  const [hasSelected, setHasSelected] = useState(false);
+
+  const handleBarSearch = (event) => {
+    setParamPage({ ...paramsPage, search: event.target.value });
+    setHasSelected(false);
+  };
+
+  const handleLoadAPagePolicy = async () => {
+    let response = await getNotiID(paramsPage);
+    if (response.status === 200) {
+      let arr = response.data.listResult;
+      setArrNotiId(arr);
+    }
+  };
+
+  const handleOnChange = (event, newValue) => {
+    setSelectedOption(newValue);
+    setHasSelected(true);
+  };
+
+  useEffect(() => {
+    handleLoadAPagePolicy();
+  }, [paramsPage]);
+
+  useEffect(() => {
+    if (!hasSelected && arrNotiId.length > 0) {
+      const defaultNotiObj = arrNotiId.find((item) => item.id === defaultNoti);
+      setSelectedOption(defaultNotiObj);
+      setParamPage({ ...paramsPage, search: null });
+      setHasSelected(true);
+    }
+  }, [hasSelected, arrNotiId, defaultNoti, setSelectedOption, paramsPage]);
+
+  return (
+    <div>
+      Recent Notification: {selectedOption ? selectedOption.title : ''}
+      <Autocomplete
+        options={arrNotiId}
+        getOptionLabel={(option) => option.title}
+        id="include-input-in-list"
+        onChange={handleOnChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            variant="standard"
+            onChange={handleBarSearch}
+            fullWidth
+          />
+        )}
+      />
+    </div>
+  );
+}
 
 const EditCommandModal = (props) => {
   const { row, setUpdatetable } = props;
@@ -22,10 +85,9 @@ const EditCommandModal = (props) => {
   const preCommand = row.original.command;
   const preName = row.original.name;
   const Noti = ['Reboot', 'Notification'];
+  const prevNoti = row.original.commandNotificationId;
+  const [selectedOption, setSelectedOption] = React.useState(null);
 
-  // const handleResetTable = () => {
-  //   setResettable(false);
-  // };
   const handleOpenEditDescription = () => {
     setOpenModal((prevState) => !prevState);
   };
@@ -42,18 +104,20 @@ const EditCommandModal = (props) => {
   };
 
   const handleEditCommand = async () => {
-    if (preCommand === command && preName === name) {
+    if (preCommand === command && preName === name && prevNoti === selectedOption) {
       toast.info('Nothing changes');
       handleCloseModalEditDescription();
       return;
     }
     if (command === '' || name === '') {
+      handleCloseModalEditDescription();
       return;
     }
     let data = {
       id: row.original.id,
       command: command,
       name: name,
+      commandNotificationId: selectedOption.id,
     };
     let response = await putEditCommand(data);
     console.log('editCommandResponse', response);
@@ -68,11 +132,12 @@ const EditCommandModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy">
-        <IconButton onClick={handleOpenEditDescription}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <Edit color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Command</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{
@@ -109,6 +174,18 @@ const EditCommandModal = (props) => {
                 value={name}
               />
             </Grid>
+            {command === 'Notification' ? (
+              <Grid item xs={12}>
+                <AutoComplete
+                  label={'Notification'}
+                  defaultNoti={prevNoti}
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                />
+              </Grid>
+            ) : (
+              <></>
+            )}
           </Grid>
           <Box
             sx={{

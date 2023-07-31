@@ -128,14 +128,20 @@ const APKManageTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row }) => [
-            <Box>
-              <DownloadAPKDialog
-                url={row.original.apkfileUrl}
-                filename={row.original.packagename.toString()}
-              />
-              <EditApkModal row={row} setUpdatetable={setUpdateTable} />
-              <DeleteAPKDialog row={row} setUpdatetable={setUpdateTable} />
-            </Box>,
+            <>
+              <Box flexBasis="25%">
+                <DownloadAPKDialog
+                  url={row.original.apkfileUrl}
+                  filename={row.original.packagename.toString()}
+                />
+              </Box>
+              <Box flexBasis="25%">
+                <EditApkModal row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+              <Box flexBasis="25%">
+                <DeleteAPKDialog row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+            </>,
           ]}
           renderDetailPanel={({ row }) => (
             <Box

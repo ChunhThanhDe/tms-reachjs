@@ -246,7 +246,7 @@ export const putEditCommand = (data) => {
   console.log(data);
   return axios
     .put(`/TMS/api/command/${data.id}`, {
-      // commandNotificationId: data.commandNotificationId,
+      commandNotificationId: data.commandNotificationId,
       name: data.name,
       command: data.command,
     })
@@ -263,7 +263,7 @@ export const postCreateNewCommand = (data) => {
     .post(`/TMS/api/command`, {
       command: data.command,
       name: data.name,
-      commandNotificationId: 1,
+      commandNotificationId: data.commandNotificationId,
     })
     .catch(function (error) {
       if (error.response) {
@@ -292,6 +292,23 @@ export const getNotiID = (data) => {
       page: data.page,
       limit: data.limit,
       search: data.search,
+    },
+  }).catch(function (error) {
+    if (error.response) {
+      console.log(`error status`, error.response);
+      return error.response.data.message;
+    }
+  });
+};
+
+export const getNotiIDForCommand = (search) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/commandNotification`,
+    params: {
+      page: 1,
+      limit: 10,
+      search: search,
     },
   }).catch(function (error) {
     if (error.response) {

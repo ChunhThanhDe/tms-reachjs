@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Modal, Tooltip } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Modal,
+  // Tooltip,
+  Typography,
+} from '@mui/material';
 import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
 import { Close } from '@mui/icons-material';
 import DeviceManageTable from './TableDevices/DevicesManageTable';
@@ -22,11 +28,14 @@ const AddDeviceToListDevice = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Add devices to list device">
-        <IconButton onClick={handleOpenEditDescription}>
-          <QueuePlayNextIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Add devices to list device"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <QueuePlayNextIcon color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black', whiteSpace: 'nowrap' }}>
+          Add devices to list device
+        </Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box
           sx={{

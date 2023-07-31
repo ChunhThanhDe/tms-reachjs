@@ -63,11 +63,12 @@ const EditListDeviceModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Description">
-        <IconButton onClick={handleOpenEditDescription}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Description"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <Edit color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Description</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

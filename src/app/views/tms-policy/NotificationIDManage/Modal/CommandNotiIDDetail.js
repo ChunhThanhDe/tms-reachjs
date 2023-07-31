@@ -34,11 +34,12 @@ const CommandNotiIDDetail = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy">
-        <IconButton onClick={handleOpenEditDescription} disabled={id ? false : true}>
-          <InfoIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
+      <IconButton onClick={handleOpenEditDescription} disabled={id ? false : true}>
+        <InfoIcon color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

@@ -139,6 +139,9 @@ const AccountForm = () => {
                 name="contact"
                 label="Contact(Phone Number)"
                 onChange={handleChange}
+                InputProps={{
+                  endAdornment: [],
+                }}
                 value={contact || ''}
                 errorMessages={['this field is required']}
                 validators={

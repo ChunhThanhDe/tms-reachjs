@@ -23,13 +23,15 @@ const userRule = ['ROLE_USER'];
 const EditUserModal = (props) => {
   const { row, setUpdatetable } = props;
   const [openModal, setOpenModal] = useState(false);
-  const name = useState(row.original.name);
-  const username = useState(row.original.username);
+  const name = row.original.name;
+  const username = row.original.username;
   const [company, setCompany] = useState(row.original.company);
   const [email, setEmail] = useState(row.original.email);
   const [contact, setContact] = useState(row.original.contact);
   const [orRule, setOrRule] = useState(row.original.rulename.length > 1 ? adminRule : userRule);
   const [rulename, setRulename] = useState(row.original.rulename.length > 1 ? adminRule : userRule);
+
+  console.log(name, username);
 
   const handleOpenEditUser = () => {
     setOpenModal((prevState) => !prevState);
@@ -116,11 +118,12 @@ const EditUserModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit User Data">
-        <IconButton onClick={row.original.active ? handleOpenEditUser : ''}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit User Data"> */}
+      <IconButton onClick={row.original.active ? handleOpenEditUser : ''}>
+        <Edit color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit User Data</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditUser}>
         <Box
           sx={{

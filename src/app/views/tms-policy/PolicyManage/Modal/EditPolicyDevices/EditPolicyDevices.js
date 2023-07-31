@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Modal, Tab, Tabs, Tooltip } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Modal,
+  Tab,
+  Tabs,
+  // Tooltip,
+  Typography,
+} from '@mui/material';
 import PolicyDevicesManageTable from './PolicyDevicesManagement/PolicyDeviceMap/PolicyDevicesManageTable';
 import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
 import { Close } from '@mui/icons-material';
@@ -15,20 +23,23 @@ const EditPolicyDevices = (props) => {
   const handleOpenEditDescription = () => {
     setOpenModal((prevState) => !prevState);
   };
-  const handleAddSuccess = () => {
-    setAddSuccess(true);
-  };
+  // const handleAddSuccess = () => {
+  //   setAddSuccess(true);
+  // };
   const handleCloseModal = () => {
     setOpenModal((prevState) => !prevState);
   };
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy Device & List Device">
-        <IconButton onClick={handleOpenEditDescription}>
-          <QueuePlayNextIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Policy Device & List Device"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <QueuePlayNextIcon color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>
+          Edit Policy Device & List Device
+        </Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box
           sx={{

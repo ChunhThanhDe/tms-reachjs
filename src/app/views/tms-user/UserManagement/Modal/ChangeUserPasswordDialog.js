@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogContent,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -79,11 +80,12 @@ const ChangeUserPasswordDialog = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Change password">
-        <IconButton onClick={() => (row.original.active ? handleOpenChangePassword(row) : '')}>
-          <PasswordIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Change password"> */}
+      <IconButton onClick={() => (row.original.active ? handleOpenChangePassword(row) : '')}>
+        <PasswordIcon color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Change password</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       {/* Dialog change user password*/}
       <Dialog
         open={openChangePassword}

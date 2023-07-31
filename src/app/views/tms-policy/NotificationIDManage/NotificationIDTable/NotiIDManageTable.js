@@ -121,8 +121,14 @@ const NotiIDManageTable = () => {
             columnOrder: ['id', 'title', 'message', 'mrt-row-expand', 'mrt-row-actions'],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <EditPolicyModal row={row} setUpdatetable={setUpdateTable} />,
-            <CommandNotiIDDetail id={row.original.id} />,
+            <>
+              <Box flexBasis="25%">
+                <EditPolicyModal row={row} setUpdatetable={setUpdateTable} />{' '}
+              </Box>
+              <Box flexBasis="25%">
+                <CommandNotiIDDetail id={row.original.id} />
+              </Box>
+            </>,
           ]}
           displayColumnDefOptions={{ 'mrt-row-actions': { size: 300, header: '' } }}
           renderDetailPanel={({ row }) => (

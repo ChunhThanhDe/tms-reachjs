@@ -266,18 +266,29 @@ const PolicyManageTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <EditPolicyModal row={row} setUpdatetable={setUpdateTable} />,
-            <EditPolicyAPK row={row} setUpdatetable={setUpdateTable} />,
-            <EditPolicyDevices row={row} setUpdatetable={setUpdateTable} />,
-            <Tooltip arrow placement="bottom" title="Detail">
-              <NavLink
-                to={`/tms-policy/policy-management/policy?id=${row.original.id}&pn=${row.original.policyname}`}
-              >
-                <IconButton>
-                  <InfoIcon color="primary" />
-                </IconButton>
-              </NavLink>
-            </Tooltip>,
+            <>
+              <Box flexBasis="25%">
+                <EditPolicyModal row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+              <Box flexBasis="25%">
+                <EditPolicyAPK row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+              <Box flexBasis="25%">
+                <EditPolicyDevices row={row} setUpdatetable={setUpdateTable} />,
+              </Box>
+              {/* <Tooltip arrow placement="bottom" title="Detail"> */}
+              <Box flexBasis="25%">
+                <NavLink
+                  to={`/tms-policy/policy-management/policy?id=${row.original.id}&pn=${row.original.policyname}`}
+                >
+                  <IconButton>
+                    <InfoIcon color="primary" />
+                    <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
+                  </IconButton>
+                </NavLink>
+              </Box>
+              {/* </Tooltip> */}
+            </>,
           ]}
           displayColumnDefOptions={{ 'mrt-row-actions': { size: 300, header: '' } }}
           renderDetailPanel={({ row }) => (

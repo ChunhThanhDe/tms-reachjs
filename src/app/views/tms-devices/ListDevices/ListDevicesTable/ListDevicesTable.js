@@ -110,8 +110,14 @@ const ListDevicesTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <EditListDeviceModal row={row} setUpdatetable={setUpdateTable} />,
-            <AddDeviceToListDevice row={row} />,
+            <>
+              <Box flexBasis="25%">
+                <EditListDeviceModal row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+              <Box flexBasis="25%">
+                <AddDeviceToListDevice row={row} />
+              </Box>
+            </>,
           ]}
           renderDetailPanel={({ row }) => (
             <Box

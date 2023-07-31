@@ -1,9 +1,8 @@
-import { Autocomplete, Box, Icon, IconButton, List, ListItem, TextField } from '@mui/material';
+import { Autocomplete, Box, Icon, IconButton, TextField } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
 import { topBarHeight } from 'app/utils/constant';
 import React, { useEffect, useState } from 'react';
 import { getSearchResult } from 'app/Services/User_Auth_Service';
-import { NavLink } from 'react-router-dom';
 
 const SearchContainer = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -19,18 +18,6 @@ const SearchContainer = styled('div')(({ theme }) => ({
   '& input::placeholder': {
     color: theme.palette.text.primary,
   },
-}));
-
-const SearchInput = styled('input')(({ theme }) => ({
-  width: '100%',
-  border: 'none',
-  outline: 'none',
-  fontSize: '1rem',
-  paddingLeft: '20px',
-  height: 'calc(100% - 5px)',
-  background: theme.palette.primary.main,
-  color: theme.palette.text.primary,
-  '&::placeholder': { color: theme.palette.text.primary },
 }));
 
 const MatxSearchBox = () => {
@@ -96,6 +83,9 @@ const MatxSearchBox = () => {
                   label="Serial Number"
                   variant="standard"
                   onChange={(e) => handleBarSearch(e)}
+                  InputProps={{
+                    endAdornment: [],
+                  }}
                   sx={{
                     marginBottom: '10px',
                     border: 'none',
@@ -115,25 +105,6 @@ const MatxSearchBox = () => {
               <Icon sx={{ color: textColor }}>close</Icon>
             </IconButton>
           </SearchContainer>
-
-          {/* {arr.length > 0 && (
-            <List dense sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
-              {arr.map((item, index) => (
-                <ListItem
-                  key={index}
-                  button
-                  selected={selectedIndexes[index] === index}
-                  onClick={() => handleListItemClick(index)}
-                >
-                  <NavLink
-                    to={`/tms-devices/devices-management/device?id=${item.id}&sn=${item.sn}`}
-                  >
-                    {item.sn}
-                  </NavLink>
-                </ListItem>
-              ))}
-            </List>
-          )} */}
         </div>
       )}
     </React.Fragment>

@@ -144,7 +144,9 @@ const CommandManageTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <EditCommandModal row={row} setUpdatetable={setUpdateTable} />,
+            <Box>
+              <EditCommandModal row={row} setUpdatetable={setUpdateTable} />
+            </Box>,
           ]}
           displayColumnDefOptions={{ 'mrt-row-actions': { size: 300, header: '' } }}
           renderDetailPanel={({ row }) => (

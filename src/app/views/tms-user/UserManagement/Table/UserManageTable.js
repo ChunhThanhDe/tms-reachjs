@@ -146,12 +146,20 @@ const UserManageTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row }) => [
-            <Box>
-              <EditUserModal row={row} setUpdatetable={setUpdateTable} />
-              <ChangeUserPasswordDialog row={row} />
-              <DeleteUserDialog row={row} setUpdatetable={setUpdateTable} />
-              <UserListDeviceModal row={row} />
-            </Box>,
+            <>
+              <Box flexBasis="25%">
+                <EditUserModal row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+              <Box flexBasis="25%">
+                <ChangeUserPasswordDialog row={row} />
+              </Box>
+              <Box flexBasis="25%">
+                <DeleteUserDialog row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+              <Box flexBasis="25%">
+                <UserListDeviceModal row={row} />
+              </Box>
+            </>,
           ]}
           renderDetailPanel={({ row }) => (
             <Box

@@ -117,8 +117,10 @@ const DeviceManageTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <Box>
-              <EditDescriptionModal row={row} setUpdatetable={setUpdateTable} />
+            <>
+              <Box flexBasis="25%">
+                <EditDescriptionModal row={row} setUpdatetable={setUpdateTable} />
+              </Box>
               {/* <DataDialog row={row} /> */}
               <Tooltip arrow placement="bottom" title="Detail">
                 <NavLink
@@ -126,10 +128,11 @@ const DeviceManageTable = () => {
                 >
                   <IconButton>
                     <InfoIcon color="primary" />
+                    <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
                   </IconButton>
                 </NavLink>
               </Tooltip>
-            </Box>,
+            </>,
           ]}
           renderDetailPanel={({ row }) => (
             <Box

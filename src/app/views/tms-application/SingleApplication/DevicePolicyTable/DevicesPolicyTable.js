@@ -127,6 +127,7 @@ const DevicePolicyTable = (props) => {
                 > */}
                 <IconButton>
                   <InfoIcon color="primary" />
+                  <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
                 </IconButton>
                 {/* </NavLink> */}
               </Tooltip>

@@ -51,11 +51,12 @@ const UserListDeviceModal = (props) => {
   }, [openModal]);
   return (
     <>
-      <Tooltip arrow placement="bottom" title="User's List Devices">
-        <IconButton onClick={handleOpenModalUserListDevices}>
-          <InfoIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="User's List Devices"> */}
+      <IconButton onClick={handleOpenModalUserListDevices}>
+        <InfoIcon color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>User's List Devices</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalUserListDevices}>
         <Box
           sx={{

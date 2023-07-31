@@ -8,7 +8,7 @@ import {
   Typography,
   TextField,
   Grid,
-  Tooltip,
+  // Tooltip,
 } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import Radio from '@mui/material/Radio';
@@ -71,11 +71,12 @@ const EditPolicyModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy">
-        <IconButton onClick={handleOpenEditDescription}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <Edit color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Policy</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   Box,
@@ -11,14 +11,77 @@ import {
   Tooltip,
 } from '@mui/material';
 import { AddBox } from '@mui/icons-material';
-import { postCreateNewCommand } from 'app/Services/PolicyServices';
+import { getNotiID, postCreateNewCommand } from 'app/Services/PolicyServices';
 import ListSelect from 'app/components/List/ListSelect';
+import Autocomplete from '@mui/material/Autocomplete';
+
+function AutoComplete({ label, selectedOption, setSelectedOption }) {
+  const [arrNotiId, setArrNotiId] = useState([]);
+  const [paramsPage, setParamPage] = useState({
+    page: 1,
+    limit: 10,
+    search: null,
+  });
+  const [hasSelected, setHasSelected] = useState(false);
+
+  const handleBarSearch = (event) => {
+    setParamPage({ ...paramsPage, search: event.target.value });
+    setHasSelected(false);
+  };
+
+  const handleLoadAPagePolicy = async () => {
+    let response = await getNotiID(paramsPage);
+    if (response.status === 200) {
+      let arr = response.data.listResult;
+      console.log(arr);
+      setArrNotiId(arr);
+    }
+  };
+
+  const handleOnChange = (event, newValue) => {
+    setSelectedOption(newValue);
+    console.log(newValue);
+    setHasSelected(true);
+  };
+
+  useEffect(() => {
+    handleLoadAPagePolicy();
+  }, [paramsPage]);
+
+  useEffect(() => {
+    if (!hasSelected) {
+      setParamPage({ ...paramsPage, search: null });
+    }
+  }, [hasSelected]);
+
+  return (
+    <div>
+      <Autocomplete
+        options={arrNotiId}
+        getOptionLabel={(option) => option.title}
+        id="include-input-in-list"
+        value={selectedOption}
+        onChange={handleOnChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            variant="standard"
+            onChange={handleBarSearch}
+            fullWidth
+          />
+        )}
+      />
+    </div>
+  );
+}
 
 const NewCommandModal = (props) => {
   const { setResettable } = props;
   const [openModal, setOpenModal] = useState(false);
   const [name, setName] = useState('');
   const [command, setCommand] = useState('');
+  const [selectedOption, setSelectedOption] = React.useState(null);
   const Noti = ['Reboot', 'Notification'];
 
   const handleCreatePolicyClick = () => {
@@ -49,9 +112,12 @@ const NewCommandModal = (props) => {
     const inputValues = {
       name: name,
       command: command,
-      commandNotificationId: 1,
+      commandNotificationId: selectedOption.id,
     };
     const requiredInputs = ['command', 'name'];
+    if (command === 'Notification') {
+      requiredInputs.push('commandNotificationId');
+    }
     for (let i = 0; i < requiredInputs.length; i++) {
       if (!inputValues[requiredInputs[i]]) {
         check = false;
@@ -69,6 +135,7 @@ const NewCommandModal = (props) => {
       let newListDevices = {
         name: name,
         command: command,
+        commandNotificationId: selectedOption.id,
       };
       let response = await postCreateNewCommand(newListDevices);
       console.log('createList', response);
@@ -86,7 +153,6 @@ const NewCommandModal = (props) => {
       }
     }
   };
-
   return (
     <>
       <Tooltip arrow placement="top" title="Add New Command">
@@ -106,20 +172,13 @@ const NewCommandModal = (props) => {
             p: 4,
             minWidth: 400,
             width: '65%',
+            minHeight: '45%',
           }}
         >
           <Typography variant="h6" component="h2" gutterBottom>
             Create a new Command
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <ListSelect
-                data={Noti}
-                handleSelected={handleCommandChange}
-                title={'Command'}
-                defaultValue={command}
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 id="name"
@@ -132,12 +191,38 @@ const NewCommandModal = (props) => {
                 value={name}
               />
             </Grid>
+            <Grid item xs={12}>
+              <ListSelect
+                data={Noti}
+                handleSelected={handleCommandChange}
+                title={'Command'}
+                defaultValue={command}
+              />
+            </Grid>
+            {command === 'Notification' ? (
+              <Grid item xs={12}>
+                <AutoComplete
+                  label={'Notification'}
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                />
+              </Grid>
+            ) : (
+              <></>
+            )}
           </Grid>
           <Box
             sx={{
+              position: 'fixed',
+              bottom: '1rem',
+              left: '50%',
+              transform: 'translate(-50%, 0)',
               display: 'flex',
               justifyContent: 'space-between',
-              marginTop: '1rem',
+              width: '400px',
+              padding: '0 1rem',
+              backgroundColor: 'white',
+              zIndex: 999,
             }}
           >
             <Button variant="contained" onClick={handleCloseModalNewPolicy}>

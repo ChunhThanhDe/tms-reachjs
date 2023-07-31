@@ -66,11 +66,12 @@ const EditPolicyModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy">
-        <IconButton onClick={handleOpenEditDescription}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
+      <IconButton onClick={handleOpenEditDescription}>
+        <Edit color="primary" />
+        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Notification</Typography>
+      </IconButton>
+      {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

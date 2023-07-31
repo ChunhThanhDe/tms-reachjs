@@ -34,7 +34,7 @@ const CommandNotiIDDetail = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Policy">
+      <Tooltip arrow placement="bottom" title="Detail">
         <IconButton onClick={handleOpenEditDescription} disabled={id ? false : true}>
           <InfoIcon color="primary" />
         </IconButton>

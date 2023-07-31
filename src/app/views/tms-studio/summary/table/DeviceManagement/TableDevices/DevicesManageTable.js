@@ -115,19 +115,24 @@ const DeviceManageTable = () => {
           ],
         }}
         renderRowActionMenuItems={({ row, table, closeMenu }) => [
-          <Box>
-            <EditDescriptionModal row={row} setUpdatetable={setUpdateTable} />
+          <>
+            <Box flexBasis="25%">
+              <EditDescriptionModal row={row} setUpdatetable={setUpdateTable} />
+            </Box>
             {/* <DataDialog row={row} /> */}
-            <Tooltip arrow placement="bottom" title="Detail">
+            {/* <Tooltip arrow placement="bottom" title="Detail"> */}
+            <Box flexBasis="25%">
               <NavLink
                 to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
               >
                 <IconButton>
                   <InfoIcon color="primary" />
+                  <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
                 </IconButton>
               </NavLink>
-            </Tooltip>
-          </Box>,
+            </Box>
+            {/* </Tooltip> */}
+          </>,
         ]}
         renderDetailPanel={({ row }) => (
           <Box
