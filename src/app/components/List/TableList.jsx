@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@mui/material';
+import { Grid, ThemeProvider } from '@mui/material';
 import tableTheme from 'app/components/Table/TableTheme';
 import { MaterialReactTable } from 'material-react-table';
 
@@ -49,9 +49,11 @@ export const TableList = (props) => {
         enableTopToolbar={false}
         enableColumnActions={false}
         enableHiding={false}
+        enablePagination={false}
         enableColumnFilterModes={false}
         enableFilters={false}
         enableDensityToggle={false}
+        renderBottomToolbarCustomActions={() => <Grid container fullWidth></Grid>}
         initialState={{
           density: density,
         }}

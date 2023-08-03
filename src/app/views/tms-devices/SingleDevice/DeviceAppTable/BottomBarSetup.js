@@ -16,12 +16,10 @@ const BottomBarSetup = (props) => {
     setIsAlive,
   } = props;
   const handleChangeSearchSystem = (event) => {
-    console.log(event.target.checked);
     setIsSystem(event.target.checked);
   };
 
   const handleChangeSearchIsAlive = (event) => {
-    console.log(event.target.checked);
     setIsAlive(event.target.checked);
   };
 
@@ -39,13 +37,13 @@ const BottomBarSetup = (props) => {
           control={
             <Android12Switch checked={isSystem} onChange={(e) => handleChangeSearchSystem(e)} />
           }
-          label="System App"
+          label={isSystem ? 'System App' : 'User App'}
         />
         <FormControlLabel
           control={
             <Android12Switch checked={isAlive} onChange={(e) => handleChangeSearchIsAlive(e)} />
           }
-          label="App Installed"
+          label={isAlive ? 'App Installed' : 'App Uninstalled'}
         />
       </Grid>
       <Grid

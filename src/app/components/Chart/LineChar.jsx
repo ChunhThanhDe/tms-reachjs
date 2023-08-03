@@ -4,7 +4,6 @@ import { useTheme } from '@mui/system';
 
 const LineChart = (props) => {
   const { data1, data2, data3, legend } = props;
-
   const theme = useTheme();
 
   const option = {
@@ -34,7 +33,7 @@ const LineChart = (props) => {
       type: 'value',
       axisLine: { show: false },
       axisTick: { show: false },
-      max: 100,
+      // max: 100,
       splitLine: {
         lineStyle: { color: theme.palette.text.secondary, opacity: 0.15 },
       },
@@ -81,7 +80,7 @@ const LineChart = (props) => {
     ],
   };
 
-  return <ReactEcharts option={option} style={{ minHeight: '90%' }} />;
+  return <ReactEcharts option={option} style={{ height: '350px', minHeight: '80%' }} />;
 };
 
 export default LineChart;

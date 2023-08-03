@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Button,
   IconButton,
   Modal,
   Tab,
@@ -32,14 +33,12 @@ const EditPolicyDevices = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit Policy Device & List Device"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <QueuePlayNextIcon color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
           Edit Policy Device & List Device
         </Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+      </Button>
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box
           sx={{
@@ -47,7 +46,8 @@ const EditPolicyDevices = (props) => {
             top: '50%',
             left: '50%',
             width: '95%',
-            height: '95%',
+            minHeight: '35%',
+            maxHeight: '95%',
             transform: 'translate(-50%, -50%)',
             bgcolor: 'background.paper',
             boxShadow: 24,

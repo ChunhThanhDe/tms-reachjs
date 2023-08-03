@@ -89,6 +89,16 @@ const DevicePolicyTable = (props) => {
 
   return (
     <Card>
+      {' '}
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        List of policies
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
@@ -154,6 +164,8 @@ const DevicePolicyTable = (props) => {
           )}
           renderBottomToolbarCustomActions={() => (
             <BottomBarSetup
+              status={status}
+              setStatus={setStatus}
               paramsPageDevices={paramsPageDeviceApps}
               totalPage={totalPage}
               handleMoveToPrePage={handleMoveToPrePage}
@@ -162,8 +174,6 @@ const DevicePolicyTable = (props) => {
           )}
           renderTopToolbarCustomActions={() => (
             <TopBarSetup
-              status={status}
-              setStatus={setStatus}
               setSearchTerm={setSearchTerm}
               setResettable={setResetTable}
               handleSearchMode={handleSearchMode}

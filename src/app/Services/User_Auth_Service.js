@@ -39,7 +39,6 @@ export const getAPageUser = (params) => {
 };
 
 export const postCreateNewUser = (data) => {
-  console.log('create data: ', data);
   return axios
     .post(`/TMS/api/auth/signup`, {
       name: data.name,
@@ -53,19 +52,24 @@ export const postCreateNewUser = (data) => {
     .catch(function (error) {
       if (error.response) {
         return error.response.data;
-        // console.log(`error status`, error.response.status);
-        // console.log(`error header`, error.response.headers);
       }
     });
 };
 
 export const putEditUserData = (data) => {
-  console.log(data);
   return axios.put(`/TMS/api/user/admin/${data.id}`, {
     company: data.company,
     email: data.email,
     contact: data.contact,
     rulename: data.rulename,
+  });
+};
+
+export const putEditOwnData = (data) => {
+  return axios.put(`/TMS/api/user/${data.id}`, {
+    company: data.company,
+    email: data.email,
+    contact: data.contact,
   });
 };
 

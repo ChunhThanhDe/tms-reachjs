@@ -2,6 +2,7 @@ import { Breadcrumb } from 'app/components';
 import { Stack } from '@mui/material';
 import { Container } from 'app/components/TagPage/CustomTag';
 import PolicyManagementTable from './PolicyManageTable/PolicyManageTable';
+import PolicyPieChartManage from './PolicyPieChartManage';
 const PolicyManage = () => {
   return (
     <Container>
@@ -12,6 +13,7 @@ const PolicyManage = () => {
         ]}
       />
       <Stack spacing={3}>
+        <PolicyPieChartManage />
         <PolicyManagementTable />
       </Stack>
     </Container>

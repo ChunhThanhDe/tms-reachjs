@@ -22,9 +22,8 @@ const CommandManageTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleLoadAPagePolicy = async () => {
-    console.log(paramsPage);
     let response = await getAPageCommand(paramsPage);
-    console.log(`Page List: `, response);
+    // console.log(`Page List: `, response);
     if (response.status === 200) {
       // console.log(`Page List: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
@@ -65,7 +64,6 @@ const CommandManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPagePolicy();
       setUpdateTable(false);
     }
@@ -144,9 +142,11 @@ const CommandManageTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <Box>
-              <EditCommandModal row={row} setUpdatetable={setUpdateTable} />
-            </Box>,
+            <>
+              <Box flexBasis="25%">
+                <EditCommandModal row={row} setUpdatetable={setUpdateTable} />
+              </Box>
+            </>,
           ]}
           displayColumnDefOptions={{ 'mrt-row-actions': { size: 300, header: '' } }}
           renderDetailPanel={({ row }) => (

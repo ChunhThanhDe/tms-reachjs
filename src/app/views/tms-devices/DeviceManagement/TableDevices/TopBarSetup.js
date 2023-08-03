@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Divider, InputAdornment } from '@mui/material';
+import { TextField, Divider, InputAdornment, Typography } from '@mui/material';
 import { IconButton, Grid, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Close, RestartAlt } from '@mui/icons-material';
@@ -32,11 +32,10 @@ const TopBarSetup = (props) => {
         md={8}
         sm={12}
         xs={12}
-        style={{ display: 'flex', justifyContent: 'flex-end' }}
+        style={{ display: 'flex', justifyContent: 'center' }}
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
           placeholder="Only search in SerialNumber and Descripttion"

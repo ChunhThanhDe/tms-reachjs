@@ -1,32 +1,11 @@
 import React from 'react';
-import { TextField, Divider, InputAdornment, Checkbox } from '@mui/material';
+import { TextField, Divider, InputAdornment } from '@mui/material';
 import { IconButton, Grid, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Close, RestartAlt } from '@mui/icons-material';
 
 const TopBarSetup = (props) => {
-  const {
-    searchTerm,
-    setSearchTerm,
-    handleResetTable,
-    handleSearchMode,
-    isSystem,
-    setIsSystem,
-    isAlive,
-    setIsAlive,
-  } = props;
-
-  // console.log(props);
-
-  const handleChangeSearchSystem = (event) => {
-    console.log(event.target.checked);
-    setIsSystem(event.target.checked);
-  };
-
-  const handleChangeSearchIsAlive = (event) => {
-    console.log(event.target.checked);
-    setIsAlive(event.target.checked);
-  };
+  const { searchTerm, setSearchTerm, handleResetTable, handleSearchMode } = props;
 
   const handleChangeSearchBar = (event) => {
     setSearchTerm(event.target.value);
@@ -57,7 +36,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
           size="small"
@@ -87,26 +65,6 @@ const TopBarSetup = (props) => {
           <IconButton type="button" onClick={handleCloseSearchMode} disabled={isSearchTermEmpty}>
             <Close color="error" />
           </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top" title={'Search in System App'}>
-          <span>
-            <Checkbox
-              checked={isSystem}
-              value={isSystem}
-              onChange={handleChangeSearchSystem}
-              title="Search in App System"
-            />
-          </span>
-        </Tooltip>
-        <Tooltip arrow placement="top" title={'Search in App is installed'}>
-          <span>
-            <Checkbox
-              checked={isAlive}
-              value={isAlive}
-              onChange={handleChangeSearchIsAlive}
-              title="Search in App System"
-            />
-          </span>
         </Tooltip>
       </Grid>
       <Grid

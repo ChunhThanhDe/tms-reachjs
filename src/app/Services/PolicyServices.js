@@ -12,7 +12,6 @@ export const getAPageAPK = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -24,7 +23,7 @@ export const deleteAPKfile = (id) => {
     .delete('/TMS/api/apk', { data: data, headers: { 'Content-Type': 'application/json' } })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response.data.message;
       }
     });
@@ -37,7 +36,7 @@ export const postNewAPKData = (data) => {
     data: data,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -67,14 +66,13 @@ export const putEditAPKData = (data, id) => {
     data: data,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const getAPKFromServer = (url, fileName) => {
-  console.log(url);
   return axios({
     url,
     method: 'GET',
@@ -96,7 +94,7 @@ export const getAPKFromServer = (url, fileName) => {
       return response;
     })
     .catch((error) => {
-      console.log('error: ', error);
+      // console.log('error: ', error);
     });
 };
 
@@ -111,7 +109,7 @@ export const getPolicy = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -123,14 +121,13 @@ export const getAPolicy = (id) => {
     url: `/TMS/api/policy/${id}`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const putEditPolicy = (data) => {
-  console.log(data);
   return axios
     .put(`/TMS/api/policy/${data.id}`, {
       policyname: data.policyname,
@@ -138,7 +135,7 @@ export const putEditPolicy = (data) => {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response.data.message;
       }
     });
@@ -169,7 +166,7 @@ export const getPolicyAPK = (data) => {
     url: `/TMS/api/policy/${data.id}/apk`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -181,12 +178,13 @@ export const getPolicyDevice = (data) => {
     params: {
       page: data.page,
       limit: data.limit,
+      search: data.search,
     },
     url: `/TMS/api/policy/${data.id}/device`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
-      return error.response.data.message;
+      // console.log(`error status`, error.response);
+      return error.response;
     }
   });
 };
@@ -197,16 +195,14 @@ export const putPolicyStatus = (policyId, status) => {
     url: `/TMS/api/policy/${policyId}/status/${status}`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const postMapPolicyApk = (policyId, ApkId) => {
-  // console.log(typeof ApkId);
   const data = JSON.stringify(ApkId);
-  // console.log(typeof data);
   return axios
     .post(`/TMS/api/policy/${policyId}/apk`, data, {
       headers: { 'Content-Type': 'application/json' },
@@ -236,14 +232,13 @@ export const getAPageCommand = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const putEditCommand = (data) => {
-  console.log(data);
   return axios
     .put(`/TMS/api/command/${data.id}`, {
       commandNotificationId: data.commandNotificationId,
@@ -252,7 +247,7 @@ export const putEditCommand = (data) => {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response.data.message;
       }
     });
@@ -278,7 +273,7 @@ export const getCommandNotiID = (id) => {
     url: `/TMS/api/commandNotification/${id}`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -295,7 +290,7 @@ export const getNotiID = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -312,7 +307,7 @@ export const getNotiIDForCommand = (search) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -324,14 +319,13 @@ export const getSingleNotiID = (id) => {
     url: `/TMS/api/commandNotification/${id}`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const putEditNotiID = (data) => {
-  console.log(data);
   return axios
     .put(`/TMS/api/commandNotification/${data.id}`, {
       title: data.title,
@@ -339,7 +333,7 @@ export const putEditNotiID = (data) => {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response.data.message;
       }
     });
@@ -359,9 +353,7 @@ export const postCreateNewNotiId = (data) => {
 };
 
 export const postMapPolicyDevices = (policyId, deviceId) => {
-  console.log(typeof deviceId);
   const data = JSON.stringify(deviceId);
-  console.log(typeof data);
   return axios
     .post(`/TMS/api/policy/${policyId}/devicePolicyDetail`, data, {
       headers: { 'Content-Type': 'application/json' },
@@ -390,7 +382,7 @@ export const getAPagePolicyDevice = (data) => {
       if (error.response && error.response.status === 404) {
         return { message: error.response.data.message, status: 404 };
       } else {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response;
       }
     });
@@ -407,9 +399,8 @@ export const deleteMapPolicyDevice = (policyId, deviceId) => {
 };
 
 export const postMapPolicyListDevices = (policyId, listDeviceId) => {
-  console.log(typeof listDeviceId);
   const data = JSON.stringify(listDeviceId);
-  console.log(typeof data);
+
   return axios
     .post(`/TMS/api/policy/${policyId}/listDevice/${listDeviceId}/devicePolicyDetail`)
     .catch(function (error) {

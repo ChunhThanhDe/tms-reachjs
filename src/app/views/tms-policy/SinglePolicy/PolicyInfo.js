@@ -10,7 +10,7 @@ const PolicyInfo = (props) => {
 
   const handleLoadDeviceData = async () => {
     let response = await getAPolicy(id);
-    console.log(response);
+    // console.log(response);
     if (response.status === 200) {
       let arr = [
         { id: 'Policy', value: response.data.policyname },
@@ -22,7 +22,7 @@ const PolicyInfo = (props) => {
               ? 'Install'
               : response.data.action === 2
               ? 'Uninstall'
-              : 'Run',
+              : 'Run Command',
         },
         {
           id: 'Status',
@@ -32,8 +32,8 @@ const PolicyInfo = (props) => {
               : response.data.status === 1
               ? 'Run'
               : response.data.status === 2
-              ? 'Success'
-              : 'Error',
+              ? 'Pause'
+              : 'Stop',
         },
         { id: 'Created By', value: response.data.createdBy },
         { id: 'Created Date', value: response.data.createdDate },
@@ -52,6 +52,6 @@ const PolicyInfo = (props) => {
     }
   }, [updateList]);
 
-  return <TableList data={arrPolicyInfo} density={'comfortable'} />;
+  return <TableList data={arrPolicyInfo} density={'compact'} />;
 };
 export default PolicyInfo;

@@ -45,7 +45,7 @@ const EditDescriptionModal = (props) => {
       description: description,
     };
     let responseEditUser = await putEditDescription(data);
-    console.log('editUserResponse', responseEditUser);
+    // console.log('editUserResponse', responseEditUser);
     if (responseEditUser && responseEditUser.status === 200) {
       toast.success(`Change description success`);
       setUpdatetable(true);
@@ -56,10 +56,12 @@ const EditDescriptionModal = (props) => {
   return (
     <>
       {/* <Tooltip arrow placement="bottom" title="Edit Description"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Description</Typography>
-      </IconButton>
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit Description
+        </Typography>
+      </Button>
       {/* </Tooltip> */}
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box

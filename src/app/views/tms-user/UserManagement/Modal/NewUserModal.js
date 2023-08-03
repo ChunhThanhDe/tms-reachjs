@@ -138,7 +138,7 @@ const NewUserModal = (props) => {
         rulename: rulename,
       };
       let responseCreateUser = await postCreateNewUser(newUser);
-      console.log('createUserResponse', responseCreateUser);
+      // console.log('createUserResponse', responseCreateUser);
       if (responseCreateUser && responseCreateUser.statusCode === 500) {
         responseCreateUser.message.includes(`JSON parse error`)
           ? toast.error('Contact must be phone number')

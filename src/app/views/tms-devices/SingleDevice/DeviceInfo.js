@@ -22,9 +22,7 @@ const DeviceInfo = (props) => {
         { id: 'Model', value: response.data.model },
         { id: 'Network', value: response.data.network },
         { id: 'Rom', value: response.data.rom },
-        { id: 'Created By', value: response.data.createdBy },
         { id: 'Created Date', value: response.data.createdDate },
-        { id: 'Modified By', value: response.data.modifiedBy },
         { id: 'Modified Date', value: response.data.modifiedDate },
       ];
       setarrDeviceInfo(arr);
@@ -38,6 +36,6 @@ const DeviceInfo = (props) => {
     }
   }, [updateList]);
 
-  return <TableList data={arrDeviceInfo} density={'comfortable'} />;
+  return <TableList data={arrDeviceInfo} density={'compact'} />;
 };
 export default DeviceInfo;

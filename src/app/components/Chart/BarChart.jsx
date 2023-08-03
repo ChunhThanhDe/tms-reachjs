@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import { colors } from 'app/color/color';
-const BarChart = ({ data, height = '350px', option = {}, legend }) => {
+const BarChart = ({ data, height = '350px', width = '100%', option = {}, legend }) => {
   const color = colors;
 
   const generateItemStyle = (color) => {
@@ -11,9 +11,6 @@ const BarChart = ({ data, height = '350px', option = {}, legend }) => {
       },
     };
   };
-  useEffect(() => {
-    console.log(legend);
-  });
   option = {
     tooltip: {
       trigger: 'axis',
@@ -45,6 +42,7 @@ const BarChart = ({ data, height = '350px', option = {}, legend }) => {
     yAxis: [
       {
         type: 'value',
+        minInterval: 1,
       },
     ],
     series: [

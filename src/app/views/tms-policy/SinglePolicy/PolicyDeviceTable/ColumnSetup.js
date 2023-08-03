@@ -1,27 +1,57 @@
 export const columns = [
   {
+    accessorKey: 'id',
+    header: 'ID',
+    size: 20,
+    enableEditing: false,
+    enableFilters: false,
+    Cell: (row) => <span>{row.row.original.id}</span>,
+  },
+  {
     accessorKey: 'sn',
     header: 'Serial Number',
     enableEditing: false,
     enableSorting: false,
-    muiTableHeadCellProps: {
-      align: 'center',
-    },
-    muiTableBodyCellProps: {
-      align: 'center',
-    },
+    enableColumnFilter: false,
+    size: 50,
+  },
+  {
+    accessorKey: 'mac',
+    header: 'MAC',
+    enableEditing: false,
+    enableSorting: false,
     enableColumnFilter: false,
     size: 50,
   },
   {
     accessorKey: 'model',
     header: 'Model',
-    muiTableHeadCellProps: {
-      align: 'center',
+    muiTableBodyCellEditTextFieldProps: {
+      required: true,
     },
-    muiTableBodyCellProps: {
-      align: 'center',
+  },
+  {
+    accessorKey: 'ip',
+    header: 'IP',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'firmwareVer',
+    header: 'Firmware Version',
+    muiTableBodyCellEditTextFieldProps: {
+      required: true,
     },
+  },
+  {
+    accessorKey: 'location',
+    header: 'Location',
+    muiTableBodyCellEditTextFieldProps: {
+      required: true,
+    },
+  },
+  {
+    accessorKey: 'description',
+    header: 'Description',
     muiTableBodyCellEditTextFieldProps: {
       required: true,
     },

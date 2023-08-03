@@ -11,7 +11,7 @@ export const getAPageApp = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -22,13 +22,12 @@ export const getAAppInfo = (id) => {
     url: `/TMS/api/application/${id}`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 export const getAPageAppDevice = (data, appID) => {
-  console.log(data);
   return axios({
     method: 'get',
     url: `/TMS/api/application/${appID}/device`,
@@ -39,8 +38,25 @@ export const getAPageAppDevice = (data, appID) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
+    }
+  });
+};
+
+export const getAPageAppDeviceNow = (data, appID) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/application/${appID}/device/now`,
+    params: {
+      page: data.page,
+      limit: data.limit,
+      search: data.search,
+    },
+  }).catch(function (error) {
+    if (error.response) {
+      // console.log(`error status`, error.response);
+      return error.response;
     }
   });
 };

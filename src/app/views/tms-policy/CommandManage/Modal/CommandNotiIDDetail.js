@@ -24,7 +24,7 @@ const CommandNotiIDDetail = (props) => {
 
   const handleLoadDetailCommand = async () => {
     let response = await getSingleNotiID(id);
-    console.log('detail', response);
+    // console.log('detail', response);
     if (response && response.status === 200) {
       setData(response.data);
     } else if (response.statusCode === 500) {

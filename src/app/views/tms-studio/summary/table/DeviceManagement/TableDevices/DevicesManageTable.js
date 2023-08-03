@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, ThemeProvider, Typography, Tooltip, IconButton } from '@mui/material';
+import { Box, ThemeProvider, Typography, Button } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
 import { getDeviceActiveNow } from 'app/Services/DevicesServices';
 import BottomBarSetup from './BottomBarSetup';
 import TopBarSetup from './TopBarSetup';
-import { toast } from 'react-toastify';
 import EditDescriptionModal from '../Modal/EditDescriptionModal';
 import InfoIcon from '@mui/icons-material/Info';
 import tableTheme from 'app/components/Table/TableTheme';
@@ -28,15 +27,16 @@ const DeviceManageTable = () => {
   const handleLoadAPageDevice = async () => {
     // console.log(paramsPageDevices);
     let response = await getDeviceActiveNow(paramsPageDevices);
-    console.log(`Page List: `, response);
+    // console.log(`Page List: `, response);
     if (response.status === 200) {
       // console.log(`Page List: `, response);
-      if (response.data.totalElement === null && searchTerm !== null) {
-        toast.error('No elements match');
-      }
       let arr = response.data.listResult;
       setArrDevices(arr);
       setTotalPage(response.data.totalPage);
+    } else if (response.status === 404) {
+      if (searchTerm !== null) {
+        setArrDevices([]);
+      }
     }
   };
 
@@ -69,15 +69,10 @@ const DeviceManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageDevice();
       setUpdateTable(false);
     }
   }, [resetTable, updateTable]);
-
-  // useEffect(() => {
-  //   console.log(arrUsers);
-  // }, [updateTable]);
 
   return (
     <ThemeProvider theme={tableTheme}>
@@ -101,6 +96,8 @@ const DeviceManageTable = () => {
           density: 'compact',
           columnVisibility: {
             id: false,
+            location: false,
+            description: false,
           },
           columnOrder: [
             'id',
@@ -119,19 +116,18 @@ const DeviceManageTable = () => {
             <Box flexBasis="25%">
               <EditDescriptionModal row={row} setUpdatetable={setUpdateTable} />
             </Box>
-            {/* <DataDialog row={row} /> */}
-            {/* <Tooltip arrow placement="bottom" title="Detail"> */}
             <Box flexBasis="25%">
               <NavLink
                 to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
               >
-                <IconButton>
+                <Button>
                   <InfoIcon color="primary" />
-                  <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
-                </IconButton>
+                  <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+                    Detail
+                  </Typography>
+                </Button>
               </NavLink>
             </Box>
-            {/* </Tooltip> */}
           </>,
         ]}
         renderDetailPanel={({ row }) => (

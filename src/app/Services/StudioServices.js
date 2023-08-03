@@ -6,7 +6,6 @@ export const getSummaryforStudio = () => {
     url: `/TMS/api/terminalStudio/device`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
       return error.response;
     }
   });
@@ -18,7 +17,6 @@ export const getStudioHistoryOnlineBarChart = () => {
     url: `/TMS/api/chart/bar/device`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
       return error.response;
     }
   });
@@ -33,7 +31,65 @@ export const getStudioOnlinePieChart = (type) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      return error.response;
+    }
+  });
+};
+
+export const getStudioDeviceIn30DaysLineChart = () => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/area/device`,
+  }).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
+export const getPolicyPieChart = (type) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/pie/policy`,
+    params: {
+      type: type,
+    },
+  }).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
+export const getSinglePolicyPieChart = (id) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/pie/policy/${id}`,
+  }).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
+
+export const getApplicationBarChart = () => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/doubleBar/application`,
+  }).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
+
+export const getSingleApplicationPieChart = (id, type) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/pie/application/${id}`,
+    params: {
+      type: type,
+    },
+  }).catch(function (error) {
+    if (error.response) {
       return error.response;
     }
   });

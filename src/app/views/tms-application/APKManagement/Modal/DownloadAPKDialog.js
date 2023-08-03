@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton, Tooltip, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import { getAPKFromServer } from 'app/Services/PolicyServices';
 import { toast } from 'react-toastify';
@@ -25,7 +25,7 @@ export default function DownloadAPKDialog(props) {
 
   const handleDownloadAPK = async (url, filename) => {
     let res = await getAPKFromServer(url, filename);
-    console.log(res);
+    // console.log(res);
     if (res.status === 200) {
       handleClose();
       toast.success('File is downloading!!!');

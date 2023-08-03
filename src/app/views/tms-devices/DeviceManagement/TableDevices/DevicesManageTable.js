@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, ThemeProvider, Typography, Tooltip, IconButton } from '@mui/material';
+import { Box, Card, ThemeProvider, Typography, Tooltip, Button } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
 import { getAPageDevice } from 'app/Services/DevicesServices';
@@ -28,7 +28,7 @@ const DeviceManageTable = () => {
   const handleLoadAPageDevice = async () => {
     // console.log(paramsPageDevices);
     let response = await getAPageDevice(paramsPageDevices);
-    console.log(`Page List: `, response);
+    // console.log(`Page List: `, response);
     if (response.status === 200) {
       // console.log(`Page List: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
@@ -69,18 +69,22 @@ const DeviceManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageDevice();
       setUpdateTable(false);
     }
   }, [resetTable, updateTable]);
 
-  // useEffect(() => {
-  //   console.log(arrUsers);
-  // }, [updateTable]);
-
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        Devices
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
@@ -121,17 +125,23 @@ const DeviceManageTable = () => {
               <Box flexBasis="25%">
                 <EditDescriptionModal row={row} setUpdatetable={setUpdateTable} />
               </Box>
-              {/* <DataDialog row={row} /> */}
-              <Tooltip arrow placement="bottom" title="Detail">
-                <NavLink
-                  to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
-                >
-                  <IconButton>
-                    <InfoIcon color="primary" />
-                    <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
-                  </IconButton>
-                </NavLink>
-              </Tooltip>
+              <Box flexBasis="25%">
+                <Tooltip arrow placement="bottom" title="Detail">
+                  <NavLink
+                    to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
+                  >
+                    <Button>
+                      <InfoIcon color="primary" />
+                      <Typography
+                        style={{ marginLeft: '8px', color: 'black' }}
+                        textTransform="none"
+                      >
+                        Detail
+                      </Typography>
+                    </Button>
+                  </NavLink>
+                </Tooltip>
+              </Box>
             </>,
           ]}
           renderDetailPanel={({ row }) => (

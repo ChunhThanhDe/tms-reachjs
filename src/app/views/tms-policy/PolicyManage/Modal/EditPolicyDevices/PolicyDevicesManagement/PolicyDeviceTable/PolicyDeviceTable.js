@@ -33,7 +33,7 @@ const DeleteDeviceinPolicy = ({ policyId, deviceId, setUpdateTable, setAddSucces
   };
   const handleDelete = async () => {
     let response = await deleteMapPolicyDevice(policyId, deviceId);
-    console.log(`Page List App: `, response);
+    // console.log(`Page List App: `, response);
     if (response.status === 204) {
       toast.success('Delete success');
       setUpdateTable(true);
@@ -85,7 +85,7 @@ const PolicyDeviceTable = (props) => {
   const [totalPage, setTotalPage] = useState();
   const handleLoadAPageDevice = async () => {
     let response = await getAPagePolicyDevice(paramsPage);
-    console.log(response);
+    // console.log(response);
     if (response.status === 200) {
       let arr = response.data.listResult;
       setArrApps(arr);

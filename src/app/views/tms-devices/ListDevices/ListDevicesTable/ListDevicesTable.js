@@ -24,11 +24,9 @@ const ListDevicesTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleLoadAPageDevice = async () => {
-    // console.log(paramsPageDevices);
     let response = await getAPageListDevices(paramsPageDevices);
-    console.log(`Page List: `, response);
+    // console.log(`Page List: `, response);
     if (response.status === 200) {
-      // console.log(`Page List: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
         toast.error('NO elemant match');
       }
@@ -67,15 +65,10 @@ const ListDevicesTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageDevice();
       setUpdateTable(false);
     }
   }, [resetTable, updateTable]);
-
-  // useEffect(() => {
-  //   console.log(arrUsers);
-  // }, [updateTable]);
 
   return (
     <Card>
@@ -130,10 +123,10 @@ const ListDevicesTable = () => {
                 alignItems: 'center',
               }}
             >
-              <Typography fontSize={'15px'}>
+              {/* <Typography fontSize={'15px'}>
                 Created Date: {convertDateTime(row.original.createdDate)}
-              </Typography>
-              <Typography fontSize={'15px'}>Created By: {row.original.createdBy}</Typography>
+              </Typography> */}
+              {/* <Typography fontSize={'15px'}>Created By: {row.original.createdBy}</Typography> */}
               <Typography fontSize={'15px'}>
                 Modified Date: {convertDateTime(row.original.modifiedDate)}
               </Typography>

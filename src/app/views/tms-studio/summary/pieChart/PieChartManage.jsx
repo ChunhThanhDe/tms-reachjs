@@ -12,7 +12,6 @@ const PieChartManage = () => {
 
   const handleGetOnline = async () => {
     let response = await getStudioOnlinePieChart('online');
-    console.log('history: ', response);
     if (response.status === 200) {
       setOnline(response.data);
       //   setSummary(true);
@@ -21,39 +20,29 @@ const PieChartManage = () => {
 
   const handleGetNetwork = async () => {
     let response = await getStudioOnlinePieChart('network');
-    console.log('history: ', response);
     if (response.status === 200) {
       setNetwork(response.data);
-      //   setSummary(true);
     }
   };
 
   const handleGetResolution = async () => {
     let response = await getStudioOnlinePieChart('hdmi');
-    console.log('history: ', response);
     if (response.status === 200) {
       setResolution(response.data);
-      //   setSummary(true);
     }
   };
 
   useEffect(() => {
-    handleGetOnline(); // Call handleGetSummary once when component mounts
+    handleGetOnline();
     handleGetResolution();
     handleGetNetwork();
     const intervalId = setInterval(() => {
-      handleGetOnline(); // Call handleGetSummary every 3 minutes
+      handleGetOnline();
       handleGetResolution();
       handleGetNetwork();
     }, 180000);
-    return () => clearInterval(intervalId); // Clear the interval on unmount
+    return () => clearInterval(intervalId);
   }, []);
-  //   useEffect(() => {
-  //     if (Summary) {
-  //       console.log('Summary: ', Online);
-  //       setSummary(false);
-  //     }
-  //   }, [Summary]);
 
   return (
     <>
@@ -61,19 +50,19 @@ const PieChartManage = () => {
         <Title level={3} style={titleStyle}>
           Online
         </Title>
-        <PieChart data={Online} />
+        <PieChart data={Online} name={'Online'} />
       </Card>
       <Card sx={{ px: 1, py: 1, mb: 1 }}>
         <Title level={3} style={titleStyle} mt={2}>
           Resolution
         </Title>
-        <PieChart data={resolution} />
+        <PieChart data={resolution} name={'Resolution'} />
       </Card>
       <Card sx={{ px: 1, py: 1, mb: 1 }}>
         <Title level={3} style={titleStyle} mt={2}>
           Network
         </Title>
-        <PieChart data={network} />
+        <PieChart data={network} name={'Network'} />
       </Card>
     </>
   );

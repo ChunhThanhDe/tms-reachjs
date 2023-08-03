@@ -28,10 +28,9 @@ const APKManageTable = () => {
   const [searchTermVersion, setSearchTermVersion] = useState('');
 
   const handleLoadAPageUser = async () => {
-    console.log(paramsPageAPK);
     let response = await getAPageAPK(paramsPageAPK);
     if (response.status === 200) {
-      console.log(`Page List: `, response);
+      // console.log(`Page List: `, response);
       if (response.data.totalElement === null) {
         if (searchTermPackage !== null || searchTermVersion !== null) {
           toast.error('No element matchs');
@@ -81,7 +80,6 @@ const APKManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageUser();
       setUpdateTable(false);
     }

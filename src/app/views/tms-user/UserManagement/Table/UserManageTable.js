@@ -29,10 +29,9 @@ const UserManageTable = () => {
   const [color, setColor] = useState('success');
 
   const handleLoadAPageUser = async () => {
-    console.log(paramsPageUser);
     let response = await getAPageUser(paramsPageUser);
     if (response.status === 200) {
-      console.log(`Page List: `, response);
+      // console.log(`Page List: `, response);
       if (response.data.totalElement === null) {
         if (searchTerm !== null) {
           toast.error('No element matchs');
@@ -96,15 +95,10 @@ const UserManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageUser();
       setUpdateTable(false);
     }
   }, [resetTable, updateTable]);
-
-  // useEffect(() => {
-  //   console.log(arrUsers);
-  // }, [updateTable]);
 
   return (
     <Card>

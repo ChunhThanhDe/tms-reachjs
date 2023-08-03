@@ -45,7 +45,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
           size="small"
@@ -56,7 +55,7 @@ const TopBarSetup = (props) => {
           InputProps={{
             endAdornment: (
               <InputAdornment>
-                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                <Divider sx={{ height: 24, m: 0.5 }} orientation="vertical" />
                 <Tooltip arrow placement="top" title={'Search'}>
                   <IconButton
                     type="button"

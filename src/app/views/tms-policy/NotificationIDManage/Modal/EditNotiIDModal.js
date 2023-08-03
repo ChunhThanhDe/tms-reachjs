@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Box,
-  IconButton,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Grid,
-  Tooltip,
-} from '@mui/material';
+import { Box, Button, Modal, Typography, TextField, Grid } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { putEditNotiID } from 'app/Services/PolicyServices';
 
@@ -66,12 +57,12 @@ const EditPolicyModal = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Notification</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit Notification
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

@@ -1,17 +1,12 @@
 import { Breadcrumb } from 'app/components';
 import { useLocation } from 'react-router-dom';
-import { Fragment } from 'react';
 import PolicyAPKTable from './PolicyAPKTable/PolicyAPKTable';
-// import { Container } from 'app/components/TagPage/CustomTag';
-import {
-  Card,
-  // Card,
-  Grid,
-} from '@mui/material';
-// import { titleStyle, Title } from 'app/components/Chart/ChartTitle';
+import { Stack, Grid } from '@mui/material';
+import { Container } from 'app/components/TagPage/CustomTag';
 import { ContentBox } from 'app/components/TagPage/CustomTag';
 import PolicyInfo from './PolicyInfo';
 import PolicDevicesTable from './PolicyDeviceTable/PolicydDeviceTable';
+import SinglePolicyPieChartManage from './SinglePolicyPieChartManage';
 const SinglePolicy = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -19,7 +14,7 @@ const SinglePolicy = () => {
   const policyName = searchParams.get('pn');
 
   return (
-    <Fragment>
+    <Container>
       <Breadcrumb
         routeSegments={[
           { name: 'Policy Manager', path: '/tms-policy/apk-management' },
@@ -30,22 +25,27 @@ const SinglePolicy = () => {
           },
         ]}
       />
-      <ContentBox className="analytics">
-        <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
-          <Grid item lg={3} md={3} sm={3} xs={12} spacing={1}>
-            <PolicyInfo id={policyId} />
+      <Stack spacing={3}>
+        <ContentBox className="analytics">
+          <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
+            <Grid item lg={6} md={6} sm={6} xs={12} spacing={1}>
+              <PolicyInfo id={policyId} />
+            </Grid>
+            <Grid item lg={6} md={6} sm={6} xs={12} spacing={1}>
+              <SinglePolicyPieChartManage id={policyId} />
+            </Grid>
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12}>
-            <PolicDevicesTable id={policyId} />
+          <Grid container spacing={2} flexDirection="row">
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+              <PolicyAPKTable id={policyId} />
+            </Grid>
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+              <PolicDevicesTable id={policyId} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={2} flexDirection="row">
-          <Grid item lg={3} md={3} sm={3} xs={12} spacing={1}>
-            <PolicyAPKTable id={policyId} />
-          </Grid>
-        </Grid>
-      </ContentBox>
-    </Fragment>
+        </ContentBox>
+      </Stack>
+    </Container>
   );
 };
 

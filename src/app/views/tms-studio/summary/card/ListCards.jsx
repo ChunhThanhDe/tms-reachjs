@@ -12,7 +12,7 @@ const ListCards = () => {
 
   const handleGetSummary = async () => {
     let response = await getSummaryforStudio();
-    console.log(response);
+    // console.log(response);
     if (response.status === 200) {
       setTotal(response.data.total);
       setOnline(response.data.online);

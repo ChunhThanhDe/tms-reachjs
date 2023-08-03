@@ -57,7 +57,7 @@ const AccountChangePassword = (props) => {
       return;
     } else {
       let response = await putChangeAccountPassword(user.id, password, passwordNew1);
-      console.log(response);
+      // console.log(response);
       if (response && response.status === 200) {
         toast.success(`Change password success`);
         alert('Please login again!!!');

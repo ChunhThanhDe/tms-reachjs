@@ -11,7 +11,6 @@ import {
   DialogActions,
   DialogTitle,
   DialogContent,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -55,7 +54,7 @@ const ChangeUserPasswordDialog = (props) => {
       return;
     } else {
       let response = await putChangeUserPassword(currentId, passwordNew1);
-      console.log(response);
+      // console.log(response);
       if (response && response.status === 200) {
         toast.success(`Change password success`);
         // setUpdatetable(!updateTable);
@@ -80,13 +79,12 @@ const ChangeUserPasswordDialog = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Change password"> */}
-      <IconButton onClick={() => (row.original.active ? handleOpenChangePassword(row) : '')}>
+      <Button onClick={() => (row.original.active ? handleOpenChangePassword(row) : '')}>
         <PasswordIcon color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Change password</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
-      {/* Dialog change user password*/}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Change password
+        </Typography>
+      </Button>
       <Dialog
         open={openChangePassword}
         onClose={handleCloseChangePassword}

@@ -17,9 +17,6 @@ const isValidToken = (accessToken) => {
 
   const decodedToken = jwtDecode(accessToken);
   const currentTime = Date.now() / 1000;
-  // console.log(`decodedToken`, decodedToken);
-  // console.log(`currentTime`, currentTime);
-  // console.log(decodedToken.exp > currentTime);
   return decodedToken.exp > currentTime;
 };
 
@@ -28,7 +25,6 @@ const setSession = (accessToken, user) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('user', JSON.stringify(user));
     axios.defaults.headers.common.Authorization = `TMS ${accessToken}`;
-    // console.log(axios.defaults);
   } else {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
@@ -37,8 +33,6 @@ const setSession = (accessToken, user) => {
 };
 
 const reducer = (state, action) => {
-  // console.log('Dispatching action:', action.type, action.payload);
-  // console.log('Current state:', state);
   switch (action.type) {
     case 'INIT': {
       const { isAuthenticated, user } = action.payload;
@@ -91,11 +85,9 @@ export const AuthProvider = ({ children }) => {
       .catch(function (error) {
         if (error.response) {
           return error.response.data;
-          // console.log(`error status`, error.response.status);
-          // console.log(`error header`, error.response.headers);
         }
       });
-    console.log(`response `, response);
+    // console.log(`response `, response);
     if (response.status === 200) {
       const accessToken = response.data.accessToken;
       const user = {
@@ -104,8 +96,6 @@ export const AuthProvider = ({ children }) => {
         username: response.data.username,
         role: response.data.roles,
       };
-      // console.log(`token `, accessToken);
-      // console.log(`user `, user);
 
       setSession(accessToken, user);
 
@@ -132,13 +122,8 @@ export const AuthProvider = ({ children }) => {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
         const user = JSON.parse(window.localStorage.getItem('user'));
-        // console.log(accessToken);
-        // console.log(user);
-        // console.log(accessToken && isValidToken(accessToken));
         if (accessToken && isValidToken(accessToken)) {
-          // console.log(accessToken);
           setSession(accessToken, user);
-          console.log(user);
 
           dispatch({
             type: 'INIT',
@@ -170,7 +155,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   if (!state.isInitialised) {
-    // console.log(state.isInitialised);
     return <MatxLoading />;
   }
 

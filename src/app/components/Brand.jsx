@@ -29,9 +29,9 @@ const Brand = ({ children }) => {
           TMS Monitor
         </StyledSpan>
       </Box>
-      {/* <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
-        {children || null}
-      </Box> */}
+      <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
+        {/* {children || null} */}
+      </Box>
     </BrandRoot>
   );
 };

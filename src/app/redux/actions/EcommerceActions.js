@@ -58,7 +58,6 @@ export const getCartList = (uid) => (dispatch) => {
 
 export const addProductToCart = (uid, productId) => (dispatch) => {
   axios.post('/api/ecommerce/add-to-cart', { uid, productId }).then((res) => {
-    console.log(res.data);
     dispatch({
       type: ADD_PRODUCT_TO_CART,
       payload: res.data,
@@ -76,7 +75,6 @@ export const deleteProductFromCart = (uid, productId) => (dispatch) => {
 };
 
 export const updateCartAmount = (uid, productId, amount) => (dispatch) => {
-  console.log(uid, productId, amount);
   axios.post('/api/ecommerce/update-cart-amount', { uid, productId, amount }).then((res) => {
     dispatch({
       type: UPDATE_CART_AMOUNT,

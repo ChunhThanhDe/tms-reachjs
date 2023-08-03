@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, IconButton, Button, Modal, Tooltip, Grid, Typography } from '@mui/material';
+import { Box, Button, Modal, Grid, Typography } from '@mui/material';
 import { getUserListDevice } from 'app/Services/User_Auth_Service';
 import InfoIcon from '@mui/icons-material/Info';
 import { MaterialReactTable } from 'material-react-table';
@@ -39,7 +39,7 @@ const UserListDeviceModal = (props) => {
   const handleLoadUserListDevices = async () => {
     let response = await getUserListDevice(row.original.id);
     if (response.status === 200) {
-      console.log(response);
+      // console.log(response);
       setArrData(response.data.listResult);
     }
   };
@@ -51,12 +51,12 @@ const UserListDeviceModal = (props) => {
   }, [openModal]);
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="User's List Devices"> */}
-      <IconButton onClick={handleOpenModalUserListDevices}>
+      <Button onClick={handleOpenModalUserListDevices}>
         <InfoIcon color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>User's List Devices</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          User's List Devices
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalUserListDevices}>
         <Box
           sx={{

@@ -50,7 +50,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="searchpackage"
-          type="search"
           label="Search Package Name"
           variant="outlined"
           size="small"
@@ -71,7 +70,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="searchversion"
-          type="search"
           label="Search Version"
           variant="outlined"
           size="small"

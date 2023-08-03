@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Box, IconButton, Button, Modal, Typography, Tooltip } from '@mui/material';
+import { Box, Button, Modal, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { getSingleNotiID } from 'app/Services/PolicyServices';
 import { convertDateTime } from 'app/components/ConvertTimeDate';
@@ -34,12 +34,12 @@ const CommandNotiIDDetail = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
-      <IconButton onClick={handleOpenEditDescription} disabled={id ? false : true}>
+      <Button onClick={handleOpenEditDescription} disabled={id ? false : true}>
         <InfoIcon color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Detail
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

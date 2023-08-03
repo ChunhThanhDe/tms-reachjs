@@ -91,7 +91,7 @@ const APKManageTable = (props) => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
+      // console.log('change status');
       handleLoadAPageApk();
       setUpdateTable(false);
     }

@@ -36,7 +36,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
           placeholder="Only search in Name"

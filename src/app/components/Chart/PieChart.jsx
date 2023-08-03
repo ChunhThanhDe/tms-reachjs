@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import { colors } from 'app/color/color';
-const PieChart = ({ data, height = '350px', option = {} }) => {
+const PieChart = ({ data, height = '350px', option = {}, name }) => {
   const color = colors;
 
   const generateItemStyle = (color) => {
@@ -22,9 +22,9 @@ const PieChart = ({ data, height = '350px', option = {} }) => {
     },
     series: [
       {
-        name: 'PieChart',
+        name: name,
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['40%', '75%'],
         avoidLabelOverlap: false,
         label: {
           show: false,
@@ -36,6 +36,7 @@ const PieChart = ({ data, height = '350px', option = {} }) => {
             show: true,
             fontSize: 15,
             fontWeight: 'bold',
+            formatter: `{b} \n{d}%`,
           },
         },
         labelLine: {

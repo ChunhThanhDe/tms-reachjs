@@ -1,8 +1,8 @@
 import { styled } from '@mui/system';
 import { MatxVerticalNav } from 'app/components';
 import useSettings from 'app/hooks/useSettings';
-import { navigations } from 'app/navigations';
-import { Fragment } from 'react';
+import { navigations, navigationsUser } from 'app/navigations';
+import { Fragment, useEffect, useState } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
 
 const StyledScrollBar = styled(Scrollbar)(() => ({
@@ -25,6 +25,15 @@ const SideNavMobile = styled('div')(({ theme }) => ({
 
 const Sidenav = ({ children }) => {
   const { settings, updateSettings } = useSettings();
+  const user = JSON.parse(window.localStorage.getItem('user'));
+  const [navigation, setNavigation] = useState([]);
+  useEffect(() => {
+    if (user.role.length === 1) {
+      setNavigation(navigationsUser);
+    } else {
+      setNavigation(navigations);
+    }
+  }, [user]);
 
   const updateSidebarMode = (sidebarSettings) => {
     let activeLayoutSettingsName = settings.activeLayout + 'Settings';
@@ -46,7 +55,7 @@ const Sidenav = ({ children }) => {
     <Fragment>
       <StyledScrollBar options={{ suppressScrollX: true }}>
         {children}
-        <MatxVerticalNav items={navigations} />
+        <MatxVerticalNav items={navigation} />
       </StyledScrollBar>
 
       <SideNavMobile onClick={() => updateSidebarMode({ mode: 'close' })} />

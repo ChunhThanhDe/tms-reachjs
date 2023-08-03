@@ -1,9 +1,67 @@
-import { Autocomplete, Box, Icon, IconButton, TextField } from '@mui/material';
+import { Autocomplete, Box, Icon, IconButton, TextField, Grid } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
 import { topBarHeight } from 'app/utils/constant';
 import React, { useEffect, useState } from 'react';
 import { getSearchResult } from 'app/Services/User_Auth_Service';
 
+function SearchBox({ selectedOption, setSelectedOption }) {
+  const [arr, setArr] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleBarSearch = (event) => {
+    setSearchTerm(event.target.value);
+    // console.log(event.target.value);
+  };
+
+  const handleSearchMode = async () => {
+    let res = await getSearchResult(searchTerm);
+    // console.log(res);
+    if (res.status === 200) {
+      setArr(res.data.listResult);
+    }
+    // console.log(arr);
+  };
+
+  useEffect(() => {
+    if (searchTerm !== '') {
+      handleSearchMode();
+      // console.log(searchTerm);
+    }
+  }, [searchTerm]);
+
+  const handleOnChange = (event, newValue) => {
+    setSelectedOption(newValue);
+    // console.log(newValue);
+  };
+
+  return (
+    <Grid container alignItems="center" justify="space-between">
+      <Box width={'20px'} />
+      <Grid item xs>
+        <Autocomplete
+          options={arr}
+          getOptionLabel={(option) => option.sn}
+          id="include-input-in-list"
+          value={selectedOption}
+          sx={{ marginBottom: '5px' }}
+          InputProps={{
+            endAdornment: [],
+          }}
+          onChange={handleOnChange}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              onChange={handleBarSearch}
+              fullWidth
+              label={'Search'}
+            />
+          )}
+        />
+      </Grid>
+    </Grid>
+  );
+}
 const SearchContainer = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: 0,
@@ -24,33 +82,17 @@ const MatxSearchBox = () => {
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
-    setSearchTerm('');
-    setArr([]);
   };
 
   const { palette } = useTheme();
   const textColor = palette.text.primary;
-  const [searchTerm, setSearchTerm] = useState('');
-  const [arr, setArr] = useState([]);
-
-  const handleBarSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearchMode = async () => {
-    let res = await getSearchResult(searchTerm);
-    console.log(res);
-    if (res.status === 200) {
-      setArr(res.data.listResult);
-    }
-    console.log(arr);
-  };
+  const [selectedOption, setSelectedOption] = React.useState(null);
 
   useEffect(() => {
-    if (searchTerm !== '') {
-      handleSearchMode();
+    if (selectedOption) {
+      window.location.href = `/tms-devices/devices-management/device?id=${selectedOption.id}&sn=${selectedOption.sn}`;
     }
-  }, [searchTerm]);
+  }, [selectedOption]);
 
   return (
     <React.Fragment>
@@ -63,44 +105,7 @@ const MatxSearchBox = () => {
       {open && (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
           <SearchContainer>
-            <Box width={20}></Box>
-            <Autocomplete
-              id="free-solo-demo"
-              fullWidth
-              freeSolo
-              options={arr.map((option) => option.sn)}
-              onChange={(event, value) => {
-                if (value) {
-                  const selectedOption = arr.find((option) => option.sn === value);
-                  if (selectedOption) {
-                    window.location.href = `/tms-devices/devices-management/device?id=${selectedOption.id}&sn=${selectedOption.sn}`;
-                  }
-                }
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Serial Number"
-                  variant="standard"
-                  onChange={(e) => handleBarSearch(e)}
-                  InputProps={{
-                    endAdornment: [],
-                  }}
-                  sx={{
-                    marginBottom: '10px',
-                    border: 'none',
-                    '&:hover': {
-                      border: 'none',
-                    },
-                    '&:focus': {
-                      border: 'none',
-                      outline: 'none',
-                    },
-                  }}
-                  fullWidth
-                />
-              )}
-            />
+            <SearchBox selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             <IconButton onClick={toggle} sx={{ mx: 2, verticalAlign: 'middle' }}>
               <Icon sx={{ color: textColor }}>close</Icon>
             </IconButton>

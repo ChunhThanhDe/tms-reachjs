@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Box,
-  IconButton,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Grid,
-  // Tooltip,
-} from '@mui/material';
+import { Box, Button, Modal, Typography, TextField, Grid } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -59,7 +50,7 @@ const EditPolicyModal = (props) => {
       action: action,
     };
     let response = await putEditCommand(data);
-    console.log('editPolicyResponse', response);
+    // console.log('editPolicyResponse', response);
     if (response && response.status === 200) {
       toast.success(`Change list devices data success`);
       setUpdatetable(true);
@@ -71,12 +62,12 @@ const EditPolicyModal = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Policy</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit Policy
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

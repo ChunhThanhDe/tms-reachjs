@@ -1,24 +1,12 @@
 import React from 'react';
-import {
-  TextField,
-  Divider,
-  InputAdornment,
-  Select,
-  MenuItem,
-  FormControlLabel,
-} from '@mui/material';
+import { TextField, Divider, InputAdornment } from '@mui/material';
 import { IconButton, Grid, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Close, RestartAlt } from '@mui/icons-material';
 
 const TopBarSetup = (props) => {
-  const { searchTerm, setSearchTerm, handleResetTable, handleSearchMode, status, setStatus } =
-    props;
+  const { searchTerm, setSearchTerm, handleResetTable, handleSearchMode } = props;
 
-  const handleChange = (event) => {
-    // console.log(event.target.value);
-    setStatus(event.target.value);
-  };
   const handleChangeSearchBar = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -48,7 +36,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
           size="small"
@@ -79,30 +66,6 @@ const TopBarSetup = (props) => {
             <Close color="error" />
           </IconButton>
         </Tooltip>
-        <FormControlLabel
-          variant="standard"
-          sx={{ m: 1, minWidth: 100, height: 30 }}
-          // label="Status"
-          control={
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={status}
-              displayEmpty
-              onChange={handleChange}
-              sx={{ height: 30 }}
-            >
-              <MenuItem value="">
-                <em>All</em>
-              </MenuItem>
-              <MenuItem value={0}>Not Active</MenuItem>
-              <MenuItem value={1}>Pending</MenuItem>
-              <MenuItem value={2}>Running</MenuItem>
-              <MenuItem value={3}>Success</MenuItem>
-              {/* <MenuItem value={4}>Timeout</MenuItem> */}
-            </Select>
-          }
-        />
       </Grid>
       <Grid
         item

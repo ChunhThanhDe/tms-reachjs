@@ -93,7 +93,7 @@ const NewApkModal = (props) => {
   };
 
   const handleUploadFileAPK = async () => {
-    console.log(uploadedFile);
+    // console.log(uploadedFile);
     if (!uploadedFile) {
       toast.error(`No File to upload`);
       handleCloseModalNewAPK();
@@ -101,7 +101,7 @@ const NewApkModal = (props) => {
       const res = await postNewAPKFile(uploadedFile, (event) => {
         setProgress(Math.round((100 * event.loaded) / event.total));
       });
-      console.log(res);
+      // console.log(res);
       if (res && res.status === 200) {
         toast.success(`Upload APK file success`);
         setResettable(true);
@@ -298,9 +298,8 @@ const NewApkModal = (props) => {
                     <input
                       type="file"
                       onChange={(e) => {
-                        const file = e.target.files[0];
+                        // const file = e.target.files[0];
                         setUploadedFile(e.target.files[0]);
-                        console.log(file);
                       }}
                       style={{ display: 'none' }}
                       ref={inputFileRef}

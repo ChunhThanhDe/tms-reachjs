@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   Box,
@@ -15,34 +15,88 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { AddBox } from '@mui/icons-material';
-import { postCreateNewPolicy } from 'app/Services/PolicyServices';
-import ListSelect from 'app/components/List/ListSelect';
+import { getAPageCommand, postCreateNewPolicy } from 'app/Services/PolicyServices';
+import Autocomplete from '@mui/material/Autocomplete';
+
+function AutoComplete({ label, selectedOption, setSelectedOption }) {
+  const [arrNotiId, setArrNotiId] = useState([]);
+  const [paramsPage, setParamPage] = useState({
+    page: 1,
+    limit: 10,
+    search: null,
+  });
+  const [hasSelected, setHasSelected] = useState(false);
+
+  const handleBarSearch = (event) => {
+    setParamPage({ ...paramsPage, search: event.target.value });
+    setHasSelected(false);
+  };
+
+  const handleLoadAPage = async () => {
+    let response = await getAPageCommand(paramsPage);
+    if (response.status === 200) {
+      let arr = response.data.listResult;
+      // console.log(arr);
+      setArrNotiId(arr);
+    }
+  };
+
+  const handleOnChange = (event, newValue) => {
+    setSelectedOption(newValue);
+    // console.log(newValue);
+    setHasSelected(true);
+  };
+
+  useEffect(() => {
+    handleLoadAPage();
+  }, [paramsPage]);
+
+  useEffect(() => {
+    if (!hasSelected) {
+      setParamPage({ ...paramsPage, search: null });
+    }
+  }, [hasSelected]);
+
+  return (
+    <div>
+      <Autocomplete
+        options={arrNotiId}
+        getOptionLabel={(option) => option.name}
+        id="include-input-in-list"
+        value={selectedOption}
+        onChange={handleOnChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            variant="outlined"
+            onChange={handleBarSearch}
+            fullWidth
+          />
+        )}
+      />
+    </div>
+  );
+}
 
 const NewPolicyModal = (props) => {
   const { setResettable } = props;
   const [openModal, setOpenModal] = useState(false);
   const [policyname, setPolicyname] = useState('');
-  const [commandName, setCommandName] = useState('');
   const [action, setAction] = useState();
-  const Noti = ['Reboot', 'Notification'];
+  const [selectedOption, setSelectedOption] = React.useState(null);
 
-  // const handleResetTable = () => {
-  //   setResettable(false);
-  // };
   const handleCreatePolicyClick = () => {
     setOpenModal((prevState) => !prevState);
   };
 
   const handleCloseModalNewPolicy = () => {
     setOpenModal((prevState) => !prevState);
-    setCommandName('');
     setAction();
     setPolicyname('');
+    setSelectedOption(null);
   };
 
-  const handleCommandChange = (command) => {
-    setCommandName(command);
-  };
   const handleOnchangeInput = (e, id) => {
     switch (id) {
       case 'policyname':
@@ -59,10 +113,10 @@ const NewPolicyModal = (props) => {
     let check = true;
     const inputValues = {
       policyname: policyname,
-      commandName: commandName,
+      commandName: selectedOption.name,
       action: action,
     };
-    const requiredInputs = ['policyname', 'action'];
+    const requiredInputs = ['policyname', 'action', 'commandName'];
     for (let i = 0; i < requiredInputs.length; i++) {
       if (!inputValues[requiredInputs[i]]) {
         check = false;
@@ -79,11 +133,11 @@ const NewPolicyModal = (props) => {
     if (isValid) {
       let newListDevices = {
         policyname: policyname,
-        commandName: commandName,
+        commandName: selectedOption.name,
         action: action,
       };
       let response = await postCreateNewPolicy(newListDevices);
-      console.log('createList', response);
+      // console.log('createList', response);
       if (response && response.statusCode === 500) {
         response.message.includes(`JSON parse error`)
           ? toast.error('Contact must be phone number')
@@ -137,14 +191,6 @@ const NewPolicyModal = (props) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <ListSelect
-                data={Noti}
-                handleSelected={handleCommandChange}
-                title={'Command'}
-                defaultValue={commandName}
-              />
-            </Grid>
-            <Grid item xs={12}>
               <FormControl
                 style={{
                   border: '1px solid #ccc',
@@ -167,6 +213,13 @@ const NewPolicyModal = (props) => {
                   <FormControlLabel value={3} control={<Radio />} label="Run Command" />
                 </RadioGroup>
               </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <AutoComplete
+                label={'Command'}
+                selectedOption={selectedOption}
+                setSelectedOption={setSelectedOption}
+              />
             </Grid>
           </Grid>
           <Box

@@ -18,7 +18,7 @@ export const columns = [
   },
   {
     accessorKey: 'name',
-    header: 'List App',
+    header: 'App Name',
     enableEditing: false,
     enableSorting: false,
     enableColumnFilter: false,

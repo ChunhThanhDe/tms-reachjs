@@ -29,7 +29,6 @@ const option = {
 };
 
 const AreaChart = ({ height, color }) => {
-  console.log(height, color);
   return <ReactEcharts style={{ height: height }} option={{ ...option, color: [...color] }} />;
 };
 

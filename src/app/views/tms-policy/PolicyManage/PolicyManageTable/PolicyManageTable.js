@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, IconButton, ThemeProvider, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Card, IconButton, ThemeProvider, Tooltip, Typography } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import BottomBarSetup from './BottomBarSetup';
 import TopBarSetup from './TopBarSetup';
@@ -32,11 +32,9 @@ const PolicyManageTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleLoadAPagePolicy = async () => {
-    console.log(paramsPagePolicy);
     let response = await getPolicy(paramsPagePolicy);
-    console.log(`Page List: `, response);
+    // console.log(`Page List: `, response);
     if (response.status === 200) {
-      // console.log(`Page List: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
         toast.error('No elements match');
       }
@@ -69,7 +67,6 @@ const PolicyManageTable = () => {
     setUpdateTable(true);
   };
   const handlePolicyAction = async (id, status) => {
-    console.log(id, status);
     let res = await putPolicyStatus(id, status);
     if (res.status === 200) {
       // console.log(res);
@@ -85,7 +82,7 @@ const PolicyManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
+      // console.log('change status');
       handleLoadAPagePolicy();
       setUpdateTable(false);
     }
@@ -141,7 +138,7 @@ const PolicyManageTable = () => {
       Cell: (row) => (
         <Box>
           {row.row.original.status === 0 ? (
-            <Tooltip arrow placement="top" title="">
+            <Tooltip arrow placement="top" title="Pennding">
               <NotStartedIcon color="primary" />
             </Tooltip>
           ) : row.row.original.status === 1 ? (
@@ -233,6 +230,15 @@ const PolicyManageTable = () => {
 
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        Policies
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
@@ -276,18 +282,18 @@ const PolicyManageTable = () => {
               <Box flexBasis="25%">
                 <EditPolicyDevices row={row} setUpdatetable={setUpdateTable} />,
               </Box>
-              {/* <Tooltip arrow placement="bottom" title="Detail"> */}
               <Box flexBasis="25%">
                 <NavLink
                   to={`/tms-policy/policy-management/policy?id=${row.original.id}&pn=${row.original.policyname}`}
                 >
-                  <IconButton>
+                  <Button>
                     <InfoIcon color="primary" />
-                    <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
-                  </IconButton>
+                    <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+                      Detail
+                    </Typography>
+                  </Button>
                 </NavLink>
               </Box>
-              {/* </Tooltip> */}
             </>,
           ]}
           displayColumnDefOptions={{ 'mrt-row-actions': { size: 300, header: '' } }}

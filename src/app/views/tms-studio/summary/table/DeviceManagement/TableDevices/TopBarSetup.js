@@ -36,23 +36,22 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
-          placeholder="Only search in SerialNumber and Descripttion"
+          placeholder="Only search in SerialNumber and Description"
           size="small"
           value={searchTerm}
           onChange={handleChangeSearchBar}
           edge="end"
           fullWidth
           InputProps={{
-            endAdornment: (
-              <InputAdornment>
+            endAdornment: [
+              <InputAdornment key="search-icon">
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <Tooltip
                   arrow
                   placement="top"
-                  title={'Only search in SerialNumber and Descripttion'}
+                  title={'Only search in SerialNumber and Description'}
                 >
                   <IconButton
                     type="button"
@@ -63,8 +62,8 @@ const TopBarSetup = (props) => {
                     <SearchIcon color="primary" />
                   </IconButton>
                 </Tooltip>
-              </InputAdornment>
-            ),
+              </InputAdornment>,
+            ],
           }}
         />
         <Tooltip arrow placement="top" title={'Close Search'}>

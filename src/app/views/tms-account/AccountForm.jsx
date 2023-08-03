@@ -1,5 +1,5 @@
 import { Button, Grid, Icon, styled } from '@mui/material';
-import { getAnUser, putEditUserData } from 'app/Services/User_Auth_Service';
+import { getAnUser, putEditOwnData } from 'app/Services/User_Auth_Service';
 import { Span } from 'app/components/Typography';
 import { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -51,10 +51,11 @@ const AccountForm = () => {
   };
 
   const handleChange = (event) => {
-    event.persist();
-    setState({ ...state, [event.target.name]: event.target.value });
-    // console.log(event.target.value);
-    // console.log(name);
+    const { name, value } = event.target;
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -67,95 +68,84 @@ const AccountForm = () => {
         email: email,
         contact: contact,
       };
-      let responseChangeData = await putEditUserData(data);
-      console.log(responseChangeData);
+      let res = await putEditOwnData(data);
+      console.log(res);
+      if (res.status === 200) {
+        toast.success('Change data success');
+        setUpdateData(true);
+      } else {
+        toast.error(res.message);
+      }
     }
   };
 
   return (
     <div>
       <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
-        <Grid spacing={6}>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  name="name"
-                  disabled="true"
-                  id="standard-basic"
-                  value={name || ''}
-                  onChange={handleChange}
-                  errorMessages={['this field is required']}
-                  label="Name"
-                  validators={['required']}
-                  sx={{ width: '100%' }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  name="userName"
-                  disabled="true"
-                  label="Username"
-                  onChange={handleChange}
-                  value={userName || ''}
-                  validators={['required']}
-                  errorMessages={['this field is required']}
-                  sx={{ width: '100%' }}
-                />
-              </Grid>
-            </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField
+              type="text"
+              name="name"
+              disabled
+              label="Name"
+              value={name || ''}
+              onChange={handleChange}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              sx={{ width: '100%' }}
+            />
           </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                name="email"
-                label="Email"
-                value={email || ''}
-                onChange={handleChange}
-                validators={['required']}
-                errorMessages={['this field is required', 'email is not valid']}
-                sx={{ width: '100%' }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                name="company"
-                value={company || ''}
-                label="Company"
-                onChange={handleChange}
-                validators={['required']}
-                errorMessages={['this field is required']}
-                sx={{ width: '100%' }}
-              />
-            </Grid>
+          <Grid item xs={6}>
+            <TextField
+              type="text"
+              name="userName"
+              disabled
+              label="Username"
+              value={userName || ''}
+              onChange={handleChange}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              sx={{ width: '100%' }}
+            />
           </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                type="number"
-                name="contact"
-                label="Contact(Phone Number)"
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: [],
-                }}
-                value={contact || ''}
-                errorMessages={['this field is required']}
-                validators={
-                  [
-                    // 'required',
-                    // 'minStringLength:9', 'maxStringLength: 11'
-                  ]
-                }
-                sx={{ width: '100%' }}
-              />
-            </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="email"
+              label="Email"
+              value={email || ''}
+              onChange={handleChange}
+              validators={['required', 'isEmail']}
+              errorMessages={['This field is required', 'Email is not valid']}
+              sx={{ width: '100%' }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              type="text"
+              name="company"
+              label="Company"
+              value={company || ''}
+              onChange={handleChange}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              sx={{ width: '100%' }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="contact"
+              type="text"
+              label="Contact (Phone Number)"
+              value={contact || ''}
+              onChange={handleChange}
+              validators={['required']}
+              errorMessages={['This field is required']}
+              sx={{ width: '100%' }}
+            />
           </Grid>
         </Grid>
-
+        <br />
         <Button color="primary" variant="contained" type="submit">
           <Icon>send</Icon>
           <Span sx={{ pl: 1, textTransform: 'capitalize' }}>Submit</Span>

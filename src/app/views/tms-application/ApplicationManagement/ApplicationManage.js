@@ -1,7 +1,8 @@
 import { Breadcrumb } from 'app/components';
-import { Stack } from '@mui/material';
+import { Card, Stack, Typography } from '@mui/material';
 import { Container } from 'app/components/TagPage/CustomTag';
 import AppTable from './AppTable/AppTable';
+import ApplicationBarChart from './ApplicationBarChart';
 const ApplicationManage = () => {
   return (
     <Container>
@@ -12,6 +13,18 @@ const ApplicationManage = () => {
         ]}
       />
       <Stack spacing={3}>
+        <Card style={{ overflow: 'auto' }}>
+          <Typography
+            variant="h6"
+            align="left"
+            fontWeight="fontWeightBold"
+            fontSize={15}
+            sx={{ marginTop: '5px', marginLeft: '10px' }}
+          >
+            Status
+          </Typography>
+          <ApplicationBarChart />
+        </Card>
         <AppTable />
       </Stack>
     </Container>

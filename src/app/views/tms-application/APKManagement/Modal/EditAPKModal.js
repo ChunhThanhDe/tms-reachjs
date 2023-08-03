@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Box,
-  IconButton,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Grid,
-  Tooltip,
-} from '@mui/material';
+import { Box, IconButton, Button, Modal, Typography, TextField, Grid } from '@mui/material';
 import { putEditAPKData } from 'app/Services/PolicyServices';
 import { Edit } from '@mui/icons-material';
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   Box,
-  IconButton,
   Button,
   Modal,
   Typography,
@@ -12,7 +11,6 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Tooltip,
 } from '@mui/material';
 import { putEditUserData } from 'app/Services/User_Auth_Service';
 import { Edit } from '@mui/icons-material';
@@ -30,8 +28,6 @@ const EditUserModal = (props) => {
   const [contact, setContact] = useState(row.original.contact);
   const [orRule, setOrRule] = useState(row.original.rulename.length > 1 ? adminRule : userRule);
   const [rulename, setRulename] = useState(row.original.rulename.length > 1 ? adminRule : userRule);
-
-  console.log(name, username);
 
   const handleOpenEditUser = () => {
     setOpenModal((prevState) => !prevState);
@@ -101,7 +97,7 @@ const EditUserModal = (props) => {
         toast.info('Nothing changes');
       } else {
         let responseEditUser = await putEditUserData(newUserData);
-        console.log('editUserResponse', responseEditUser);
+        // console.log('editUserResponse', responseEditUser);
         if (responseEditUser && responseEditUser.statusCode === 500) {
           responseEditUser.message.includes(`JSON parse error`)
             ? toast.error('Contact must be phone number')
@@ -118,12 +114,12 @@ const EditUserModal = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit User Data"> */}
-      <IconButton onClick={row.original.active ? handleOpenEditUser : ''}>
+      <Button onClick={row.original.active ? handleOpenEditUser : ''}>
         <Edit color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit User Data</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit User Data
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditUser}>
         <Box
           sx={{

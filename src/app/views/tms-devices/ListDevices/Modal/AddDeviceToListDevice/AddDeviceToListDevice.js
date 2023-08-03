@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Button,
   IconButton,
   Modal,
   // Tooltip,
@@ -28,14 +29,15 @@ const AddDeviceToListDevice = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Add devices to list device"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <QueuePlayNextIcon color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black', whiteSpace: 'nowrap' }}>
+        <Typography
+          style={{ marginLeft: '8px', color: 'black', whiteSpace: 'nowrap' }}
+          textTransform="none"
+        >
           Add devices to list device
         </Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+      </Button>
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box
           sx={{
@@ -43,7 +45,8 @@ const AddDeviceToListDevice = (props) => {
             top: '50%',
             left: '50%',
             width: '95%',
-            height: '95%',
+            minHeight: '35%',
+            maxHeight: '95%',
             transform: 'translate(-50%, -50%)',
             bgcolor: 'background.paper',
             boxShadow: 24,
@@ -56,9 +59,19 @@ const AddDeviceToListDevice = (props) => {
               sx={{
                 width: '100%',
                 display: 'flex',
-                justifyContent: 'flex-end',
+                justifyContent: 'space-between',
               }}
             >
+              {' '}
+              <Typography
+                variant="h6"
+                align="left"
+                fontWeight="fontWeightBold"
+                fontSize={22}
+                sx={{ marginTop: '15px', marginLeft: '10px' }}
+              >
+                Add devices to list devices
+              </Typography>
               <IconButton type="button">
                 <Close color="inherit" onClick={handleCloseModal} />
               </IconButton>

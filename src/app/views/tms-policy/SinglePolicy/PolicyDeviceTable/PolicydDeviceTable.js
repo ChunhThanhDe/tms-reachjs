@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, IconButton, ThemeProvider, Tooltip } from '@mui/material';
+import { Box, Card, IconButton, ThemeProvider, Tooltip, Typography } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
 import BottomBarSetup from './BottomBarSetup';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { getPolicyDevice } from 'app/Services/PolicyServices';
 import InfoIcon from '@mui/icons-material/Info';
 import { NavLink } from 'react-router-dom';
+import { convertDateTime } from 'app/components/ConvertTimeDate';
 
 // import { NavLink } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ const PolicDevicesTable = (props) => {
     page: 1,
     limit: 10,
     id: id,
+    search: null,
   });
   const [totalPage, setTotalPage] = useState();
   const [updateTable, setUpdateTable] = useState(true);
@@ -28,13 +30,15 @@ const PolicDevicesTable = (props) => {
   const handleLoadAPagePolicyAPK = async () => {
     let response = await getPolicyDevice(paramsPage);
     if (response.status === 200) {
-      // console.log(`Page List App: `, response);
-      if (response.data.totalElement === null && searchTerm !== null) {
-        toast.error('No elements match');
-      }
+      console.log(`Page List App: `, response);
       let arr = response.data.listResult;
       setArrApps(arr);
       setTotalPage(response.data.totalPage);
+    } else {
+      if (searchTerm !== null) {
+        toast.error('No elements match');
+        setArrApps([]);
+      }
     }
   };
 
@@ -70,7 +74,7 @@ const PolicDevicesTable = (props) => {
 
   useEffect(() => {
     if (resetTable) {
-      setParamPage({ page: 1, limit: 10, id: id });
+      setParamPage({ page: 1, limit: 10, id: id, search: null });
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
@@ -87,7 +91,7 @@ const PolicDevicesTable = (props) => {
           columns={columns}
           data={arrApps}
           options={{ actionsColumnIndex: -1 }}
-          enableTopToolbar={false}
+          enableTopToolbar={true}
           enableExpanding
           enableGlobalFilter={false}
           enableColumnFilters={false}
@@ -104,8 +108,20 @@ const PolicDevicesTable = (props) => {
             density: 'compact',
             columnVisibility: {
               id: false,
+              mac: false,
             },
-            columnOrder: ['id', 'sn', 'model', 'mrt-row-actions'],
+            columnOrder: [
+              'id',
+              'sn',
+              'mac',
+              'model',
+              'ip',
+              'firmwareVer',
+              'location',
+              'description',
+              'mrt-row-expand',
+              'mrt-row-actions',
+            ],
           }}
           renderRowActions={({ row, closeMenu }) => [
             <Tooltip arrow placement="bottom" title="Detail">
@@ -118,6 +134,25 @@ const PolicDevicesTable = (props) => {
               </NavLink>
             </Tooltip>,
           ]}
+          renderDetailPanel={({ row }) => (
+            <Box
+              sx={{
+                display: 'grid',
+                margin: 'auto',
+                gridTemplateColumns: '1fr 1fr',
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Typography fontSize={'15px'}>
+                Created Date: {convertDateTime(row.original.createdDate)}
+              </Typography>
+              <Typography fontSize={'15px'}>
+                Modified Date: {convertDateTime(row.original.modifiedDate)}
+              </Typography>
+            </Box>
+          )}
           renderBottomToolbarCustomActions={() => (
             <BottomBarSetup
               paramsPageDevices={paramsPage}

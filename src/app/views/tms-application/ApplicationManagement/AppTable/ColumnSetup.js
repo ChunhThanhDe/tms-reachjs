@@ -1,6 +1,3 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, IconButton, Tooltip } from '@mui/material';
-
 export const columns = [
   {
     accessorKey: 'id',

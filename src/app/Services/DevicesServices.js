@@ -4,11 +4,15 @@ export const getDeviceActiveNow = (data) => {
   return axios({
     method: 'get',
     url: `/TMS/api/device/now`,
-    params: data,
+    params: {
+      page: data.page,
+      limit: data.limit,
+      search: data.search,
+    },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
-      return error.response.data.message;
+      // console.log(`error status`, error.response);
+      return error.response;
     }
   });
 };
@@ -24,32 +28,31 @@ export const getAPageDevice = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
-export const postANewDevice = (data) => {
-  return axios({
-    method: 'post',
-    url: `/TMS/api/device`,
-    params: {
-      sn: data.san,
-      mac: data.mac,
-      date: data.date,
-      description: data.description,
-    },
-  }).catch(function (error) {
-    if (error.response) {
-      console.log(`error status`, error.response);
-      return error.response.data.message;
-    }
-  });
-};
+// export const postANewDevice = (data) => {
+//   return axios({
+//     method: 'post',
+//     url: `/TMS/api/device`,
+//     params: {
+//       sn: data.san,
+//       mac: data.mac,
+//       date: data.date,
+//       description: data.description,
+//     },
+//   }).catch(function (error) {
+//     if (error.response) {
+//       // console.log(`error status`, error.response);
+//       return error.response.data.message;
+//     }
+//   });
+// };
 
 export const putEditDescription = (data) => {
-  console.log(data);
   return axios.put(`/TMS/api/device/${data.id}`, {
     description: data.description,
   });
@@ -61,7 +64,7 @@ export const getADeviceInfo = (id) => {
     url: `/TMS/api/device/${id}`,
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -93,14 +96,13 @@ export const getADevicePerformance = (id, dayago) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const getAPageDeviceApp = (data, id) => {
-  console.log(data);
   return axios({
     method: 'get',
     url: `/TMS/api/device/${id}/application`,
@@ -113,14 +115,13 @@ export const getAPageDeviceApp = (data, id) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const getAPageDevicePolicy = (data, id) => {
-  console.log(data);
   return axios({
     method: 'get',
     url: `/TMS/api/device/${id}/devicePolicyDetail`,
@@ -132,14 +133,13 @@ export const getAPageDevicePolicy = (data, id) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
 };
 
 export const getAPageListDevices = (data) => {
-  console.log(data);
   return axios({
     method: 'get',
     url: `/TMS/api/listDevice`,
@@ -150,7 +150,7 @@ export const getAPageListDevices = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response.data.message;
     }
   });
@@ -165,14 +165,13 @@ export const putAPageListDevices = (data) => {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response.data.message;
       }
     });
 };
 
 export const postANewListDevices = (data) => {
-  console.log(data);
   return axios
     .post(`/TMS/api/listDevice`, {
       name: data.name,
@@ -181,7 +180,7 @@ export const postANewListDevices = (data) => {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response.data.message;
       }
     });
@@ -196,7 +195,7 @@ export const postDevicesToListDevices = (listDeviceID, deviceId) => {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(`error status`, error.response);
+        // console.log(`error status`, error.response);
         return error.response;
       }
     });
@@ -214,7 +213,7 @@ export const getDevicesInListDevices = (data) => {
     },
   }).catch(function (error) {
     if (error.response) {
-      console.log(`error status`, error.response);
+      // console.log(`error status`, error.response);
       return error.response;
     }
   });

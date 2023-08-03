@@ -66,7 +66,7 @@ const NotiIDManageTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
+      // console.log('change status');
       handleLoadAPagePolicy();
       setUpdateTable(false);
     }

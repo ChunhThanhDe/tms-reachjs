@@ -33,14 +33,13 @@ function AutoComplete({ label, selectedOption, setSelectedOption }) {
     let response = await getNotiID(paramsPage);
     if (response.status === 200) {
       let arr = response.data.listResult;
-      console.log(arr);
+      // console.log(arr);
       setArrNotiId(arr);
     }
   };
 
   const handleOnChange = (event, newValue) => {
     setSelectedOption(newValue);
-    console.log(newValue);
     setHasSelected(true);
   };
 
@@ -66,7 +65,7 @@ function AutoComplete({ label, selectedOption, setSelectedOption }) {
           <TextField
             {...params}
             label={label}
-            variant="standard"
+            variant="outlined"
             onChange={handleBarSearch}
             fullWidth
           />
@@ -138,7 +137,7 @@ const NewCommandModal = (props) => {
         commandNotificationId: selectedOption.id,
       };
       let response = await postCreateNewCommand(newListDevices);
-      console.log('createList', response);
+      // console.log('createList', response);
       if (response && response.statusCode === 500) {
         response.message.includes(`JSON parse error`)
           ? toast.error('Contact must be phone number')
@@ -172,7 +171,7 @@ const NewCommandModal = (props) => {
             p: 4,
             minWidth: 400,
             width: '65%',
-            minHeight: '45%',
+            minHeight: '35%',
           }}
         >
           <Typography variant="h6" component="h2" gutterBottom>
@@ -213,16 +212,9 @@ const NewCommandModal = (props) => {
           </Grid>
           <Box
             sx={{
-              position: 'fixed',
-              bottom: '1rem',
-              left: '50%',
-              transform: 'translate(-50%, 0)',
               display: 'flex',
               justifyContent: 'space-between',
-              width: '400px',
-              padding: '0 1rem',
-              backgroundColor: 'white',
-              zIndex: 999,
+              marginTop: '1rem',
             }}
           >
             <Button variant="contained" onClick={handleCloseModalNewPolicy}>

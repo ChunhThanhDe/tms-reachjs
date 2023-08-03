@@ -43,9 +43,9 @@ const initialValues = {
   // email: 'String',
   // password: 'admin',
   // remember: true,
-  email: 'root',
-  password: 'root',
-  remember: true,
+  email: '',
+  password: '',
+  remember: false,
 };
 
 // form field validation schema
@@ -69,7 +69,7 @@ const JwtLogin = () => {
   const handleFormSubmit = async (values) => {
     setLoading(true);
     let response = await login(values.email, values.password);
-    console.log(`jwtLogin res`, response);
+    // console.log(`jwtLogin res`, response);
     if (response === `Success`) {
       navigate('/');
     } else {
@@ -178,7 +178,13 @@ const JwtLogin = () => {
                     >
                       Login
                     </LoadingButton>
-                    <Paragraph style={{ color: 'red' }}>{errMessage ? errMessage : ''}</Paragraph>
+                    <Paragraph style={{ color: 'red' }}>
+                      {errMessage
+                        ? errMessage === 'Bad credentials'
+                          ? 'Wrong Password'
+                          : errMessage
+                        : ''}
+                    </Paragraph>
                   </form>
                 )}
               </Formik>

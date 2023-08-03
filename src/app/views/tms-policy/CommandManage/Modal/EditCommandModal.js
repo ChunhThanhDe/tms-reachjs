@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Box,
-  IconButton,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Grid,
-  Autocomplete,
-  // Tooltip,
-} from '@mui/material';
+import { Box, Button, Modal, Typography, TextField, Grid, Autocomplete } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { getNotiID, putEditCommand } from 'app/Services/PolicyServices';
 import ListSelect from 'app/components/List/ListSelect';
@@ -67,7 +57,7 @@ function AutoComplete({ label, defaultNoti, selectedOption, setSelectedOption })
           <TextField
             {...params}
             label={label}
-            variant="standard"
+            variant="outlined"
             onChange={handleBarSearch}
             fullWidth
           />
@@ -120,7 +110,7 @@ const EditCommandModal = (props) => {
       commandNotificationId: selectedOption.id,
     };
     let response = await putEditCommand(data);
-    console.log('editCommandResponse', response);
+    // console.log('editCommandResponse', response);
     if (response && response.status === 200) {
       toast.success(`Change command data success`);
       setUpdatetable(true);
@@ -132,12 +122,12 @@ const EditCommandModal = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit Policy"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Command</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit Command
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

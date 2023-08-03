@@ -17,7 +17,6 @@ import { columns } from './ColumnSetup';
 import tableTheme from 'app/components/Table/TableTheme';
 import { toast } from 'react-toastify';
 import { getPolicyAPK, deleteMapPolicyApk } from 'app/Services/PolicyServices';
-import ModalDetail from './ModalDetail';
 import { Delete } from '@mui/icons-material';
 
 const DeleteAPKinPolicy = ({ policyId, apkId, setUpdateTable }) => {
@@ -30,7 +29,7 @@ const DeleteAPKinPolicy = ({ policyId, apkId, setUpdateTable }) => {
   };
   const handleDelete = async () => {
     let response = await deleteMapPolicyApk(policyId, apkId);
-    console.log(`Page List App: `, response);
+    // console.log(`Page List App: `, response);
     if (response.status === 204) {
       toast.success('Delete success');
       setUpdateTable(true);
@@ -75,11 +74,15 @@ const PolicyAPKTable = (props) => {
     id: id,
   };
   const [updateTable, setUpdateTable] = useState(true);
+  // const EMPTY_ROW = { packagename: '' };
 
   const handleLoadAPagePolicyAPK = async () => {
     let response = await getPolicyAPK(paramsPageDeviceApps);
     if (response.status === 200) {
       let arr = response.data.listResult;
+      // while (arr.length < 3) {
+      //   arr.push(EMPTY_ROW);
+      // }
       setArrApps(arr);
     }
   };
@@ -92,41 +95,44 @@ const PolicyAPKTable = (props) => {
 
   return (
     <Card>
-      <ThemeProvider theme={tableTheme}>
-        <MaterialReactTable
-          columns={columns}
-          data={arrApps}
-          options={{ actionsColumnIndex: -1 }}
-          enableTopToolbar={false}
-          enableExpanding
-          enableGlobalFilter={false}
-          enableColumnFilters={false}
-          enableColumnActions={false}
-          enablePagination={false}
-          enableSorting={false}
-          enableBottomToolbar={false}
-          muiTableBodyRowProps={{ hover: false }}
-          defaultColumn={{
-            maxSize: 120,
-            minSize: 10,
-            size: 100, //default size is usually 180
-          }}
-          initialState={{
-            density: 'compact',
-            columnOrder: ['packagename', 'mrt-row-actions'],
-          }}
-          renderRowActions={({ row }) => [
-            <Box>
-              <ModalDetail row={row} />
-              <DeleteAPKinPolicy
-                policyId={id}
-                apkId={row.original.id}
-                setUpdateTable={setUpdateTable}
-              />
-            </Box>,
-          ]}
-        />
-      </ThemeProvider>
+      {arrApps.length > 0 && (
+        <ThemeProvider theme={tableTheme}>
+          <MaterialReactTable
+            columns={columns}
+            data={arrApps}
+            options={{ actionsColumnIndex: -1 }}
+            enableTopToolbar={false}
+            enableExpanding
+            enableGlobalFilter={false}
+            enableColumnFilters={false}
+            enableColumnActions={false}
+            enablePagination={false}
+            enableSorting={false}
+            enableBottomToolbar={false}
+            muiTableBodyRowProps={{ hover: false }}
+            defaultColumn={{
+              maxSize: 120,
+              minSize: 10,
+              size: 100, //default size is usually 180
+            }}
+            initialState={{
+              density: 'comfortable',
+              columnOrder: ['id', 'packagename', 'version', 'apkfileUrl', 'mrt-row-actions'],
+            }}
+            renderRowActions={({ row }) =>
+              row.original.packagename !== '' && (
+                <Box>
+                  <DeleteAPKinPolicy
+                    policyId={id}
+                    apkId={row.original.id}
+                    setUpdateTable={setUpdateTable}
+                  />
+                </Box>
+              )
+            }
+          />
+        </ThemeProvider>
+      )}
     </Card>
   );
 };

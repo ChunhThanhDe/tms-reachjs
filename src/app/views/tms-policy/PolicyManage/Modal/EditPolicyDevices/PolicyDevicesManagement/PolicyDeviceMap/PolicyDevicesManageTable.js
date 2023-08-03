@@ -32,7 +32,7 @@ const PolicyDevicesManageTable = (props) => {
       toast.error('There is no device selected.');
     } else {
       let res = await postMapPolicyDevices(id, selectedRows);
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         toast.success('Add device success');
         setAddSuccess(true);
@@ -44,7 +44,7 @@ const PolicyDevicesManageTable = (props) => {
 
   const handleLoadAPageDeivice = async () => {
     let response = await getAPageDevice(paramsPageAPK);
-    console.log(response);
+    // console.log(response);
     if (response.status === 200) {
       if (response.data.totalElement === null) {
         if (searchTerm !== null) {
@@ -90,7 +90,6 @@ const PolicyDevicesManageTable = (props) => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageDeivice();
       setUpdateTable(false);
     }

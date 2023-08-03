@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getADevicePerformance } from 'app/Services/DevicesServices';
 import LineChart from 'app/components/Chart/LineChar';
-import { Card } from '@mui/material';
+import { Card, Grid, Typography } from '@mui/material';
 
 const DevicePerformance = (props) => {
   const { id } = props;
@@ -13,7 +13,7 @@ const DevicePerformance = (props) => {
   const handleLoadDeviceData = async () => {
     let response = await getADevicePerformance(id, 1);
     if (response.status === 200) {
-      console.log(response);
+      // console.log(response);
       let arr = response.data;
       let newCPU = [];
       let newMemory = [];

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, ThemeProvider, Typography, Tooltip, IconButton } from '@mui/material';
+import { Box, Card, ThemeProvider, Typography, Button } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
-import { getAPageDeviceApp } from 'app/Services/DevicesServices';
 import BottomBarSetup from './BottomBarSetup';
 import tableTheme from 'app/components/Table/TableTheme';
 import TopBarSetup from './TopBarSetup';
@@ -19,7 +18,7 @@ const DeviceAppTable = (props) => {
   const [arrApps, setArrApps] = useState([]);
   const [paramsPageDeviceApps, setParamPageDeviceApps] = useState({
     page: 1,
-    limit: 10,
+    limit: 4,
     search: null,
   });
   const [totalPage, setTotalPage] = useState();
@@ -30,7 +29,7 @@ const DeviceAppTable = (props) => {
   const handleLoadAPageDevice = async () => {
     let response = await getAPageAppDevice(paramsPageDeviceApps, id);
     if (response.status === 200) {
-      console.log(`Page List device: `, response);
+      // console.log(`Page List device: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
         toast.error('No elements match');
       }
@@ -73,7 +72,7 @@ const DeviceAppTable = (props) => {
 
   useEffect(() => {
     if (resetTable) {
-      setParamPageDeviceApps({ page: 1, limit: 10 });
+      setParamPageDeviceApps({ page: 1, limit: 4, search: null });
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
@@ -89,6 +88,15 @@ const DeviceAppTable = (props) => {
 
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        List of devices with app installed
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
@@ -124,17 +132,17 @@ const DeviceAppTable = (props) => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <Box>
-              {/* <Tooltip arrow placement="bottom" title="Detail"> */}
+            <Box flexBasis="25%">
               <NavLink
                 to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
               >
-                <IconButton>
+                <Button>
                   <InfoIcon color="primary" />
-                  <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
-                </IconButton>
+                  <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+                    Detail
+                  </Typography>
+                </Button>
               </NavLink>
-              {/* </Tooltip> */}
             </Box>,
           ]}
           renderDetailPanel={({ row }) => (

@@ -77,7 +77,7 @@ const NewListDeviceModal = (props) => {
         description: description,
       };
       let response = await postANewListDevices(newListDevices);
-      console.log('createList', response);
+      // console.log('createList', response);
       if (response && response.statusCode === 500) {
         response.message.includes(`JSON parse error`)
           ? toast.error('Contact must be phone number')

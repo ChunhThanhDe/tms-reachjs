@@ -1,12 +1,7 @@
 import { Breadcrumb } from 'app/components';
 import { useLocation } from 'react-router-dom';
-import { Fragment } from 'react';
-import {
-  Card,
-  // Card,
-  Grid,
-} from '@mui/material';
-// import { titleStyle, Title } from 'app/components/Chart/ChartTitle';
+import { Grid, Stack } from '@mui/material';
+import { Container } from 'app/components/TagPage/CustomTag';
 import { ContentBox } from 'app/components/TagPage/CustomTag';
 import DeviceInfo from './DeviceInfo';
 import DevicePerformance from './DevicePerformance';
@@ -19,7 +14,7 @@ const SingleDevice = () => {
   const deviceSn = searchParams.get('sn');
 
   return (
-    <Fragment>
+    <Container>
       <Breadcrumb
         routeSegments={[
           { name: 'Devices Manager', path: '/tms-devices/devices-management' },
@@ -30,29 +25,27 @@ const SingleDevice = () => {
           },
         ]}
       />
-      <ContentBox className="analytics">
-        <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
-          <Grid item lg={3} md={3} sm={3} xs={12}>
-            <DeviceInfo id={deviceId} />
-          </Grid>
-          <Grid item lg={9} md={9} sm={9} xs={12}>
-            <Card style={{ height: '100%', overflow: 'auto' }}>
-              <br></br>
-              <br></br>
+      <Stack spacing={3}>
+        <ContentBox className="analytics">
+          <Grid container spacing={2} sx={{ mb: 2 }} alignItems="stretch">
+            <Grid item lg={3} md={3} sm={3} xs={12}>
+              <DeviceInfo id={deviceId} />
+            </Grid>
+            <Grid item lg={9} md={9} sm={9} xs={12}>
               <DevicePerformance id={deviceId} />
-            </Card>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={1}>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <DeviceAppTable deviceID={deviceId} />
+          <Grid container spacing={1}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <DeviceAppTable deviceID={deviceId} />
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <DevicePolicyTable deviceID={deviceId} />
+            </Grid>
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <DevicePolicyTable deviceID={deviceId} />
-          </Grid>
-        </Grid>
-      </ContentBox>
-    </Fragment>
+        </ContentBox>
+      </Stack>
+    </Container>
   );
 };
 

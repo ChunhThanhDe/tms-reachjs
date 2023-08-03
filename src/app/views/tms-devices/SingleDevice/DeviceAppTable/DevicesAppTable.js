@@ -33,7 +33,7 @@ const DeviceAppTable = (props) => {
   const handleLoadAPageDevice = async () => {
     let response = await getAPageDeviceApp(paramsPageDeviceApps, deviceID);
     if (response.status === 200) {
-      console.log(`Page List App: `, response);
+      // console.log(`Page List App: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
         toast.error('No elements match');
       }
@@ -81,11 +81,9 @@ const DeviceAppTable = (props) => {
     setUpdateTable(true);
   };
   useEffect(() => {
-    console.log(isSystem);
     handleIsSystem();
   }, [isSystem]);
   useEffect(() => {
-    console.log(isAlive);
     handleIsAlive();
   }, [isAlive]);
   useEffect(() => {
@@ -101,6 +99,15 @@ const DeviceAppTable = (props) => {
 
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        List of apps
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
@@ -122,6 +129,7 @@ const DeviceAppTable = (props) => {
             density: 'comfortable',
             columnVisibility: {
               id: false,
+              packagename: false,
             },
             columnOrder: [
               'id',
@@ -129,7 +137,7 @@ const DeviceAppTable = (props) => {
               'packagename',
               'version',
               'issystem',
-              'mrt-row-expand',
+              // 'mrt-row-expand',
               'mrt-row-actions',
             ],
           }}

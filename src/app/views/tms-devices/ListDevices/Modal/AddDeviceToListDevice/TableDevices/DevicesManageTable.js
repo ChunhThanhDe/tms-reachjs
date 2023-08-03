@@ -43,7 +43,7 @@ const DeviceManageTable = (props) => {
   const handleLoadAPageDevice = async () => {
     // console.log(paramsPageDevices);
     let response = await getAPageDevice(paramsPageDevices);
-    console.log(`Page List: `, response);
+    // console.log(`Page List: `, response);
     if (response.status === 200) {
       // console.log(`Page List: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
@@ -84,7 +84,6 @@ const DeviceManageTable = (props) => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      console.log('change status');
       handleLoadAPageDevice();
       setUpdateTable(false);
     }

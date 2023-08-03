@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Box,
-  IconButton,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Grid,
-  Tooltip,
-} from '@mui/material';
+import { Box, Button, Modal, Typography, TextField, Grid } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { putAPageListDevices } from 'app/Services/DevicesServices';
 
@@ -51,7 +42,7 @@ const EditListDeviceModal = (props) => {
       name: name,
     };
     let response = await putAPageListDevices(data);
-    console.log('editUserResponse', response);
+    // console.log('editUserResponse', response);
     if (response && response.status === 200) {
       toast.success(`Change list devices data success`);
       setUpdatetable(true);
@@ -63,12 +54,12 @@ const EditListDeviceModal = (props) => {
 
   return (
     <>
-      {/* <Tooltip arrow placement="bottom" title="Edit Description"> */}
-      <IconButton onClick={handleOpenEditDescription}>
+      <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
-        <Typography style={{ marginLeft: '8px', color: 'black' }}>Edit Description</Typography>
-      </IconButton>
-      {/* </Tooltip> */}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{

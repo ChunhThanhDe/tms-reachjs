@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Divider, InputAdornment, Checkbox } from '@mui/material';
+import { TextField, Divider, InputAdornment } from '@mui/material';
 import { IconButton, Grid, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Close, RestartAlt } from '@mui/icons-material';
@@ -36,7 +36,6 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          type="search"
           label="Search"
           variant="outlined"
           size="small"

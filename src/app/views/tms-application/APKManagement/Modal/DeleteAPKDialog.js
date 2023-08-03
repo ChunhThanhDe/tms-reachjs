@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  Tooltip,
   IconButton,
   Typography,
 } from '@mui/material';
@@ -23,7 +22,7 @@ const DeleteAPKDialog = (props) => {
   //Delete user
   const handleDelete = async () => {
     let responseDel = await deleteAPKfile([currentId]);
-    console.log('ResponseDel: ', responseDel);
+    // console.log('ResponseDel: ', responseDel);
     if (responseDel.status === 200) {
       setUpdatetable(true);
       toast.success('Delete APK file success');

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, ThemeProvider, Typography, Tooltip, IconButton } from '@mui/material';
+import { Box, Card, ThemeProvider, Typography, Button } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
-import { getAPageDeviceApp } from 'app/Services/DevicesServices';
 import BottomBarSetup from './BottomBarSetup';
 import tableTheme from 'app/components/Table/TableTheme';
 import TopBarSetup from './TopBarSetup';
@@ -59,7 +58,6 @@ const AppTable = () => {
   const handleResetTable = () => {
     setResetTable(true);
     setSearchTerm('');
-    // console.log('resetTable');
   };
   const handleSearchMode = () => {
     setParamPageDeviceApps({ ...paramsPageDeviceApps, packagename: searchTerm });
@@ -74,18 +72,22 @@ const AppTable = () => {
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      // console.log('change status');
       handleLoadAPageDevice();
       setUpdateTable(false);
     }
   }, [resetTable, updateTable]);
 
-  // useEffect(() => {
-  //   console.log(arrUsers);
-  // }, [updateTable]);
-
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        Applications
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
@@ -119,17 +121,17 @@ const AppTable = () => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <Box>
-              {/* <Tooltip arrow placement="bottom" title="Detail"> */}
+            <Box flexBasis="25%">
               <NavLink
                 to={`/tms-application/application-management/application?id=${row.original.id}&name=${row.original.name}`}
               >
-                <IconButton>
+                <Button>
                   <InfoIcon color="primary" />
-                  <Typography style={{ marginLeft: '8px', color: 'black' }}>Detail</Typography>
-                </IconButton>
+                  <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+                    Detail
+                  </Typography>
+                </Button>
               </NavLink>
-              {/* </Tooltip> */}
             </Box>,
           ]}
           renderDetailPanel={({ row }) => (

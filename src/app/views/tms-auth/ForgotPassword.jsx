@@ -30,9 +30,7 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('admin@example.com');
 
-  const handleFormSubmit = () => {
-    console.log(email);
-  };
+  // const handleFormSubmit = () => {};
 
   return (
     <ForgotPasswordRoot>
@@ -44,7 +42,9 @@ const ForgotPassword = () => {
             </JustifyBox>
 
             <ContentBox>
-              <form onSubmit={handleFormSubmit}>
+              <form
+              // onSubmit={handleFormSubmit}
+              >
                 <TextField
                   type="email"
                   name="email"

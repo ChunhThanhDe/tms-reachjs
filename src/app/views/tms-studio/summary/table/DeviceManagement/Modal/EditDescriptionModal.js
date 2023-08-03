@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Box,
-  IconButton,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Grid,
-  Tooltip,
-} from '@mui/material';
+import { Box, Button, Modal, Typography, TextField, Grid } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { putEditDescription } from 'app/Services/DevicesServices';
 
@@ -45,7 +36,7 @@ const EditDescriptionModal = (props) => {
       description: description,
     };
     let responseEditUser = await putEditDescription(data);
-    console.log('editUserResponse', responseEditUser);
+    // console.log('editUserResponse', responseEditUser);
     if (responseEditUser && responseEditUser.status === 200) {
       toast.success(`Change description success`);
       setUpdatetable(true);
@@ -55,11 +46,12 @@ const EditDescriptionModal = (props) => {
 
   return (
     <>
-      <Tooltip arrow placement="bottom" title="Edit Description">
-        <IconButton onClick={handleOpenEditDescription}>
-          <Edit color="primary" />
-        </IconButton>
-      </Tooltip>
+      <Button onClick={handleOpenEditDescription}>
+        <Edit color="primary" />{' '}
+        <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+          Edit
+        </Typography>
+      </Button>
       <Modal open={openModal} onClose={handleCloseModalEditDescription}>
         <Box
           sx={{
