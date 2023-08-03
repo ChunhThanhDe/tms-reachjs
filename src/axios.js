@@ -3,7 +3,7 @@ import axios from 'axios';
 // const API_URL = 'http://localhost:8082';
 // const API_URL = 'http://192.168.0.33:8082';
 // const API_URL = 'http://192.168.68.22:8082';
-const API_URL = 'http://192.168.20.7:8082';
+const API_URL = 'http://54.251.0.2:8082';
 // const API_URL = 'http://192.168.0.14:8082';
 // const API_URL = 'http://192.168.0.6:8082';
 // const API_URL = 'http://192.168.68.107:8082';
