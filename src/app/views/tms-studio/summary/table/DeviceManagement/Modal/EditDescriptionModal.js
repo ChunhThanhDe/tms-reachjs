@@ -65,6 +65,7 @@ const EditDescriptionModal = (props) => {
             boxShadow: 24,
             p: 4,
             minWidth: 400,
+            minHeight: 350,
           }}
         >
           <Typography variant="h6" component="h2" gutterBottom>

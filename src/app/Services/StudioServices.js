@@ -46,6 +46,17 @@ export const getStudioDeviceIn30DaysLineChart = () => {
     }
   });
 };
+
+export const getDeviceIn7DaysBarChart = (id) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/area/device/device/${id}`,
+  }).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
 export const getPolicyPieChart = (type) => {
   return axios({
     method: 'get',
@@ -87,6 +98,21 @@ export const getSingleApplicationPieChart = (id, type) => {
     url: `/TMS/api/chart/pie/application/${id}`,
     params: {
       type: type,
+    },
+  }).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
+
+export const getSingleDeviceReportPieChart = (id, packagename, dayago) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/chart/area/device/${id}/application`,
+    params: {
+      packagename: packagename,
+      dayago: dayago,
     },
   }).catch(function (error) {
     if (error.response) {

@@ -4,7 +4,7 @@ import { topBarHeight } from 'app/utils/constant';
 import React, { useEffect, useState } from 'react';
 import { getSearchResult } from 'app/Services/User_Auth_Service';
 
-function SearchBox({ selectedOption, setSelectedOption }) {
+export function SearchBox({ selectedOption, setSelectedOption }) {
   const [arr, setArr] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -22,6 +22,10 @@ function SearchBox({ selectedOption, setSelectedOption }) {
     // console.log(arr);
   };
 
+  const handleAutocompleteClose = () => {
+    setArr([]);
+  };
+
   useEffect(() => {
     if (searchTerm !== '') {
       handleSearchMode();
@@ -36,13 +40,13 @@ function SearchBox({ selectedOption, setSelectedOption }) {
 
   return (
     <Grid container alignItems="center" justify="space-between">
-      <Box width={'20px'} />
       <Grid item xs>
         <Autocomplete
           options={arr}
           getOptionLabel={(option) => option.sn}
           id="include-input-in-list"
           value={selectedOption}
+          onClose={handleAutocompleteClose}
           sx={{ marginBottom: '5px' }}
           InputProps={{
             endAdornment: [],
@@ -105,6 +109,7 @@ const MatxSearchBox = () => {
       {open && (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
           <SearchContainer>
+            <Box width={'20px'} />
             <SearchBox selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             <IconButton onClick={toggle} sx={{ mx: 2, verticalAlign: 'middle' }}>
               <Icon sx={{ color: textColor }}>close</Icon>

@@ -43,6 +43,13 @@ export const columns = [
     },
   },
   {
+    accessorKey: 'rom',
+    header: 'ROM',
+    muiTableBodyCellEditTextFieldProps: {
+      required: true,
+    },
+  },
+  {
     accessorKey: 'location',
     header: 'Location',
     muiTableBodyCellEditTextFieldProps: {

@@ -1,5 +1,5 @@
 import AuthGuard from 'app/auth/AuthGuard';
-import chartsRoute from 'app/views/charts/ChartsRoute';
+import chartsRoute from 'app/views/tms-report/ChartsRoute';
 import studioRoutes from 'app/views/tms-studio/StudioRoutes';
 import UserManageRoutes from 'app/views/tms-user/UserManageRoutes';
 import AccountManageRoutes from './views/tms-account/AccountManagerRoutes';

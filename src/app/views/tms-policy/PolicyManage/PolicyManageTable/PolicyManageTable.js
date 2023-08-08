@@ -12,10 +12,10 @@ import { NavLink } from 'react-router-dom';
 import { Pause, PlayArrow, Stop } from '@mui/icons-material';
 import EditPolicyAPK from '../Modal/EditPolicyApk/EditPolicyAPK';
 import { convertDateTime } from 'app/components/ConvertTimeDate';
-import NotStartedIcon from '@mui/icons-material/NotStarted';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
+// import NotStartedIcon from '@mui/icons-material/NotStarted';
+// import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+// import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+// import StopCircleIcon from '@mui/icons-material/StopCircle';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import EditPolicyDevices from '../Modal/EditPolicyDevices/EditPolicyDevices';
 
@@ -111,7 +111,7 @@ const PolicyManageTable = () => {
     },
     {
       accessorKey: 'commandName',
-      header: 'Command',
+      header: 'Command Name',
       enableEditing: false,
       enableSorting: false,
     },
@@ -138,21 +138,33 @@ const PolicyManageTable = () => {
       Cell: (row) => (
         <Box>
           {row.row.original.status === 0 ? (
-            <Tooltip arrow placement="top" title="Pennding">
-              <NotStartedIcon color="primary" />
-            </Tooltip>
-          ) : row.row.original.status === 1 ? (
-            <Tooltip arrow placement="top" title="Running">
-              <PlayCircleIcon color="success" />
-            </Tooltip>
-          ) : row.row.original.status === 2 ? (
-            <Tooltip arrow placement="top" title="Pause">
-              <PauseCircleIcon color="warning" />
-            </Tooltip>
+            <Typography color="grey" fontWeight={'bold'}>
+              Pennding
+            </Typography>
+          ) : // <Tooltip arrow placement="top" title="Pennding">
+          //   <NotStartedIcon color="disabled" />
+          // </Tooltip>
+          row.row.original.status === 1 ? (
+            <Typography color="green" fontWeight={'bold'}>
+              Running
+            </Typography>
+          ) : // <Tooltip arrow placement="top" title="Running">
+          //   <PlayCircleIcon color="success" />
+          // </Tooltip>
+          row.row.original.status === 2 ? (
+            <Typography color="blue" fontWeight={'bold'}>
+              Pause
+            </Typography>
           ) : (
-            <Tooltip arrow placement="top" title="Stop">
-              <StopCircleIcon color="error" />
-            </Tooltip>
+            // <Tooltip arrow placement="top" title="Pause">
+            //   <PauseCircleIcon color="warning" />
+            // </Tooltip>
+            <Typography color="error" fontWeight={'bold'}>
+              Stop
+            </Typography>
+            // <Tooltip arrow placement="top" title="Stop">
+            //   <StopCircleIcon color="error" />
+            // </Tooltip>
           )}
         </Box>
       ),
@@ -166,42 +178,48 @@ const PolicyManageTable = () => {
       muiTableBodyCellProps: {
         align: 'center',
       },
-      Cell: ({ row }) => (
+      Cell: (row) => (
         <Box sx={{ display: 'flex', gap: '1rem' }}>
           <Tooltip
             arrow
             placement="top"
-            title={row.original.status === 2 ? 'Continue' : 'Run'}
+            title={row.row.original.status === 2 ? 'Continue' : 'Run'}
             disabled={
-              !(row.original.status === 0 || row.original.status === 3 || row.original.status === 2)
+              !(
+                row.row.original.status === 0 ||
+                row.row.original.status === 3 ||
+                row.row.original.status === 2
+              )
             }
           >
             <IconButton
               color={
-                row.original.status === 0 || row.original.status === 3 || row.original.status === 2
+                row.row.original.status === 0 ||
+                row.row.original.status === 3 ||
+                row.row.original.status === 2
                   ? 'primary'
                   : 'inherit'
               }
               disabled={
                 !(
-                  row.original.status === 0 ||
-                  row.original.status === 3 ||
-                  row.original.status === 2
+                  row.row.original.status === 0 ||
+                  row.row.original.status === 3 ||
+                  row.row.original.status === 2
                 )
               }
               onClick={() => {
-                handlePolicyAction(row.original.id, 1);
+                handlePolicyAction(row.row.original.id, 1);
               }}
             >
-              {row.original.status === 2 ? <SlowMotionVideoIcon /> : <PlayArrow />}
+              {row.row.original.status === 2 ? <SlowMotionVideoIcon /> : <PlayArrow />}
             </IconButton>
           </Tooltip>
-          <Tooltip arrow placement="top" title="Pause" disabled={row.original.status !== 1}>
+          <Tooltip arrow placement="top" title="Pause" disabled={row.row.original.status !== 1}>
             <IconButton
-              color={row.original.status === 1 ? 'warning' : 'inherit'}
-              disabled={row.original.status !== 1}
+              color={row.row.original.status === 1 ? 'warning' : 'inherit'}
+              disabled={row.row.original.status !== 1}
               onClick={() => {
-                handlePolicyAction(row.original.id, 2);
+                handlePolicyAction(row.row.original.id, 2);
               }}
             >
               <Pause />
@@ -211,13 +229,15 @@ const PolicyManageTable = () => {
             arrow
             placement="top"
             title="Stop"
-            disabled={!(row.original.status === 1 || row.original.status === 2)}
+            disabled={!(row.row.original.status === 1 || row.row.original.status === 2)}
           >
             <IconButton
-              color={row.original.status === 1 || row.original.status === 2 ? 'error' : 'inherit'}
-              disabled={!(row.original.status === 1 || row.original.status === 2)}
+              color={
+                row.row.original.status === 1 || row.row.original.status === 2 ? 'error' : 'inherit'
+              }
+              disabled={!(row.row.original.status === 1 || row.row.original.status === 2)}
               onClick={() => {
-                handlePolicyAction(row.original.id, 3);
+                handlePolicyAction(row.row.original.id, 3);
               }}
             >
               <Stop />

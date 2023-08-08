@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Box, Button, Modal, Typography, TextField, Grid } from '@mui/material';
 import { Edit } from '@mui/icons-material';
@@ -6,7 +6,78 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { putEditCommand } from 'app/Services/PolicyServices';
+import { putEditPolicy } from 'app/Services/PolicyServices';
+import { getAPageCommand } from 'app/Services/PolicyServices';
+import Autocomplete from '@mui/material/Autocomplete';
+
+function AutoComplete({ label, defaultCommand, selectedOption, setSelectedOption }) {
+  const [arrNotiId, setArrNotiId] = useState([]);
+  const [paramsPage, setParamPage] = useState({
+    page: 1,
+    limit: 10,
+    search: null,
+  });
+  const [hasSelected, setHasSelected] = useState(false);
+
+  const handleBarSearch = (event) => {
+    setParamPage({ ...paramsPage, search: event.target.value });
+    setHasSelected(false);
+  };
+
+  const handleLoadAPage = async () => {
+    let response = await getAPageCommand(paramsPage);
+    if (response.status === 200) {
+      let arr = response.data.listResult;
+      setArrNotiId(arr);
+    }
+  };
+
+  const handleOnChange = (event, newValue) => {
+    setSelectedOption(newValue);
+    setHasSelected(true);
+  };
+
+  useEffect(() => {
+    handleLoadAPage();
+  }, [paramsPage]);
+
+  useEffect(() => {
+    if (!hasSelected) {
+      setParamPage({ ...paramsPage, search: null });
+    }
+  }, [hasSelected]);
+
+  useEffect(() => {
+    if (!hasSelected && arrNotiId.length > 0) {
+      const defaultNotiObj = arrNotiId.find((item) => item.name === defaultCommand);
+      setSelectedOption(defaultNotiObj);
+      setParamPage({ ...paramsPage, search: null });
+      setHasSelected(true);
+    }
+  }, [hasSelected, arrNotiId, defaultCommand, setSelectedOption, paramsPage]);
+
+  return (
+    <div>
+      <Typography>Recent Command Name: {selectedOption ? selectedOption.name : ''}</Typography>
+      <br />
+      <Autocomplete
+        options={arrNotiId}
+        getOptionLabel={(option) => option.name}
+        id="include-input-in-list"
+        onChange={handleOnChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            variant="outlined"
+            onChange={handleBarSearch}
+            fullWidth
+          />
+        )}
+      />
+    </div>
+  );
+}
 
 const EditPolicyModal = (props) => {
   const { row, setUpdatetable } = props;
@@ -15,16 +86,18 @@ const EditPolicyModal = (props) => {
   const [policyname, setPolicyname] = useState(row.original.policyname);
   const preAction = row.original.action;
   const prePolicyName = row.original.policyname;
+  const prevCommand = row.original.commandName;
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  // const handleResetTable = () => {
-  //   setResettable(false);
-  // };
   const handleOpenEditDescription = () => {
     setOpenModal((prevState) => !prevState);
   };
 
   const handleCloseModalEditDescription = () => {
     setOpenModal((prevState) => !prevState);
+    setSelectedOption(null);
+    setPolicyname();
+    setAction();
   };
 
   const handlePolicyActionChange = (event) => {
@@ -36,7 +109,11 @@ const EditPolicyModal = (props) => {
   };
 
   const handleEditPolicy = async () => {
-    if (action === preAction && prePolicyName === policyname) {
+    if (
+      action === preAction &&
+      prePolicyName === policyname &&
+      prevCommand === selectedOption.name
+    ) {
       toast.info('Nothing changes');
       handleCloseModalEditDescription();
       return;
@@ -48,8 +125,9 @@ const EditPolicyModal = (props) => {
       id: row.original.id,
       policyname: policyname,
       action: action,
+      commandName: selectedOption.name,
     };
-    let response = await putEditCommand(data);
+    let response = await putEditPolicy(data);
     // console.log('editPolicyResponse', response);
     if (response && response.status === 200) {
       toast.success(`Change list devices data success`);
@@ -117,6 +195,14 @@ const EditPolicyModal = (props) => {
                   <FormControlLabel value={3} control={<Radio />} label="Run Command" />
                 </RadioGroup>
               </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <AutoComplete
+                label={'Command'}
+                defaultCommand={prevCommand}
+                selectedOption={selectedOption}
+                setSelectedOption={setSelectedOption}
+              />
             </Grid>
           </Grid>
           <Box

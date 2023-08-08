@@ -30,7 +30,7 @@ const DevicePolicyTable = (props) => {
   const handleLoadAPageDevice = async () => {
     let response = await getAPageDevicePolicy(paramsPageDeviceApps, deviceID);
     if (response.status === 200) {
-      // console.log(`Page List Policy: `, response);
+      console.log(`Page List Policy: `, response);
       if (response.data.totalElement === null && searchTerm !== null) {
         toast.error('No elements match');
       }

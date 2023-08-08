@@ -30,11 +30,11 @@ export const navigations = [
     icon: 'security',
     path: '/tms-admin/user-management',
   },
-  // {
-  //   name: 'Charts',
-  //   icon: 'trending_up',
-  //   children: [{ name: 'Echarts', path: '/charts/echarts', iconText: 'F' }],
-  // },
+  {
+    name: 'Analytics',
+    icon: 'trending_up',
+    children: [{ name: 'Report', path: '/analytics/report', iconText: 'F' }],
+  },
 ];
 
 export const navigationsUser = [
@@ -64,9 +64,9 @@ export const navigationsUser = [
       { name: 'Notification', path: '/tms-policy/notificationID-management' },
     ],
   },
-  // {
-  //   name: 'Charts',
-  //   icon: 'trending_up',
-  //   children: [{ name: 'Echarts', path: '/charts/echarts', iconText: 'F' }],
-  // },
+  {
+    name: 'Analytics',
+    icon: 'trending_up',
+    children: [{ name: 'Report', path: '/analytics/report', iconText: 'F' }],
+  },
 ];

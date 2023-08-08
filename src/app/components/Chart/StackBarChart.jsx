@@ -51,7 +51,7 @@ const StackBarChart = ({ data, option = {}, legend }) => {
         stack: 'stack',
         barWidth: '40%',
         itemStyle: {
-          color: colors[7],
+          color: colors[6],
           emphasis: {
             shadowBlur: 10,
             shadowOffsetX: 0,

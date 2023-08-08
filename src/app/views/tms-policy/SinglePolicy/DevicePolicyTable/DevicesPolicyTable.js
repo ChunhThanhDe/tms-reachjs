@@ -1,91 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, IconButton, ThemeProvider, Tooltip, Typography } from '@mui/material';
+import { Box, Card, ThemeProvider, Typography, Tooltip, IconButton } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
+import { getAPagePolicyDevices } from 'app/Services/PolicyServices';
 import BottomBarSetup from './BottomBarSetup';
 import tableTheme from 'app/components/Table/TableTheme';
 import TopBarSetup from './TopBarSetup';
 import { toast } from 'react-toastify';
-import { getPolicyDevice } from 'app/Services/PolicyServices';
 import InfoIcon from '@mui/icons-material/Info';
-import { NavLink } from 'react-router-dom';
 import { convertDateTime } from 'app/components/ConvertTimeDate';
+import { NavLink } from 'react-router-dom';
 
 // import { NavLink } from 'react-router-dom';
 
-const PolicDevicesTable = (props) => {
+const DevicePolicyTable = (props) => {
   const { id } = props;
   const [arrApps, setArrApps] = useState([]);
-  const [paramsPage, setParamPage] = useState({
+  const [paramsPageDeviceApps, setParamPageDeviceApps] = useState({
     page: 1,
-    limit: 10,
-    id: id,
-    search: null,
+    limit: 5,
+    status: 3,
   });
   const [totalPage, setTotalPage] = useState();
   const [updateTable, setUpdateTable] = useState(true);
   const [resetTable, setResetTable] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [status, setStatus] = useState(3);
 
-  const handleLoadAPagePolicyAPK = async () => {
-    let response = await getPolicyDevice(paramsPage);
+  const handleLoadAPageDevice = async () => {
+    let response = await getAPagePolicyDevices(paramsPageDeviceApps, id);
     if (response.status === 200) {
       console.log(`Page List devices: `, response);
+      if (response.data.totalElement === null && searchTerm !== null) {
+        toast.error('No elements match');
+      }
       let arr = response.data.listResult;
       setArrApps(arr);
       setTotalPage(response.data.totalPage);
-    } else {
-      if (searchTerm !== null) {
-        toast.error('No elements match');
-        setArrApps([]);
-      }
+      setUpdateTable(false);
+    }
+  };
+
+  const handleMoveToNextPage = () => {
+    if (paramsPageDeviceApps.page < totalPage) {
+      setParamPageDeviceApps({
+        limit: paramsPageDeviceApps.limit,
+        page: paramsPageDeviceApps.page + 1,
+      });
+      setUpdateTable(true);
+    }
+  };
+  const handleMoveToPrePage = () => {
+    if (paramsPageDeviceApps.page > 1) {
+      setParamPageDeviceApps({
+        limit: paramsPageDeviceApps.limit,
+        page: paramsPageDeviceApps.page - 1,
+      });
+      setUpdateTable(true);
     }
   };
 
   const handleResetTable = () => {
     setResetTable(true);
     setSearchTerm('');
+    setStatus(3);
+    setParamPageDeviceApps({ page: 1, limit: 5, status: 3 });
     // console.log('resetTable');
   };
-  const handleMoveToNextPage = () => {
-    if (paramsPage.page < totalPage) {
-      setParamPage({
-        limit: paramsPage.limit,
-        page: paramsPage.page + 1,
-      });
-      setUpdateTable(true);
-    }
-  };
-  const handleMoveToPrePage = () => {
-    if (paramsPage.page > 1) {
-      setParamPage({
-        limit: paramsPage.limit,
-        page: paramsPage.page - 1,
-      });
-      setUpdateTable(true);
-    }
-  };
   const handleSearchMode = () => {
-    setParamPage({ ...paramsPage, search: searchTerm });
+    setParamPageDeviceApps({ ...paramsPageDeviceApps, search: searchTerm });
     setUpdateTable(true);
   };
 
-  //Edit user
-
   useEffect(() => {
     if (resetTable) {
-      setParamPage({ page: 1, limit: 10, id: id, search: null });
       setResetTable(false);
       setUpdateTable(true);
-    } else if (updateTable) {
-      // console.log('change status');
-      handleLoadAPagePolicyAPK();
-      setUpdateTable(false);
+    }
+    if (updateTable) {
+      handleLoadAPageDevice();
     }
   }, [resetTable, updateTable]);
 
+  useEffect(() => {
+    setParamPageDeviceApps({ ...paramsPageDeviceApps, status: status });
+    setUpdateTable(true);
+  }, [status]);
+
   return (
     <Card>
+      {' '}
       <Typography
         variant="h6"
         align="left"
@@ -93,14 +97,13 @@ const PolicDevicesTable = (props) => {
         fontSize={15}
         sx={{ marginTop: '5px', marginLeft: '10px' }}
       >
-        Policies' Devices
+        Devices' Status
       </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
           data={arrApps}
           options={{ actionsColumnIndex: -1 }}
-          enableTopToolbar={true}
           enableExpanding
           enableGlobalFilter={false}
           enableColumnFilters={false}
@@ -109,40 +112,17 @@ const PolicDevicesTable = (props) => {
           enableSorting={false}
           muiTableBodyRowProps={{ hover: false }}
           defaultColumn={{
-            maxSize: 120,
+            maxSize: 100,
             minSize: 10,
-            size: 100, //default size is usually 180
+            size: 80, //default size is usually 180
           }}
           initialState={{
-            density: 'compact',
+            density: 'comfortable',
             columnVisibility: {
               id: false,
-              mac: false,
             },
-            columnOrder: [
-              'id',
-              'sn',
-              'mac',
-              'model',
-              'ip',
-              'firmwareVer',
-              'location',
-              'description',
-              'mrt-row-expand',
-              'mrt-row-actions',
-            ],
+            columnOrder: ['id', 'deviceSN', 'action', 'status', 'mrt-row-expand'],
           }}
-          renderRowActions={({ row, closeMenu }) => [
-            <Tooltip arrow placement="bottom" title="Detail">
-              <NavLink
-                to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
-              >
-                <IconButton>
-                  <InfoIcon color="primary" />
-                </IconButton>
-              </NavLink>
-            </Tooltip>,
-          ]}
           renderDetailPanel={({ row }) => (
             <Box
               sx={{
@@ -164,7 +144,9 @@ const PolicDevicesTable = (props) => {
           )}
           renderBottomToolbarCustomActions={() => (
             <BottomBarSetup
-              paramsPageDevices={paramsPage}
+              status={status}
+              setStatus={setStatus}
+              paramsPageDevices={paramsPageDeviceApps}
               totalPage={totalPage}
               handleMoveToPrePage={handleMoveToPrePage}
               handleMoveToNextPage={handleMoveToNextPage}
@@ -172,7 +154,6 @@ const PolicDevicesTable = (props) => {
           )}
           renderTopToolbarCustomActions={() => (
             <TopBarSetup
-              searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               setResettable={setResetTable}
               handleSearchMode={handleSearchMode}
@@ -185,4 +166,4 @@ const PolicDevicesTable = (props) => {
   );
 };
 
-export default PolicDevicesTable;
+export default DevicePolicyTable;

@@ -132,6 +132,7 @@ export const putEditPolicy = (data) => {
     .put(`/TMS/api/policy/${data.id}`, {
       policyname: data.policyname,
       action: data.action,
+      commandName: data.commandName,
     })
     .catch(function (error) {
       if (error.response) {
@@ -365,6 +366,18 @@ export const postMapPolicyDevices = (policyId, deviceId) => {
     });
 };
 
+export const getAPagePolicyDevices = (data, policyId) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/policy/${policyId}/devicePolicyDetail`,
+    params: {
+      page: data.page,
+      limit: data.limit,
+      status: data.status,
+    },
+  });
+};
+
 export const getAPagePolicyDevice = (data) => {
   return axios({
     method: 'get',
@@ -399,8 +412,6 @@ export const deleteMapPolicyDevice = (policyId, deviceId) => {
 };
 
 export const postMapPolicyListDevices = (policyId, listDeviceId) => {
-  const data = JSON.stringify(listDeviceId);
-
   return axios
     .post(`/TMS/api/policy/${policyId}/listDevice/${listDeviceId}/devicePolicyDetail`)
     .catch(function (error) {

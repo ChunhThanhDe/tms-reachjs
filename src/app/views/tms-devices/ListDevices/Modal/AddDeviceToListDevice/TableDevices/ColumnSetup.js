@@ -59,7 +59,7 @@ export const columns = [
       <Box>
         <Tooltip arrow placement="bottom" title="Detail">
           <NavLink
-            to={`/tms-policy/policy-management/policy?id=${row.row.original.id}&pn=${row.row.original.policyname}`}
+            to={`/tms-devices/devices-management/device?id=${row.row.original.id}&sn=${row.row.original.sn}`}
           >
             <IconButton>
               <InfoIcon color="primary" />

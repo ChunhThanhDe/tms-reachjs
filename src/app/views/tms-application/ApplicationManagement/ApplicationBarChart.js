@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import BarChart from 'app/components/Chart/BarChart';
 import { getApplicationBarChart } from 'app/Services/StudioServices';
 import StackBarChart from 'app/components/Chart/StackBarChart';
 

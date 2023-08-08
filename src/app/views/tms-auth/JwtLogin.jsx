@@ -109,7 +109,7 @@ const JwtLogin = () => {
                       size="small"
                       // type="email"
                       name="email"
-                      label="Email"
+                      label="Username"
                       variant="outlined"
                       onBlur={handleBlur}
                       value={values.email}

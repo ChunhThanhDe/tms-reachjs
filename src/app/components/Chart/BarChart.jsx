@@ -72,7 +72,7 @@ const BarChart = ({ data, height = '350px', width = '100%', option = {}, legend 
     ],
   };
 
-  return <ReactEcharts height={height} option={option} />;
+  return <ReactEcharts height={height} width={width} option={option} />;
 };
 
 export default BarChart;

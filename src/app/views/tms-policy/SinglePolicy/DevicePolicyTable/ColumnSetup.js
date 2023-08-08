@@ -26,17 +26,13 @@ export const columns = [
     Cell: (row) => <span>{row.row.original.id}</span>,
   },
   {
-    accessorKey: 'policyName',
-    header: 'Policy',
+    accessorKey: 'deviceSN',
+    header: 'Serial Number',
     enableEditing: false,
     enableSorting: false,
+    enableColumnFilter: false,
+    size: 50,
   },
-  // {
-  //   accessorKey: 'commandName',
-  //   header: 'Command',
-  //   enableEditing: false,
-  //   enableSorting: false,
-  // },
   {
     accessorKey: 'action',
     header: 'Action',
@@ -60,31 +56,14 @@ export const columns = [
     Cell: (row) => (
       <Box>
         {row.row.original.status === 0 ? (
-          // <Tooltip arrow placement="top" title="Not run">
-          //   <DoNotDisturbOnIcon color="disabled" />
-          // </Tooltip>
           <Typography color="grey" fontWeight={'bold'}>
             Not run
           </Typography>
         ) : row.row.original.status === 1 ? (
-          // <Tooltip arrow placement="top" title="Run">
-          //   <Pending color="secondary" />
-          // </Tooltip>
           <Typography color="blue" fontWeight={'bold'}>
             Run
           </Typography>
         ) : row.row.original.status === 2 ? (
-          // <Tooltip
-          //   arrow
-          //   placement="top"
-          //   title={CheckTimeOut(row.row.original.modifiedDate) ? 'TimeOut' : 'Running'}
-          // >
-          //   {CheckTimeOut(row.row.original.modifiedDate) ? (
-          //     <RunningWithErrorsIcon color="primary" />
-          //   ) : (
-          //     <Circle color="primary" />
-          //   )}
-          // </Tooltip>
           <Typography
             color={CheckTimeOut(row.row.original.modifiedDate) ? 'error' : 'blue'}
             fontWeight={'bold'}
@@ -92,16 +71,10 @@ export const columns = [
             {CheckTimeOut(row.row.original.modifiedDate) ? 'TimeOut' : 'Running'}
           </Typography>
         ) : row.row.original.status === 3 ? (
-          // <Tooltip arrow placement="top" title="Success">
-          //   <CheckCircleIcon color="success" />
-          // </Tooltip>
           <Typography color="green" fontWeight={'bold'}>
             Success
           </Typography>
         ) : (
-          // <Tooltip arrow placement="top" title="Cancel">
-          //   <ErrorIcon color="error" />
-          // </Tooltip>
           <Typography color="error" fontWeight={'bold'}>
             Cancel
           </Typography>

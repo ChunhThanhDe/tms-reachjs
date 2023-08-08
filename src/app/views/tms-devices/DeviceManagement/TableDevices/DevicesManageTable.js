@@ -114,6 +114,7 @@ const DeviceManageTable = () => {
               'model',
               'ip',
               'firmwareVer',
+              'rom',
               'location',
               'description',
               'mrt-row-expand',
