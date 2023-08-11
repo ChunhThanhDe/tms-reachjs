@@ -10,6 +10,8 @@ import EditListDeviceModal from '../Modal/EditListDevicesModal';
 import tableTheme from 'app/components/Table/TableTheme';
 import { convertDateTime } from 'app/components/ConvertTimeDate';
 import AddDeviceToListDevice from '../Modal/AddDeviceToListDevice/AddDeviceToListDevice';
+import AddUserToListDevice from '../Modal/AddUserToListDevice/AddUserToListDevice';
+import TableUserInListDevice from '../Modal/TableUserInListDevice/TableUserInListDevice';
 
 const ListDevicesTable = () => {
   const [arrDevices, setArrDevices] = useState([]);
@@ -22,6 +24,15 @@ const ListDevicesTable = () => {
   const [updateTable, setUpdateTable] = useState(true);
   const [resetTable, setResetTable] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [show, setShow] = useState();
+  const user = JSON.parse(window.localStorage.getItem('user'));
+  useEffect(() => {
+    if (user.role.length === 1) {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  }, [user]);
 
   const handleLoadAPageDevice = async () => {
     let response = await getAPageListDevices(paramsPageDevices);
@@ -108,8 +119,18 @@ const ListDevicesTable = () => {
                 <EditListDeviceModal row={row} setUpdatetable={setUpdateTable} />
               </Box>
               <Box flexBasis="25%">
-                <AddDeviceToListDevice row={row} />
+                <TableUserInListDevice row={row} />
               </Box>
+              {show && (
+                <Box flexBasis="25%">
+                  <AddDeviceToListDevice row={row} />
+                </Box>
+              )}
+              {show && (
+                <Box flexBasis="25%">
+                  <AddUserToListDevice row={row} />
+                </Box>
+              )}
             </>,
           ]}
           renderDetailPanel={({ row }) => (

@@ -37,7 +37,7 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          label="Only search in SerialNumber and Descripttion"
+          label="Only search in SerialNumber and Description"
           variant="outlined"
           size="small"
           value={searchTerm}
@@ -86,7 +86,7 @@ const TopBarSetup = (props) => {
               <RestartAlt />
             </IconButton>
           </Tooltip>
-          <Tooltip arrow placement="top" title="Reset table to default">
+          <Tooltip arrow placement="top" title="Add Policy">
             <IconButton color="primary" aria-label="clear" onClick={handleEditPolicyApk}>
               <SendAndArchive />
             </IconButton>

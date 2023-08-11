@@ -138,6 +138,15 @@ const PolicyListDevicesTable = (props) => {
 
   return (
     <Card sx={{ m: 1 }}>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        List Devices available
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}

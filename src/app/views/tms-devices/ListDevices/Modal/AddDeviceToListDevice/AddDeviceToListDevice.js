@@ -4,6 +4,8 @@ import {
   Button,
   IconButton,
   Modal,
+  Tab,
+  Tabs,
   // Tooltip,
   Typography,
 } from '@mui/material';
@@ -11,11 +13,13 @@ import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
 import { Close } from '@mui/icons-material';
 import DeviceManageTable from './TableDevices/DevicesManageTable';
 import DevicesInListDeviceTable from './DevicesInListDeviceTable/DevicesInListDeviceTable';
+import DeviceLocationMap from './DeviceLocationMap/DeviceLocationMap';
 
 const AddDeviceToListDevice = (props) => {
   const { row } = props;
   const [openModal, setOpenModal] = useState(false);
   const [addDevicesSuccess, setAddDevicesSuccess] = useState(false);
+  const [key, setKey] = useState(1);
 
   const handleOpenEditDescription = () => {
     setOpenModal((prevState) => !prevState);
@@ -28,7 +32,7 @@ const AddDeviceToListDevice = (props) => {
   };
 
   return (
-    <>
+    <div>
       <Button onClick={handleOpenEditDescription}>
         <QueuePlayNextIcon color="primary" />
         <Typography
@@ -62,36 +66,52 @@ const AddDeviceToListDevice = (props) => {
                 justifyContent: 'space-between',
               }}
             >
-              {' '}
-              <Typography
-                variant="h6"
-                align="left"
-                fontWeight="fontWeightBold"
-                fontSize={22}
-                sx={{ marginTop: '15px', marginLeft: '10px' }}
+              <Tabs
+                value={key}
+                onChange={(e, newValue) => setKey(newValue)}
+                textColor="primary"
+                indicatorColor="primary"
               >
-                Add devices to list devices
-              </Typography>
+                <Tab value={1} label="Add new device" />
+                <Tab value={2} label="Add new device by location" />
+              </Tabs>
               <IconButton type="button">
                 <Close color="inherit" onClick={handleCloseModal} />
               </IconButton>
             </Box>
-            <DeviceManageTable
-              id={row.original.id}
-              handleAddDeviceSuccess={handleAddDeviceSuccess}
-            />
-            <br />
-            <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
-              <DevicesInListDeviceTable
-                id={row.original.id}
-                addDevicesSuccess={addDevicesSuccess}
-                setAddDevicesSuccess={setAddDevicesSuccess}
-              />
-            </Box>
+            {key === 1 && (
+              <Box sx={{ p: 1 }}>
+                <DeviceManageTable
+                  id={row.original.id}
+                  handleAddDeviceSuccess={handleAddDeviceSuccess}
+                />
+                <br />
+                <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
+                  <DevicesInListDeviceTable
+                    id={row.original.id}
+                    addDevicesSuccess={addDevicesSuccess}
+                    setAddDevicesSuccess={setAddDevicesSuccess}
+                  />
+                </Box>
+              </Box>
+            )}
+            {key === 2 && (
+              <Box sx={{ p: 1 }}>
+                <DeviceLocationMap id={row.original.id} setAddSuccess={setAddDevicesSuccess} />
+                <br />
+                <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
+                  <DevicesInListDeviceTable
+                    id={row.original.id}
+                    addDevicesSuccess={addDevicesSuccess}
+                    setAddDevicesSuccess={setAddDevicesSuccess}
+                  />
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 };
 

@@ -2,27 +2,42 @@ import React from 'react';
 import { TextField, Divider } from '@mui/material';
 import { IconButton, Grid, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { Close, RestartAlt } from '@mui/icons-material';
+import { Close, RestartAlt, SendAndArchive } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 
 const TopBarSetup = (props) => {
-  const { handleResetTable, handleSearchMode, searchTerm, setSearchTerm } = props;
+  const {
+    handleEditPolicyDevice,
+    handleResetTable,
+    handleSearchMode,
+    searchLoca,
+    searchDes,
+    setSearchLoca,
+    setSearchDes,
+  } = props;
 
-  const handleChangeSearchPackage = (event) => {
-    setSearchTerm(event.target.value);
+  const handleChangeSearchLoca = (event) => {
+    setSearchLoca(event.target.value);
+  };
+
+  const handleChangeSearchDes = (event) => {
+    setSearchDes(event.target.value);
   };
 
   const handleStartSearchMode = () => {
-    if (isSearchTermEmpty) {
+    if (searchLoca.trim().length === 0) {
+      toast.error('Please in put location!!!');
       return;
     } else {
       handleSearchMode();
     }
   };
   const handleCloseSearchMode = () => {
-    setSearchTerm('');
+    setSearchDes('');
+    setSearchLoca('');
     handleResetTable();
   };
-  const isSearchTermEmpty = searchTerm.trim().length === 0;
+  const isSearchTermEmpty = searchLoca.trim().length === 0 && searchDes.trim().length === 0;
 
   return (
     <Grid container fullWidth>
@@ -32,19 +47,29 @@ const TopBarSetup = (props) => {
         md={8}
         sm={12}
         xs={12}
-        style={{ display: 'flex', justifyContent: 'flex-center' }}
+        style={{ display: 'flex', justifyContent: 'flex-end' }}
       >
         <TextField
-          id="search"
-          label="Only search in Serial Number and Description"
+          id="searchlocation"
+          label="Search Location"
           variant="outlined"
           size="small"
-          value={searchTerm}
-          onChange={handleChangeSearchPackage}
+          value={searchLoca}
+          onChange={handleChangeSearchLoca}
           edge="end"
           fullWidth
         />
         <Divider sx={{ height: 28, m: 0.5, borderWidth: 2, opacity: 0 }} orientation="vertical" />
+        <TextField
+          id="searchDescription"
+          label="Search Description"
+          variant="outlined"
+          size="small"
+          value={searchDes}
+          onChange={handleChangeSearchDes}
+          edge="end"
+          fullWidth
+        />
       </Grid>
       <Grid
         item
@@ -80,9 +105,9 @@ const TopBarSetup = (props) => {
         </Grid>
         <Grid lg={2} md={2} sm={12} xs={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <Tooltip arrow placement="top" title="Reset table to default">
-            <IconButton color="primary" aria-label="clear" onClick={handleResetTable}>
-              <RestartAlt />
+          <Tooltip arrow placement="top" title="Add Devices">
+            <IconButton color="primary" aria-label="clear" onClick={handleEditPolicyDevice}>
+              <SendAndArchive />
             </IconButton>
           </Tooltip>
         </Grid>

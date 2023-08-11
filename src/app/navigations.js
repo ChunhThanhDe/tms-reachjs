@@ -1,5 +1,5 @@
 export const navigations = [
-  { name: 'Terminal Studio', path: '/tms-default/studio', icon: 'dashboard' },
+  { name: 'Dashboard', path: '/tms-default/dashboard', icon: 'dashboard' },
   {
     name: 'Devices Manager',
     icon: 'router',
@@ -38,7 +38,7 @@ export const navigations = [
 ];
 
 export const navigationsUser = [
-  { name: 'Terminal Studio', path: '/tms-default/studio', icon: 'dashboard' },
+  { name: 'Dashboard', path: '/tms-default/dashboard', icon: 'dashboard' },
   {
     name: 'Devices Manager',
     icon: 'router',

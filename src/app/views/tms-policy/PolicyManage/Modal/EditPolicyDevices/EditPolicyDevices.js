@@ -24,9 +24,7 @@ const EditPolicyDevices = (props) => {
   const handleOpenEditDescription = () => {
     setOpenModal((prevState) => !prevState);
   };
-  // const handleAddSuccess = () => {
-  //   setAddSuccess(true);
-  // };
+
   const handleCloseModal = () => {
     setOpenModal((prevState) => !prevState);
   };

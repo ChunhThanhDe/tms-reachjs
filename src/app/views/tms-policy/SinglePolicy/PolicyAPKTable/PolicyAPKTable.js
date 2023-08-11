@@ -11,6 +11,7 @@ import {
   IconButton,
   ThemeProvider,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
@@ -96,42 +97,53 @@ const PolicyAPKTable = (props) => {
   return (
     <Card>
       {arrApps.length > 0 && (
-        <ThemeProvider theme={tableTheme}>
-          <MaterialReactTable
-            columns={columns}
-            data={arrApps}
-            options={{ actionsColumnIndex: -1 }}
-            enableTopToolbar={false}
-            enableExpanding
-            enableGlobalFilter={false}
-            enableColumnFilters={false}
-            enableColumnActions={false}
-            enablePagination={false}
-            enableSorting={false}
-            enableBottomToolbar={false}
-            muiTableBodyRowProps={{ hover: false }}
-            defaultColumn={{
-              maxSize: 120,
-              minSize: 10,
-              size: 100, //default size is usually 180
-            }}
-            initialState={{
-              density: 'comfortable',
-              columnOrder: ['id', 'packagename', 'version', 'apkfileUrl', 'mrt-row-actions'],
-            }}
-            renderRowActions={({ row }) =>
-              row.original.packagename !== '' && (
-                <Box>
-                  <DeleteAPKinPolicy
-                    policyId={id}
-                    apkId={row.original.id}
-                    setUpdateTable={setUpdateTable}
-                  />
-                </Box>
-              )
-            }
-          />
-        </ThemeProvider>
+        <>
+          <Typography
+            variant="h6"
+            align="left"
+            fontWeight="fontWeightBold"
+            fontSize={15}
+            sx={{ marginTop: '5px', marginLeft: '10px' }}
+          >
+            APKs in Policy
+          </Typography>
+          <ThemeProvider theme={tableTheme}>
+            <MaterialReactTable
+              columns={columns}
+              data={arrApps}
+              options={{ actionsColumnIndex: -1 }}
+              enableTopToolbar={false}
+              enableExpanding
+              enableGlobalFilter={false}
+              enableColumnFilters={false}
+              enableColumnActions={false}
+              enablePagination={false}
+              enableSorting={false}
+              enableBottomToolbar={false}
+              muiTableBodyRowProps={{ hover: false }}
+              defaultColumn={{
+                maxSize: 120,
+                minSize: 10,
+                size: 100, //default size is usually 180
+              }}
+              initialState={{
+                density: 'comfortable',
+                columnOrder: ['id', 'packagename', 'version', 'apkfileUrl', 'mrt-row-actions'],
+              }}
+              renderRowActions={({ row }) =>
+                row.original.packagename !== '' && (
+                  <Box>
+                    <DeleteAPKinPolicy
+                      policyId={id}
+                      apkId={row.original.id}
+                      setUpdateTable={setUpdateTable}
+                    />
+                  </Box>
+                )
+              }
+            />
+          </ThemeProvider>
+        </>
       )}
     </Card>
   );

@@ -96,7 +96,7 @@ const DeviceManageTable = () => {
           density: 'compact',
           columnVisibility: {
             id: false,
-            location: false,
+            firmwareVer: false,
             description: false,
           },
           columnOrder: [
@@ -104,7 +104,7 @@ const DeviceManageTable = () => {
             'sn',
             'model',
             'ip',
-            'firmwareVer',
+            'location',
             'location',
             'description',
             'mrt-row-expand',

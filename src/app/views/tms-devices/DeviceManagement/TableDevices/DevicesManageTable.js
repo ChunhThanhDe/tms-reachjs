@@ -131,15 +131,17 @@ const DeviceManageTable = () => {
                   <NavLink
                     to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
                   >
-                    <Button>
-                      <InfoIcon color="primary" />
-                      <Typography
-                        style={{ marginLeft: '8px', color: 'black' }}
-                        textTransform="none"
-                      >
-                        Detail
-                      </Typography>
-                    </Button>
+                    <div>
+                      <Button>
+                        <InfoIcon color="primary" />
+                        <Typography
+                          style={{ marginLeft: '8px', color: 'black' }}
+                          textTransform="none"
+                        >
+                          Detail
+                        </Typography>
+                      </Button>
+                    </div>
                   </NavLink>
                 </Tooltip>
               </Box>

@@ -17,14 +17,12 @@ import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
 import tableTheme from 'app/components/Table/TableTheme';
 import { toast } from 'react-toastify';
-import { getAPagePolicyDevice, deleteMapPolicyDevice } from 'app/Services/PolicyServices';
-import InfoIcon from '@mui/icons-material/Info';
 import { Delete } from '@mui/icons-material';
 import BottomBarSetup from './BottomBarSetup';
 import TopBarSetup from './TopBarSetup';
-import { NavLink } from 'react-router-dom';
+import { deleteUserinListDevice, getUsersInListDevices } from 'app/Services/DevicesServices';
 
-const DeleteDeviceinPolicy = ({ policyId, deviceId, setUpdateTable, setAddSuccess }) => {
+const DeleteUser = ({ listDeviceId, userId, setUpdateTable }) => {
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleOpenDeleteModal = () => {
     setOpenModalDelete(true);
@@ -33,12 +31,11 @@ const DeleteDeviceinPolicy = ({ policyId, deviceId, setUpdateTable, setAddSucces
     setOpenModalDelete(false);
   };
   const handleDelete = async () => {
-    let response = await deleteMapPolicyDevice(policyId, deviceId);
+    let response = await deleteUserinListDevice(listDeviceId, userId);
     // console.log(`Page List App: `, response);
     if (response.status === 204) {
       toast.success('Delete success');
       setUpdateTable(true);
-      setAddSuccess(true);
       handleCloseDelete();
     } else {
       toast.error(`Delete fail!!!`, response.message);
@@ -47,7 +44,7 @@ const DeleteDeviceinPolicy = ({ policyId, deviceId, setUpdateTable, setAddSucces
   };
 
   return (
-    <>
+    <div>
       <Tooltip arrow placement="bottom" title="Delete">
         <IconButton onClick={handleOpenDeleteModal}>
           <Delete color="error" />
@@ -56,7 +53,7 @@ const DeleteDeviceinPolicy = ({ policyId, deviceId, setUpdateTable, setAddSucces
       <Dialog open={openModalDelete} onClose={handleCloseDelete} id="deleteDialog">
         <DialogTitle>Delete confirmation</DialogTitle>
         <DialogContent>
-          <DialogContentText>Are you sure you want to delete device?</DialogContentText>
+          <DialogContentText>Are you sure you want to delete user?</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDelete} color="primary">
@@ -67,11 +64,11 @@ const DeleteDeviceinPolicy = ({ policyId, deviceId, setUpdateTable, setAddSucces
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   );
 };
 
-const PolicyDeviceTable = (props) => {
+const UserInListDeviceTable = (props) => {
   const { id, addSuccess, setAddSuccess } = props;
   const [arrApps, setArrApps] = useState([]);
   const [paramsPage, setParamPage] = useState({
@@ -85,16 +82,12 @@ const PolicyDeviceTable = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [totalPage, setTotalPage] = useState();
   const handleLoadAPageDevice = async () => {
-    let response = await getAPagePolicyDevice(paramsPage);
+    let response = await getUsersInListDevices(paramsPage);
     // console.log(response);
     if (response.status === 200) {
       let arr = response.data.listResult;
       setArrApps(arr);
       setTotalPage(response.data.totalPage);
-    } else if (response.status !== 200) {
-      setTotalPage('');
-      setArrApps([]);
-      toast.error(response.message);
     }
   };
   const handleMoveToNextPage = () => {
@@ -114,7 +107,6 @@ const PolicyDeviceTable = (props) => {
     setResetTable(true);
     setSearchTerm('');
   };
-
   const handleSearchMode = () => {
     setParamPage({
       ...paramsPage,
@@ -125,7 +117,9 @@ const PolicyDeviceTable = (props) => {
   useEffect(() => {
     if (updateTable) {
       handleLoadAPageDevice();
-      setAddSuccess(false);
+      if (addSuccess) {
+        setAddSuccess(false);
+      }
       setUpdateTable(false);
     }
     if (addSuccess) {
@@ -144,7 +138,7 @@ const PolicyDeviceTable = (props) => {
   }, [updateTable, addSuccess, resetTable]);
 
   return (
-    <Card sx={{ m: 1 }}>
+    <Card>
       <Typography
         variant="h6"
         align="left"
@@ -152,7 +146,7 @@ const PolicyDeviceTable = (props) => {
         fontSize={15}
         sx={{ marginTop: '5px', marginLeft: '10px' }}
       >
-        Devices in Policy
+        User in List Devices
       </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
@@ -173,33 +167,26 @@ const PolicyDeviceTable = (props) => {
           }}
           initialState={{
             density: 'compact',
+            columnVisibility: {
+              id: false,
+            },
             columnOrder: [
               'id',
-              'sn',
-              'model',
-              'ip',
-              'firmwareVer',
-              'location',
-              'description',
+              'role-state',
+              'name',
+              'username',
+              'email',
+              'company',
+              'contact',
               'mrt-row-actions',
             ],
           }}
           renderRowActions={({ row }) => [
             <Box>
-              <Tooltip arrow placement="bottom" title="Detail">
-                <NavLink
-                  to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
-                >
-                  <IconButton>
-                    <InfoIcon color="primary" />
-                  </IconButton>
-                </NavLink>
-              </Tooltip>
-              <DeleteDeviceinPolicy
-                policyId={id}
-                deviceId={row.original.id}
+              <DeleteUser
+                listDeviceId={id}
+                userId={row.original.id}
                 setUpdateTable={setUpdateTable}
-                setAddSuccess={setAddSuccess}
               />
             </Box>,
           ]}
@@ -226,4 +213,4 @@ const PolicyDeviceTable = (props) => {
   );
 };
 
-export default PolicyDeviceTable;
+export default UserInListDeviceTable;

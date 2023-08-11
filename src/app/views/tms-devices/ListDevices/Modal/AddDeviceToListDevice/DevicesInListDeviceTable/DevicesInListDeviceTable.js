@@ -11,6 +11,7 @@ import {
   IconButton,
   ThemeProvider,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
@@ -133,12 +134,22 @@ const DevicesInListDeviceTable = (props) => {
         id: id,
         search: null,
       });
+      setResetTable(false);
       setUpdateTable(true);
     }
   }, [updateTable, addDevicesSuccess, resetTable]);
 
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        Devices in List Devices
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}

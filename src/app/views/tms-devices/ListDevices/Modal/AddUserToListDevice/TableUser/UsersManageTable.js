@@ -1,63 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, ThemeProvider, Typography, Tooltip, IconButton } from '@mui/material';
+import { Box, Card, IconButton, ThemeProvider, Tooltip, Typography } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
-import { getAPageDeviceApp } from 'app/Services/DevicesServices';
+import { postUsersToListDevices } from 'app/Services/DevicesServices';
 import BottomBarSetup from './BottomBarSetup';
-import tableTheme from 'app/components/Table/TableTheme';
 import TopBarSetup from './TopBarSetup';
 import { toast } from 'react-toastify';
-import InfoIcon from '@mui/icons-material/Info';
+import tableTheme from 'app/components/Table/TableTheme';
 import { convertDateTime } from 'app/components/ConvertTimeDate';
-import { NavLink } from 'react-router-dom';
+import { getAPageUser } from 'app/Services/User_Auth_Service';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-// import { NavLink } from 'react-router-dom';
-
-const DeviceAppTable = (props) => {
-  const { deviceID } = props;
-  const [arrApps, setArrApps] = useState([]);
-  const [paramsPageDeviceApps, setParamPageDeviceApps] = useState({
+const UserManageTable = (props) => {
+  const { id, handleAddUserSuccess } = props;
+  const [arrUsers, setArrUsers] = useState([]);
+  const [paramsPageUser, setParamPageUser] = useState({
     page: 1,
     limit: 5,
-    name: null,
-    isSystem: false,
-    isAlive: true,
+    active: 1,
+    search: null,
   });
   const [totalPage, setTotalPage] = useState();
   const [updateTable, setUpdateTable] = useState(true);
   const [resetTable, setResetTable] = useState(false);
-  const [isSystem, setIsSystem] = useState(false);
-  const [isAlive, setIsAlive] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [userId, setUserId] = useState(null);
 
-  const handleLoadAPageDevice = async () => {
-    let response = await getAPageDeviceApp(paramsPageDeviceApps, deviceID);
+  const handleLoadAPageUser = async () => {
+    let response = await getAPageUser(paramsPageUser);
     if (response.status === 200) {
-      // console.log(`Page List App: `, response);
-      if (response.data.totalElement === null && searchTerm !== null) {
-        toast.error('No elements match');
+      if (response.data.totalElement === null) {
+        if (searchTerm !== null) {
+          toast.error('No element matchs');
+        } else {
+          toast.error('Nothing to show');
+        }
       }
       let arr = response.data.listResult;
-      setArrApps(arr);
+      setArrUsers(arr);
       setTotalPage(response.data.totalPage);
     }
   };
 
+  const handleEditUserToListDevices = async () => {
+    let res = await postUsersToListDevices(id, userId);
+    if (res.status === 200) {
+      toast.success('Add users success');
+      setUserId(null);
+      handleAddUserSuccess();
+    } else {
+      toast.error(res.message);
+    }
+  };
+
   const handleMoveToNextPage = () => {
-    if (paramsPageDeviceApps.page < totalPage) {
-      setParamPageDeviceApps({
-        limit: paramsPageDeviceApps.limit,
-        page: paramsPageDeviceApps.page + 1,
-      });
+    if (paramsPageUser.page < totalPage) {
+      setParamPageUser({ limit: paramsPageUser.limit, page: paramsPageUser.page + 1 });
       setUpdateTable(true);
     }
   };
   const handleMoveToPrePage = () => {
-    if (paramsPageDeviceApps.page > 1) {
-      setParamPageDeviceApps({
-        limit: paramsPageDeviceApps.limit,
-        page: paramsPageDeviceApps.page - 1,
-      });
+    if (paramsPageUser.page > 1) {
+      setParamPageUser({ limit: paramsPageUser.limit, page: paramsPageUser.page - 1 });
       setUpdateTable(true);
     }
   };
@@ -65,38 +69,32 @@ const DeviceAppTable = (props) => {
   const handleResetTable = () => {
     setResetTable(true);
     setSearchTerm('');
-    setIsAlive(true);
-    setIsSystem(false);
+    // console.log('resetTable');
   };
   const handleSearchMode = () => {
-    setParamPageDeviceApps({ ...paramsPageDeviceApps, name: searchTerm });
+    setParamPageUser({ ...paramsPageUser, search: searchTerm });
     setUpdateTable(true);
   };
-  const handleIsAlive = () => {
-    setParamPageDeviceApps({ ...paramsPageDeviceApps, isAlive: isAlive });
-    setUpdateTable(true);
-  };
-  const handleIsSystem = () => {
-    setParamPageDeviceApps({ ...paramsPageDeviceApps, isSystem: isSystem });
-    setUpdateTable(true);
-  };
-  useEffect(() => {
-    handleIsSystem();
-  }, [isSystem]);
-  useEffect(() => {
-    handleIsAlive();
-  }, [isAlive]);
+
+  //Edit user
+
   useEffect(() => {
     if (resetTable) {
-      setParamPageDeviceApps({ page: 1, limit: 5, name: null, isSystem: false, isAlive: true });
+      setParamPageUser({ page: 1, limit: 5, active: 1, search: null });
       setResetTable(false);
       setUpdateTable(true);
     } else if (updateTable) {
-      handleLoadAPageDevice();
+      handleLoadAPageUser();
       setUpdateTable(false);
     }
   }, [resetTable, updateTable]);
 
+  useEffect(() => {
+    if (userId !== null) {
+      handleEditUserToListDevices();
+      console.log(userId);
+    }
+  }, [userId]);
   return (
     <Card>
       <Typography
@@ -106,12 +104,12 @@ const DeviceAppTable = (props) => {
         fontSize={15}
         sx={{ marginTop: '5px', marginLeft: '10px' }}
       >
-        List of apps
+        Users available
       </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}
-          data={arrApps}
+          data={arrUsers}
           options={{ actionsColumnIndex: -1 }}
           enableExpanding
           enableGlobalFilter={false}
@@ -119,41 +117,39 @@ const DeviceAppTable = (props) => {
           enableColumnActions={false}
           enablePagination={false}
           enableSorting={false}
-          muiTableBodyRowProps={{ hover: false }}
-          defaultColumn={{
-            maxSize: 100,
-            minSize: 10,
-            size: 80, //default size is usually 180
-          }}
-          initialState={{
-            density: 'comfortable',
-            columnVisibility: {
-              id: false,
-              packagename: false,
-            },
-            columnOrder: [
-              'id',
-              'name',
-              'packagename',
-              'version',
-              'issystem',
-              // 'mrt-row-expand',
-              'mrt-row-actions',
-            ],
-          }}
-          renderRowActions={({ row, table, closeMenu }) => [
+          renderRowActions={({ row }) => [
             <Box>
-              <Tooltip arrow placement="bottom" title="Detail">
-                <NavLink
-                  to={`/tms-application/application-management/application?id=${row.original.id}&name=${row.original.name}`}
-                >
-                  <IconButton>
-                    <InfoIcon color="primary" />
+              <Tooltip arrow placement="bottom" title="Add User">
+                <div>
+                  <IconButton onClick={() => setUserId(row.original.id)}>
+                    <PersonAddAltIcon color="primary" />
                   </IconButton>
-                </NavLink>
+                </div>
               </Tooltip>
             </Box>,
           ]}
+          defaultColumn={{
+            maxSize: 120,
+            minSize: 10,
+            size: 100, //default size is usually 180
+          }}
+          initialState={{
+            density: 'compact',
+            columnVisibility: {
+              id: false,
+            },
+            columnOrder: [
+              'id',
+              'role-state',
+              'name',
+              'username',
+              'email',
+              'company',
+              'contact',
+              'mrt-row-actions',
+              'mrt-row-expand',
+            ],
+          }}
           renderDetailPanel={({ row }) => (
             <Box
               sx={{
@@ -168,23 +164,19 @@ const DeviceAppTable = (props) => {
               <Typography fontSize={'15px'}>
                 Created Date: {convertDateTime(row.original.createdDate)}
               </Typography>
+              <Typography fontSize={'15px'}>Created By: {row.original.createdBy}</Typography>
               <Typography fontSize={'15px'}>
                 Modified Date: {convertDateTime(row.original.modifiedDate)}
               </Typography>
+              <Typography fontSize={'15px'}>Modified By: {row.original.modifiedBy}</Typography>
             </Box>
           )}
           renderBottomToolbarCustomActions={() => (
             <BottomBarSetup
-              isSystem={isSystem}
-              isAlive={isAlive}
-              setIsSystem={setIsSystem}
-              setIsAlive={setIsAlive}
-              paramsPageDevices={paramsPageDeviceApps}
+              paramsPageDevices={paramsPageUser}
               totalPage={totalPage}
               handleMoveToPrePage={handleMoveToPrePage}
               handleMoveToNextPage={handleMoveToNextPage}
-              handleIsAlive={handleIsAlive}
-              handleSIsSystem={handleIsSystem}
             />
           )}
           renderTopToolbarCustomActions={() => (
@@ -202,4 +194,4 @@ const DeviceAppTable = (props) => {
   );
 };
 
-export default DeviceAppTable;
+export default UserManageTable;

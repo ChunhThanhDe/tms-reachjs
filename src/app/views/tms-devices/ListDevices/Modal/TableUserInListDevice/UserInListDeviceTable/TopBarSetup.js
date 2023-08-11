@@ -36,7 +36,7 @@ const TopBarSetup = (props) => {
       >
         <TextField
           id="search"
-          label="Only search in Serial Number and Description"
+          label="Search User"
           variant="outlined"
           size="small"
           value={searchTerm}

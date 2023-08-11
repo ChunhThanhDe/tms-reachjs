@@ -1,8 +1,6 @@
 import { Box, IconButton, Tooltip } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonIcon from '@mui/icons-material/Person';
-// import ChangeUserPasswordDialog from '../Modal/ChangeUserPasswordDialog';
-// import DeleteUserDialog from '../Modal/DeleteUserDialog';
 
 export const columns = [
   {

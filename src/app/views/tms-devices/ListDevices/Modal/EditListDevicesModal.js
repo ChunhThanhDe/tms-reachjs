@@ -10,6 +10,7 @@ const EditListDeviceModal = (props) => {
   const [description, setDescription] = useState(row.original.description);
   const [name, setName] = useState(row.original.name);
   const preDescription = row.original.description;
+  const preName = row.original.name;
 
   // const handleResetTable = () => {
   //   setResettable(false);
@@ -31,7 +32,7 @@ const EditListDeviceModal = (props) => {
   };
 
   const handleEditDescription = async () => {
-    if (description === preDescription) {
+    if (description === preDescription && name === preName) {
       toast.info('Nothing changes');
       handleCloseModalEditDescription();
       return;
@@ -53,7 +54,7 @@ const EditListDeviceModal = (props) => {
   };
 
   return (
-    <>
+    <div>
       <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
         <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
@@ -118,7 +119,7 @@ const EditListDeviceModal = (props) => {
           </Box>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 };
 

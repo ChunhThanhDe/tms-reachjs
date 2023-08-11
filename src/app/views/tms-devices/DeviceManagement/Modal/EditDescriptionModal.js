@@ -54,7 +54,7 @@ const EditDescriptionModal = (props) => {
   };
 
   return (
-    <>
+    <div>
       {/* <Tooltip arrow placement="bottom" title="Edit Description"> */}
       <Button onClick={handleOpenEditDescription}>
         <Edit color="primary" />
@@ -111,7 +111,7 @@ const EditDescriptionModal = (props) => {
           </Box>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 };
 

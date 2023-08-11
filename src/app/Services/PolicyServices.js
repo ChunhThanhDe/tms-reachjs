@@ -190,6 +190,24 @@ export const getPolicyDevice = (data) => {
   });
 };
 
+export const getPolicyDeviceLocation = (data) => {
+  return axios({
+    method: 'get',
+    params: {
+      page: data.page,
+      limit: data.limit,
+      location: data.location,
+      description: data.description,
+    },
+    url: `/TMS/api/policy/${data.id}/device`,
+  }).catch(function (error) {
+    if (error.response) {
+      // console.log(`error status`, error.response);
+      return error.response;
+    }
+  });
+};
+
 export const putPolicyStatus = (policyId, status) => {
   return axios({
     method: 'put',

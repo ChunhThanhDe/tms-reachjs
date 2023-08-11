@@ -1,27 +1,10 @@
 import React from 'react';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { IconButton, Grid, Tooltip, FormControlLabel } from '@mui/material';
+import { IconButton, Grid, Tooltip } from '@mui/material';
 import { NavigateBefore } from '@mui/icons-material';
-import { Android12Switch } from 'app/components/CustomSwitch';
 
 const BottomBarSetup = (props) => {
-  const {
-    paramsPageDevices,
-    totalPage,
-    handleMoveToPrePage,
-    handleMoveToNextPage,
-    isSystem,
-    setIsSystem,
-    isAlive,
-    setIsAlive,
-  } = props;
-  const handleChangeSearchSystem = (event) => {
-    setIsSystem(!event.target.checked);
-  };
-
-  const handleChangeSearchIsAlive = (event) => {
-    setIsAlive(event.target.checked);
-  };
+  const { paramsPageDevices, totalPage, handleMoveToPrePage, handleMoveToNextPage } = props;
 
   return (
     <Grid container fullWidth>
@@ -31,21 +14,8 @@ const BottomBarSetup = (props) => {
         md={8}
         sm={12}
         xs={12}
-        style={{ display: 'flex', justifyContent: 'flex-start' }}
-      >
-        <FormControlLabel
-          control={
-            <Android12Switch checked={!isSystem} onChange={(e) => handleChangeSearchSystem(e)} />
-          }
-          label={!isSystem ? 'User App' : 'System App'}
-        />
-        <FormControlLabel
-          control={
-            <Android12Switch checked={isAlive} onChange={(e) => handleChangeSearchIsAlive(e)} />
-          }
-          label={isAlive ? 'App Installed' : 'App Uninstalled'}
-        />
-      </Grid>
+        style={{ display: 'flex', justifyContent: 'flex-end' }}
+      ></Grid>
       <Grid
         item
         lg={4}

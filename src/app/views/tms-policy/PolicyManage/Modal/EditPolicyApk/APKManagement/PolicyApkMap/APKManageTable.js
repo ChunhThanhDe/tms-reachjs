@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import { columns } from './ColumnSetup';
 import { toast } from 'react-toastify';
-import { ThemeProvider } from '@mui/material';
+import { Card, ThemeProvider, Typography } from '@mui/material';
 import tableTheme from 'app/components/Table/TableTheme';
 import { getAPageAPK, postMapPolicyApk } from 'app/Services/PolicyServices';
 import BottomBarSetup from './BottomBarSetup';
@@ -98,53 +98,64 @@ const APKManageTable = (props) => {
   }, [resetTable, updateTable]);
 
   return (
-    <ThemeProvider theme={tableTheme}>
-      <MaterialReactTable
-        columns={columns}
-        data={arrAPKS}
-        initialState={{
-          density: 'compact',
-          columnVisibility: { packagesize: false, id: false },
-        }}
-        enableRowSelection
-        enableGlobalFilter={false}
-        enableColumnFilters={false}
-        enableColumnActions={false}
-        enablePagination={false}
-        enableSorting={false}
-        enableSelectAll={false}
-        positionToolbarAlertBanner={'none'}
-        getRowId={(row) => row.id}
-        onRowSelectionChange={(selectedRows) => setRowSelection(selectedRows)}
-        state={{ rowSelection }}
-        muiTableBodyRowProps={{ hover: false }}
-        defaultColumn={{
-          maxSize: 120,
-          minSize: 10,
-          size: 100, //default size is usually 180
-        }}
-        renderBottomToolbarCustomActions={() => (
-          <BottomBarSetup
-            paramsPageUser={paramsPageAPK}
-            totalPage={totalPage}
-            handleMoveToPrePage={handleMoveToPrePage}
-            handleMoveToNextPage={handleMoveToNextPage}
-          />
-        )}
-        renderTopToolbarCustomActions={() => (
-          <TopBarSetup
-            handleEditPolicyApk={handleEditPolicyApk}
-            searchTermPackage={searchTermPackage}
-            setSearchTermPackage={setSearchTermPackage}
-            searchTermVersion={searchTermVersion}
-            setSearchTermVersion={setSearchTermVersion}
-            setResettable={setResetTable}
-            handleSearchMode={handleSearchMode}
-            handleResetTable={handleResetTable}
-          />
-        )}
-      />
-    </ThemeProvider>
+    <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        APKs available
+      </Typography>
+      <ThemeProvider theme={tableTheme}>
+        <MaterialReactTable
+          columns={columns}
+          data={arrAPKS}
+          initialState={{
+            density: 'compact',
+            columnVisibility: { packagesize: false, id: false },
+          }}
+          enableRowSelection
+          enableGlobalFilter={false}
+          enableColumnFilters={false}
+          enableColumnActions={false}
+          enablePagination={false}
+          enableSorting={false}
+          enableSelectAll={false}
+          positionToolbarAlertBanner={'none'}
+          getRowId={(row) => row.id}
+          onRowSelectionChange={(selectedRows) => setRowSelection(selectedRows)}
+          state={{ rowSelection }}
+          muiTableBodyRowProps={{ hover: false }}
+          defaultColumn={{
+            maxSize: 120,
+            minSize: 10,
+            size: 100, //default size is usually 180
+          }}
+          renderBottomToolbarCustomActions={() => (
+            <BottomBarSetup
+              paramsPageUser={paramsPageAPK}
+              totalPage={totalPage}
+              handleMoveToPrePage={handleMoveToPrePage}
+              handleMoveToNextPage={handleMoveToNextPage}
+            />
+          )}
+          renderTopToolbarCustomActions={() => (
+            <TopBarSetup
+              handleEditPolicyApk={handleEditPolicyApk}
+              searchTermPackage={searchTermPackage}
+              setSearchTermPackage={setSearchTermPackage}
+              searchTermVersion={searchTermVersion}
+              setSearchTermVersion={setSearchTermVersion}
+              setResettable={setResetTable}
+              handleSearchMode={handleSearchMode}
+              handleResetTable={handleResetTable}
+            />
+          )}
+        />
+      </ThemeProvider>
+    </Card>
   );
 };
 export default APKManageTable;

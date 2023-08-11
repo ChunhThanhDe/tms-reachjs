@@ -5,13 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Close, RestartAlt, SendAndArchive } from '@mui/icons-material';
 
 const TopBarSetup = (props) => {
-  const {
-    searchTerm,
-    setSearchTerm,
-    handleResetTable,
-    handleSearchMode,
-    handleEditDevicesToListDevices,
-  } = props;
+  const { searchTerm, setSearchTerm, handleResetTable, handleSearchMode } = props;
 
   const handleChangeSearchBar = (event) => {
     setSearchTerm(event.target.value);
@@ -54,11 +48,7 @@ const TopBarSetup = (props) => {
             endAdornment: (
               <InputAdornment>
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <Tooltip
-                  arrow
-                  placement="top"
-                  title={'Only search in SerialNumber and Description'}
-                >
+                <Tooltip arrow placement="top" title={'Search'}>
                   <IconButton
                     type="button"
                     aria-label="search"
@@ -90,11 +80,6 @@ const TopBarSetup = (props) => {
         <Tooltip arrow placement="top" title="Reset table to default">
           <IconButton color="primary" aria-label="clear" onClick={handleResetTable}>
             <RestartAlt />
-          </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top" title="Add devices">
-          <IconButton color="primary" aria-label="clear" onClick={handleEditDevicesToListDevices}>
-            <SendAndArchive />
           </IconButton>
         </Tooltip>
       </Grid>

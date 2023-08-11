@@ -34,6 +34,24 @@ export const getAPageDevice = (data) => {
   });
 };
 
+export const getAPageDeviceLocation = (data) => {
+  return axios({
+    method: 'get',
+    url: `/TMS/api/device/location`,
+    params: {
+      page: data.page,
+      limit: data.limit,
+      location: data.location,
+      description: data.description,
+    },
+  }).catch(function (error) {
+    if (error.response) {
+      // console.log(`error status`, error.response);
+      return error.response.data.message;
+    }
+  });
+};
+
 // export const postANewDevice = (data) => {
 //   return axios({
 //     method: 'post',
@@ -227,4 +245,39 @@ export const deleteDeviceinListDevice = (listDeviceId, deviceId) => {
         return error.response;
       }
     });
+};
+
+export const getUsersInListDevices = (data) => {
+  // console.log(data);
+  return axios({
+    method: 'get',
+    url: `/TMS/api/listDevice/${data.id}/user`,
+    params: {
+      page: data.page,
+      limit: data.limit,
+      search: data.search,
+    },
+  }).catch(function (error) {
+    if (error.response) {
+      // console.log(`error status`, error.response);
+      return error.response;
+    }
+  });
+};
+
+export const deleteUserinListDevice = (listDeviceId, userId) => {
+  return axios.delete(`/TMS/api/user/${userId}/listDevice/${listDeviceId}`).catch(function (error) {
+    if (error.response) {
+      return error.response;
+    }
+  });
+};
+
+export const postUsersToListDevices = (listDeviceID, userId) => {
+  return axios.post(`/TMS/api/user/${userId}/listDevice/${listDeviceID}`).catch(function (error) {
+    if (error.response) {
+      // console.log(`error status`, error.response);
+      return error.response;
+    }
+  });
 };

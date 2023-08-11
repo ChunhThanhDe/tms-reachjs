@@ -95,6 +95,15 @@ const DeviceManageTable = (props) => {
 
   return (
     <Card>
+      <Typography
+        variant="h6"
+        align="left"
+        fontWeight="fontWeightBold"
+        fontSize={15}
+        sx={{ marginTop: '5px', marginLeft: '10px' }}
+      >
+        Devices available
+      </Typography>
       <ThemeProvider theme={tableTheme}>
         <MaterialReactTable
           columns={columns}

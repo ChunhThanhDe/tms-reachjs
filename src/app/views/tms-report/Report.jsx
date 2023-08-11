@@ -109,7 +109,7 @@ const Report = () => {
             <DevicePolicyTable deviceID={selectedOptionCP.id} />
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
-            <SimpleCard title="Update Application Performance">
+            <SimpleCard title="Print Report">
               <Button variant="contained" onClick={handlePrint} sx={{ height: '60%' }}>
                 Print Report
               </Button>

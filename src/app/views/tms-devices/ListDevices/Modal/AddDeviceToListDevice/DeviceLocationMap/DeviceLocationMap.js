@@ -4,24 +4,26 @@ import { columns } from './ColumnSetup';
 import { toast } from 'react-toastify';
 import { Card, ThemeProvider, Typography } from '@mui/material';
 import tableTheme from 'app/components/Table/TableTheme';
-import { postMapPolicyDevices } from 'app/Services/PolicyServices';
-import { getAPageDevice } from 'app/Services/DevicesServices';
+import { postDevicesToListDevices } from 'app/Services/DevicesServices';
+import { getAPageDeviceLocation } from 'app/Services/DevicesServices';
 import BottomBarSetup from './BottomBarSetup';
 import TopBarSetup from './TopBarSetup';
 
-const PolicyDevicesManageTable = (props) => {
+const DeviceLocationMap = (props) => {
   const { id, setAddSuccess } = props;
   const [arrAPKS, setArrAPKs] = useState([]);
   const [paramsPageAPK, setParamPageAPK] = useState({
     page: 1,
     limit: 5,
-    search: null,
+    location: null,
+    description: null,
   });
 
   const [totalPage, setTotalPage] = useState();
-  const [updateTable, setUpdateTable] = useState(true);
+  const [updateTable, setUpdateTable] = useState(false);
   const [resetTable, setResetTable] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchLoca, setSearchLoca] = useState('');
+  const [searchDes, setSearchDes] = useState('');
   const [rowSelection, setRowSelection] = useState([]);
 
   const handleEditPolicyDevices = async () => {
@@ -31,8 +33,8 @@ const PolicyDevicesManageTable = (props) => {
     if (selectedRows.length === 0) {
       toast.error('There is no device selected.');
     } else {
-      let res = await postMapPolicyDevices(id, selectedRows);
-      // console.log(res);
+      let res = await postDevicesToListDevices(id, selectedRows);
+      console.log(res);
       if (res.status === 200) {
         toast.success('Add device success');
         setAddSuccess(true);
@@ -43,11 +45,10 @@ const PolicyDevicesManageTable = (props) => {
   };
 
   const handleLoadAPageDeivice = async () => {
-    let response = await getAPageDevice(paramsPageAPK);
-    // console.log(response);
+    let response = await getAPageDeviceLocation(paramsPageAPK);
     if (response.status === 200) {
       if (response.data.totalElement === null) {
-        if (searchTerm !== null) {
+        if (searchLoca !== null) {
           toast.error('No element matchs');
         } else {
           toast.error('Nothing to show');
@@ -74,21 +75,23 @@ const PolicyDevicesManageTable = (props) => {
 
   const handleResetTable = () => {
     setResetTable(true);
-    setSearchTerm('');
   };
   const handleSearchMode = () => {
     setParamPageAPK({
       ...paramsPageAPK,
-      search: searchTerm,
+      location: searchLoca,
+      description: searchDes,
     });
     setUpdateTable(true);
   };
 
   useEffect(() => {
     if (resetTable) {
-      setParamPageAPK({ page: 1, limit: 5, packagename: null, version: null });
+      setSearchLoca('');
+      setSearchDes('');
+      setArrAPKs([]);
+      setTotalPage();
       setResetTable(false);
-      setUpdateTable(true);
     } else if (updateTable) {
       handleLoadAPageDeivice();
       setUpdateTable(false);
@@ -141,9 +144,11 @@ const PolicyDevicesManageTable = (props) => {
           )}
           renderTopToolbarCustomActions={() => (
             <TopBarSetup
-              handleEditPolicyApk={handleEditPolicyDevices}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
+              handleEditPolicyDevice={handleEditPolicyDevices}
+              searchLoca={searchLoca}
+              searchDes={searchDes}
+              setSearchLoca={setSearchLoca}
+              setSearchDes={setSearchDes}
               setResettable={setResetTable}
               handleSearchMode={handleSearchMode}
               handleResetTable={handleResetTable}
@@ -154,4 +159,4 @@ const PolicyDevicesManageTable = (props) => {
     </Card>
   );
 };
-export default PolicyDevicesManageTable;
+export default DeviceLocationMap;

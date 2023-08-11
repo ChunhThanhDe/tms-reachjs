@@ -120,19 +120,26 @@ const AppTable = () => {
               'mrt-row-actions',
             ],
           }}
-          renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <Box flexBasis="25%">
-              <NavLink
-                to={`/tms-application/application-management/application?id=${row.original.id}&name=${row.original.name}`}
-              >
-                <Button>
-                  <InfoIcon color="primary" />
-                  <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
-                    Detail
-                  </Typography>
-                </Button>
-              </NavLink>
-            </Box>,
+          renderRowActionMenuItems={({ row }) => [
+            <>
+              <Box flexBasis="25%">
+                <NavLink
+                  to={`/tms-application/application-management/application?id=${row.original.id}&name=${row.original.name}`}
+                >
+                  <div>
+                    <Button>
+                      <InfoIcon color="primary" />
+                      <Typography
+                        style={{ marginLeft: '8px', color: 'black' }}
+                        textTransform="none"
+                      >
+                        Detail
+                      </Typography>
+                    </Button>
+                  </div>
+                </NavLink>
+              </Box>
+            </>,
           ]}
           renderDetailPanel={({ row }) => (
             <Box

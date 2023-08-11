@@ -55,7 +55,7 @@ const validationSchema = Yup.object().shape({
     .required('Password is required!'),
   email: Yup.string()
     // .email('Invalid Email address')
-    .required('Email is required!'),
+    .required('Username is required!'),
 });
 
 const JwtLogin = () => {

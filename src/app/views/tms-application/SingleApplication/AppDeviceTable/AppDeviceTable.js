@@ -132,18 +132,20 @@ const DeviceAppTable = (props) => {
             ],
           }}
           renderRowActionMenuItems={({ row, table, closeMenu }) => [
-            <Box flexBasis="25%">
-              <NavLink
-                to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
-              >
-                <Button>
-                  <InfoIcon color="primary" />
-                  <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
-                    Detail
-                  </Typography>
-                </Button>
-              </NavLink>
-            </Box>,
+            <>
+              <Box flexBasis="25%">
+                <NavLink
+                  to={`/tms-devices/devices-management/device?id=${row.original.id}&sn=${row.original.sn}`}
+                >
+                  <Button>
+                    <InfoIcon color="primary" />
+                    <Typography style={{ marginLeft: '8px', color: 'black' }} textTransform="none">
+                      Detail
+                    </Typography>
+                  </Button>
+                </NavLink>
+              </Box>
+            </>,
           ]}
           renderDetailPanel={({ row }) => (
             <Box

@@ -38,7 +38,7 @@ const TopBarSetup = (props) => {
           id="search"
           label="Search"
           variant="outlined"
-          placeholder="Only search in SerialNumber and Descripttion"
+          placeholder="Only search in SerialNumber and Description"
           size="small"
           value={searchTerm}
           onChange={handleChangeSearchBar}
@@ -51,7 +51,7 @@ const TopBarSetup = (props) => {
                 <Tooltip
                   arrow
                   placement="top"
-                  title={'Only search in SerialNumber and Descripttion'}
+                  title={'Only search in SerialNumber and Description'}
                 >
                   <IconButton
                     type="button"
