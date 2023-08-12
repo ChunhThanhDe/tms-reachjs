@@ -29,7 +29,7 @@ const routes = [
     ],
   },
   ...systemRoutes,
-  { path: '/', element: <Navigate to="tms-default/studio" /> },
+  { path: '/', element: <Navigate to="tms-default/dashboard" /> },
   { path: '*', element: <NotFound /> },
 ];
 
